@@ -1,7 +1,0 @@
-{
-	"InstallScripts" : 
-	[
-		"/Users/jonah/Github/matrix-lib/tests/build/cmake_install.cmake"
-	],
-	"Parallel" : false
-}
