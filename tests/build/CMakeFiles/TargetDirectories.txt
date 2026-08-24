@@ -1,0 +1,3 @@
+/Users/jonah/Github/matrix-lib/tests/build/CMakeFiles/tests.dir
+/Users/jonah/Github/matrix-lib/tests/build/CMakeFiles/edit_cache.dir
+/Users/jonah/Github/matrix-lib/tests/build/CMakeFiles/rebuild_cache.dir
