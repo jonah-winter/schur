@@ -1,4 +1,5 @@
-add_executable(internals storage_dims_test.cpp)
+add_executable(internals storage_dims_test.cpp
+        ../include/matrix/dim_funcs.h)
 
 find_package(GTest)
 

@@ -1,8 +1,8 @@
 #ifndef MATRIX_H_
 #define MATRIX_H_
 
-#include <matrix/dimensions.h>
 #include <matrix/global_decls.h>
-#include <matrix/storage.h>
+#include <matrix/dimensions_main.h>
+#include <matrix/storage_main.h>
 
 #endif

@@ -16,23 +16,21 @@ struct Storage {
 private:
   // allocator type to allocate memory for data pointer
   std::allocator<T> alloc_;
-  //using AllocTraits = std::allocator_traits<decltype(alloc_)>;
+  // using AllocTraits = std::allocator_traits<decltype(alloc_)>;
   T* data_;
   size_t size_;
   size_t capacity_;
 
   // CONSTRUCTORS //
 public:
-  explicit Storage() : data_{nullptr}, size_{}, capacity_{} {}
+  explicit Storage() : data_{nullptr}, size_{}, capacity_{1} {}
 
   explicit Storage(size_t s)
-    : data_{nullptr}, size_{s} 
+    : data_{nullptr}, size_{s}, capacity_{1}
   {
     if (s) [[likely]] {
-      capacity_ = std::bit_ceil(s);
+      capacity_ = grow_cap_(s);
       data_ = alloc_.allocate(capacity_);
-    } else {
-      capacity_ = 0;
     }
   }
 
@@ -40,12 +38,14 @@ public:
     : data_{nullptr}, size_{r * c} 
   {
     if (r * c) [[likely]] {
-      capacity_ = std::bit_ceil(r * c);
+      capacity_ = grow_cap_(r * c);
       data_ = alloc_.allocate(capacity_);
     } else {
-      capacity_ = 0;
+      capacity_ = 1;
     }
   }
+
+  // big 5 //
 
   // destructor
   ~Storage() 
@@ -73,7 +73,7 @@ public:
     if (this == &storage) return *this;
     // two paths
     if (capacity_ < storage.size_) {
-      size_t new_cap_ = std::bit_ceil(storage.size_);
+      size_t new_cap_ = grow_cap_(storage.size_);
       T* new_ = alloc_.allocate(new_cap_);
       /* storage.size_ is guaranteeed to be valid memory for new_[i]
        * because we allocated enough capacity so that its greater than
@@ -93,18 +93,18 @@ public:
   }
 
   // move constructor
-  Storage(Storage&& storage)
+  Storage(Storage&& storage) noexcept
     : data_{storage.data_},
       size_{storage.size_},
       capacity_{storage.capacity_}
   {
     storage.data_ = nullptr;
     storage.size_ = 0;
-    storage.capacity_ = 0;
+    storage.capacity_ = 1;
   }
 
   // move assignment
-  Storage& operator=(Storage&& storage)
+  Storage& operator=(Storage&& storage) noexcept
   {
     if (this == &storage) return *this;
     if (data_ != nullptr) {
@@ -116,7 +116,7 @@ public:
 
     storage.data_ = nullptr;
     storage.size_ = 0;
-    storage.capacity_ = 0;
+    storage.capacity_ = 1;
     return *this;
   }
 
@@ -152,27 +152,48 @@ public:
     }
   }
 
+  size_t grow_cap_(size_t s) const
+  {
+    return std::max(capacity_ * 2,
+                    std::bit_ceil(s));
+  }
+
   [[nodiscard]] T* get_data_() const { return data_; }
 
   [[nodiscard]] size_t get_size_() const { return size_; }
 
   [[nodiscard]] size_t get_cap_() const { return capacity_; }
 
+  // INDEXING //
+
+  // dont resize, unchecked
   [[nodiscard]] T& operator[](size_t i) { return data_[i]; }
 
+  // dont resize, unchecked, view only
   [[nodiscard]] const T& operator[](size_t i) const { return data_[i]; }
 
+  // dont resize, checked
   [[nodiscard]] T& at_(size_t i)
   {
     if (i >= get_size_()) throw std::out_of_range("index is out of bounds");
     return data_[i];
   }
 
+  // dont resize, checked, view only
   [[nodiscard]] const T& at_(size_t i) const
   {
     if (i >= get_size_()) throw std::out_of_range("index is out of bounds");
     return data_[i];
   }
+
+  // if (i < get_cap_()) {
+  //   if (i >= size_) {
+  //     size_ += size_ - i + 1;
+  //     return data_[i];
+  //   }
+  // }
+  // // else
+  // throw std::out_of_range("index is out of bounds");
 };
 } // namespace internal
 } // namespace matrix
