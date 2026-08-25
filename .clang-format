@@ -1,7 +1,18 @@
 BasedOnStyle: LLVM
+AlwaysBreakTemplateDeclarations: Yes
 BreakBeforeBraces: Custom
 BraceWrapping:
-  AfterFunction: true
+  AfterFunction: false
+  SplitEmptyFunction: false
+
 SeparateDefinitionBlocks: Always
 
 MaxEmptyLinesToKeep: 1
+ColumnLimit: 80
+
+AllowShortBlocksOnASingleLine: Always
+AllowShortIfStatementsOnASingleLine: AllIfsAndElse
+AllowShortLoopsOnASingleLine: true
+AllowShortFunctionsOnASingleLine: All
+
+PointerAlignment: Left

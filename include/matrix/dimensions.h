@@ -10,7 +10,8 @@ namespace matrix {
 namespace internal {
 
 template <size_t Rows, size_t Cols>
-requires (Rows != 0 && Cols != 0) struct Dimensions {
+  requires(Rows != 0 && Cols != 0)
+struct Dimensions {
 
   // CONSTRUCTORS //
   Dimensions() = default;
@@ -22,14 +23,14 @@ requires (Rows != 0 && Cols != 0) struct Dimensions {
   [[nodiscard]] static constexpr size_t cols() { return Cols; }
 };
 
-template <> struct Dimensions<Dynamic, Dynamic> {
+template <>
+struct Dimensions<Dynamic, Dynamic> {
   // STRUCT VARIABLES //
   size_t rows_;
   size_t cols_;
 
   // CONSTRUCTORS //
-  Dimensions(size_t rows, size_t cols) : rows_{rows}, cols_{cols}
-  {
+  Dimensions(size_t rows, size_t cols) : rows_{rows}, cols_{cols} {
     if (!rows) throw std::invalid_argument("cannot have 0 rows");
     if (!cols) throw std::invalid_argument("cannot have 0 cols");
   }
@@ -40,14 +41,14 @@ template <> struct Dimensions<Dynamic, Dynamic> {
   [[nodiscard]] size_t cols() const { return cols_; }
 };
 
-template <size_t Rows> requires (Rows != 0)
+template <size_t Rows>
+  requires(Rows != 0)
 struct Dimensions<Rows, Dynamic> {
   // STRUCT VARIABLES //
   size_t cols_;
 
   // CONSTRUCTORS //
-  explicit Dimensions(size_t cols) : cols_{cols}
-  {
+  explicit Dimensions(size_t cols) : cols_{cols} {
     if (!cols) throw std::invalid_argument("cannot have 0 columns");
   }
 
@@ -57,14 +58,14 @@ struct Dimensions<Rows, Dynamic> {
   [[nodiscard]] size_t cols() const { return cols_; }
 };
 
-template <size_t Cols> requires (Cols != 0)
+template <size_t Cols>
+  requires(Cols != 0)
 struct Dimensions<Dynamic, Cols> {
   // STRUCT VARIABLES //
   size_t rows_;
 
   // CONSTRUCTORS //
-  explicit Dimensions(size_t rows) : rows_{rows}
-  {
+  explicit Dimensions(size_t rows) : rows_{rows} {
     if (!rows) throw std::invalid_argument("cannot have 0 rows");
   }
 

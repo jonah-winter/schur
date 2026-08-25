@@ -1,6 +1,9 @@
-project(tests)
+add_executable(internals storage_dims_test.cpp)
 
-add_executable(${PROJECT_NAME} storage_dims_test.cpp)
+find_package(GTest)
 
-target_include_directories(${PROJECT_NAME} PRIVATE
+target_link_libraries(internals PRIVATE GTest::gtest_main)
+
+target_include_directories(internals PRIVATE
                            ${CMAKE_SOURCE_DIR}/include)
+include(GoogleTest)

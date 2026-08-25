@@ -3,18 +3,28 @@
 
 #include <iostream>
 
+#include <gtest/gtest.h>
+
 #include <matrix/matrix.h>
 
-int main()
+TEST(MATRIX_STORAGE, _INITIAL_TEST)
 {
-  using namespace matrix;
-  using T = int;
-  auto a = internal::Storage<T>(5);
-  a[3] = 5;
-  T* b = a.get_data();
-  T* c = a.get_data();
-  std::cout << b[3] << '\n';
-  return 0;
+  using namespace matrix::internal;
+  Storage<float> fir(1);
+  Storage<float> sec(100);
+  fir.init_();
+  EXPECT_EQ(fir[0], 0);
+  fir[0] = 100;
+  EXPECT_EQ(fir[0], 100);
+  sec[99] = 100;
+  EXPECT_EQ(sec[99], 100);
+}
+
+TEST(MATRIX_STORAGE, _LARGE_STORAGE)
+{
+  using namespace matrix::internal;
+  Storage<float> fir(1000000000);
+  EXPECT_EQ(fir[9999], 0);
 }
 
 #endif
