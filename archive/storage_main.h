@@ -1,11 +1,12 @@
 #ifndef STORAGE_H_
 #define STORAGE_H_
 
+#include <algorithm>
 #include <bit>
 #include <memory>
 #include <stdexcept>
 
-#include <matrix/global_decls.h>
+#include <matrix/global_decls.hpp>
 
 namespace matrix {
 namespace internal {
@@ -50,7 +51,10 @@ public:
   // destructor
   ~Storage() 
   {
-    if (data_ != nullptr) {
+    if (data_ != nullptr) [[likely]] {
+      for (size_t i{0}; i < size_; i++) {
+        alloc_.destroy(data_ + i);
+      }
       alloc_.deallocate(data_, capacity_);
     }
   }
@@ -61,9 +65,9 @@ public:
       size_{storage.size_},
       capacity_{storage.capacity_}
   {
-    if (capacity_) {
+    if (capacity_ > 1) {
       data_ = alloc_.allocate(storage.capacity_);
-      copy_(storage.data_, 0, storage.size_);
+      copy_init_(storage.data_, 0, storage.size_);
     }
   }
 
@@ -71,22 +75,21 @@ public:
   Storage& operator=(const Storage& storage) 
   {
     if (this == &storage) return *this;
-    // two paths
+    
     if (capacity_ < storage.size_) {
       size_t new_cap_ = grow_cap_(storage.size_);
       T* new_ = alloc_.allocate(new_cap_);
-      /* storage.size_ is guaranteeed to be valid memory for new_[i]
-       * because we allocated enough capacity so that its greater than
-       * or equal to storage.size_ */
+
       for (size_t i{0}; i < storage.size_; i++) {
-        new_[i] = storage[i];
+        alloc_.construct(new_ + i, storage[i]);
+        alloc_.destroy(data_ + i);
       }
       alloc_.deallocate(data_, capacity_);
       data_ = new_;
       capacity_ = new_cap_;
       size_ = storage.size_;
     } else {
-      copy_(storage.data_, 0, storage.size_);
+      copy_init_(storage.data_, 0, storage.size_);
       size_ = storage.size_;
     }
     return *this;
@@ -121,18 +124,45 @@ public:
   }
 
   // FUNCTIONS //
+  void resize_(size_t i)
+  {
+    reserve_(i);
+    size_ = i;
+  }
+
+  void resize_(size_t i, const T& val)
+  {
+    reserve_(i);
+    for (size_t z{size_}; z < i; z++) {
+      data_[i] = val;
+    }
+    size_ = i;
+  }
+
+  void reserve_(size_t i)
+  {
+    if (i <= capacity_) return;
+    T* old_ = data_;
+    data_ = alloc_.allocate(i);
+    for (size_t z{0}; z < size_; z++) {
+      alloc_.construct(data_ + z, old_[z]);
+      alloc_.destroy(old_ + z);
+    }
+    alloc_.deallocate(old_, capacity_);
+    capacity_ = i;
+  }
 
   void init_(size_t start, size_t end)
   {
-    for (size_t i{start}; i < end; i++) {
-      data_[i] = static_cast<T>(0);
+    for (size_t i{0}; i < size_; i++) {
+      alloc_.construct(data_ + i, static_cast<T>(0));
     }
   }
   
   void init_()
   {
     for (size_t i{0}; i < size_; i++) {
-      data_[i] = static_cast<T>(0);
+      alloc_.construct(data_ + i, static_cast<T>(0));
     }
   }
 
@@ -140,11 +170,18 @@ public:
   {
     if (start > end || start > size_) throw std::logic_error("start should be less than end and size");
     if (end > size_) throw std::logic_error("end must be equal to or less than size");
-    for (size_t i{start}; i < end; i++) {
-      data_[i] = static_cast<T>(0);
+    for (size_t i{0}; i < size_; i++) {
+      alloc_.construct(data_ + i, static_cast<T>(0));
     }
   }
 
+  void copy_init_(T* arr, size_t start, size_t end)
+  {
+    for (size_t i{0}; i < size_; i++) {
+      alloc_.construct(data_ + i, arr[i]);
+    }
+  }
+  
   void copy_(T* arr, size_t start, size_t end)
   {
     for (size_t i{start}; i < end; i++) {
