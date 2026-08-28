@@ -2,6 +2,7 @@
 #define GLOBAL_DECLS_H_
 
 #include <cstddef>
+#include <type_traits>
 
 namespace matrix {
 using index_t = std::ptrdiff_t;
@@ -14,7 +15,7 @@ template <typename T>
 struct is_valid_storage_type : std::false_type {};
 
 template <typename T>
-  requires(std::is_arithmetic_v<T>)
+requires(std::is_arithmetic_v<T>)
 struct is_valid_storage_type<T> : std::true_type {};
 
 template <typename T>

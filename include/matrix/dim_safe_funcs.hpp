@@ -1,5 +1,5 @@
-#ifndef SCHUR_DIM_FUNCS_H
-#define SCHUR_DIM_FUNCS_H
+#ifndef SCHUR_DIM_SAFE_FUNCS_HPP_
+#define SCHUR_DIM_SAFE_FUNCS_HPP_
 
 #include <matrix/dimensions_decl_internal.hpp>
 #include <matrix/generic_dim_funcs.hpp>
@@ -32,11 +32,6 @@ bool internal::Dimensions<Rows, Cols>::valid_dims_overflow() const {
   return false;
 }
 
-bool internal::Dimensions<Dynamic, Dynamic>::valid_dims_overflow() const {
-  if (SIZE_MAX / rows_ > cols_) return true;
-  return false;
-}
-
 template <index_t Rows>
   requires(internal::valid_dim_(Rows))
 bool internal::Dimensions<Rows, Dynamic>::valid_dims_overflow() const {
@@ -59,4 +54,4 @@ inline size_t get_dims_(index_t r, index_t c) {
 }
 } // namespace matrix
 
-#endif // SCHUR_DIM_FUNCS_H
+#endif // SCHUR_DIM_SAFE_FUNCS_HPP_

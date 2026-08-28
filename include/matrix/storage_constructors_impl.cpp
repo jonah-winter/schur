@@ -13,7 +13,7 @@ Storage<T>::Storage(size_t s) {
   if (s) [[likely]] {
     size_ = s;
     capacity_ = grow_cap(s);
-    data_ = objects_::allocate(alloc_, capacity_);
+    data_ = objects_.allocate(alloc_, capacity_);
   } else {
     data_ = nullptr;
     size_ = 0;
@@ -28,7 +28,7 @@ Storage<T>::Storage(size_t r, size_t c) {
   if (s) [[likely]] {
     size_ = s;
     capacity_ = grow_cap(s);
-    data_ = objects_::allocate(alloc_, capacity_);
+    data_ = objects_.allocate(alloc_, capacity_);
   } else {
     data_ = nullptr;
     size_ = 0;
@@ -41,18 +41,18 @@ template <storage_t T>
 Storage<T>::Storage(const Storage& other)
     : size_{other.size_}, capacity_{other.capacity_} {
   if (other.data_ != nullptr) {
-    data_ = objects_::allocate(alloc_, capacity_);
+    data_ = objects_.allocate(alloc_, capacity_);
     size_t i{0};
     // i is global to use as count for catch loop
     try {
       while (i < size_) {
-        objects_::construct(alloc_, data_ + i, other[i]);
+        objects_.construct(alloc_, data_ + i, other[i]);
         ++i;
       }
     } catch (...) {
       // catch exceptions related to T constructor's throw
-      for (size_t z{0}; z < i; z++) { objects_::destroy(alloc_, data_ + z); }
-      objects_::deallocate(alloc_, data_, capacity_);
+      for (size_t z{0}; z < i; z++) { objects_.destroy(alloc_, data_ + z); }
+      objects_.deallocate(alloc_, data_, capacity_);
       // "throw;" just rethrows current exception
       throw;
     }
@@ -68,15 +68,15 @@ Storage<T>& Storage<T>::operator=(const Storage<T>& other) {
   if (other.data_ != nullptr) {
     size_t i{0};
     // see notes in copy constructor
-    T* new_data_ = objects_::allocate(alloc_, other.capacity_);
+    T* new_data_ = objects_.allocate(alloc_, other.capacity_);
     try {
       while (i < other.size_) {
-        objects_::construct(alloc_, new_data_ + i, other[i]);
+        objects_.construct(alloc_, new_data_ + i, other[i]);
         ++i;
       }
     } catch (...) {
-      for (size_t z{0}; z < i; z++) { objects_::destroy(alloc_, new_data_ + z); }
-      objects_::deallocate(alloc_, new_data_, other.capacity_);
+      for (size_t z{0}; z < i; z++) { objects_.destroy(alloc_, new_data_ + z); }
+      objects_.deallocate(alloc_, new_data_, other.capacity_);
       throw;
     }
     delete_data();

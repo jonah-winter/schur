@@ -12,6 +12,7 @@ struct Storage {
   // STRUCT VARIABLES //
 private:
   std::allocator<T> alloc_;
+  std::allocator_traits<decltype(alloc_)> objects_;
   T* data_;
   size_t size_;
   size_t capacity_;
@@ -29,16 +30,30 @@ public:
   Storage& operator=(Storage&& other) noexcept;
 
   // FUNCTIONS //
+  // UNSAFE -- FAST
+  T& operator[](size_t i);
+  const T& operator[](size_t i) const;
+  // SAFE -- slow?
+  /* not really slow but just slower than the fast ones
+   * also some of them are inherently safe and theres not
+   * reall a point for an unsafe version */
+  T& at(size_t i);
+  const T& at(size_t i) const;
   void safe_resize(size_t s);
+  void reserve(size_t s);
+  // function for growing capacity internally, should not be used externally
+private:
   void reserve_copy(size_t s);
   void reserve_move(size_t s);
-  void reserve(size_t s);
   size_t grow_cap(size_t s) const;
+  void delete_data();
+public:
   void init();
   void init(size_t start, size_t end);
   void init(T val);
   void init(size_t start, size_t end, T val);
-  void delete_data();
+  size_t size() const;
+  size_t capacity() const;
 };
 } // namespace internal
 } // namespace matrix

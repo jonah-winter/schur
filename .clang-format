@@ -2,8 +2,14 @@ BasedOnStyle: LLVM
 AlwaysBreakTemplateDeclarations: Yes
 BreakBeforeBraces: Custom
 BraceWrapping:
-  AfterFunction: false
-  SplitEmptyFunction: false
+  AfterFunction: true
+
+  AfterClass: true
+  AfterStruct: true
+  AfterControlStatement: false
+  AfterNamespace: false
+  AfterEnum: false
+  AfterUnion: false
 
 SeparateDefinitionBlocks: Always
 
