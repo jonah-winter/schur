@@ -1,14 +1,13 @@
 #ifndef SCHUR_STORAGE_DECL_INTERNAL_HPP_
 #define SCHUR_STORAGE_DECL_INTERNAL_HPP_
 
-#include <memory>
 #include <matrix/global_decls.hpp>
+#include <memory>
 
 namespace matrix {
 namespace internal {
 
-
-template<storage_t T>
+template <storage_t T>
 struct Storage {
   // STRUCT VARIABLES //
 private:
@@ -16,9 +15,11 @@ private:
   T* data_;
   size_t size_;
   size_t capacity_;
+
 public:
   // CONSTRUCTORS //
   Storage() : data_{nullptr}, size_{}, capacity_{1} {}
+
   explicit Storage(size_t s);
   Storage(size_t r, size_t c);
   Storage(const Storage& other);
@@ -39,7 +40,7 @@ public:
   void init(size_t start, size_t end, T val);
   void delete_data();
 };
-}
-}
+} // namespace internal
+} // namespace matrix
 
-#endif //SCHUR_STORAGE_DECL_INTERNAL_HPP_
+#endif // SCHUR_STORAGE_DECL_INTERNAL_HPP_

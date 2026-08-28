@@ -3,14 +3,14 @@
 
 #include <stdexcept>
 
-#include <matrix/global_decls.hpp>
 #include <matrix/generic_dim_funcs.hpp>
+#include <matrix/global_decls.hpp>
 
 namespace matrix {
 namespace internal {
 
-template<index_t Rows, index_t Cols>
-requires(valid_dims_(Rows, Cols))
+template <index_t Rows, index_t Cols>
+  requires(valid_dims_(Rows, Cols))
 struct Dimensions {
 
   // CONSTRUCTORS //
@@ -25,7 +25,7 @@ struct Dimensions {
   bool valid_dims_overflow() const;
 };
 
-template<>
+template <>
 struct Dimensions<Dynamic, Dynamic> {
   // STRUCT VARIABLES //
   index_t rows_;
@@ -45,8 +45,8 @@ struct Dimensions<Dynamic, Dynamic> {
   bool valid_dims_overflow() const;
 };
 
-template<index_t Rows>
-requires(valid_dim_(Rows))
+template <index_t Rows>
+  requires(valid_dim_(Rows))
 struct Dimensions<Rows, Dynamic> {
   // STRUCT VARIABLES //
   index_t cols_;
@@ -55,6 +55,7 @@ struct Dimensions<Rows, Dynamic> {
   explicit Dimensions(index_t cols) : cols_{cols} {
     if (cols < 0) throw std::invalid_argument("cannot have 0 columns");
   }
+
   // FUNCTIONS //
   [[nodiscard]] static constexpr index_t rows() { return Rows; }
 
@@ -63,8 +64,8 @@ struct Dimensions<Rows, Dynamic> {
   bool valid_dims_overflow() const;
 };
 
-template<index_t Cols>
-requires(valid_dim_(Cols))
+template <index_t Cols>
+  requires(valid_dim_(Cols))
 struct Dimensions<Dynamic, Cols> {
   // STRUCT VARIABLES //
   index_t rows_;
