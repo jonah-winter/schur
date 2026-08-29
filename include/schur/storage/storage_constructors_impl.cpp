@@ -1,45 +1,45 @@
-#ifndef SCHUR_STORAGE_CONSTRUCTORS_IMPL_H
-#define SCHUR_STORAGE_CONSTRUCTORS_IMPL_H
+#ifndef SCHUR_STORAGE_CONSTRUCTORS_IMPL
+#define SCHUR_STORAGE_CONSTRUCTORS_IMPL
 
-#include <matrix/global_decls.hpp>
-#include <matrix/storage_decl_internal.hpp>
+#include <stdexcept>
+#include <iostream>
+#include <schur/matrix/global_decls.hpp>
+#include <schur/storage/storage_decl_internal.hpp>
 
-namespace matrix {
+namespace schur {
 namespace internal {
 
 // SIZE CONSTRUCTOR //
 template <storage_t T>
-Storage<T>::Storage(size_t s) {
+Storage<T>::Storage(size_t s)
+  : data_{nullptr}, size_{0}, capacity_{1}
+{
   if (s) [[likely]] {
     size_ = s;
     capacity_ = grow_cap(s);
     data_ = objects_.allocate(alloc_, capacity_);
-  } else {
-    data_ = nullptr;
-    size_ = 0;
-    capacity_ = 1;
   }
 }
 
 // DIMENSIONS CONSTRUCTOR //
 template <storage_t T>
-Storage<T>::Storage(size_t r, size_t c) {
+Storage<T>::Storage(size_t r, size_t c)
+  : data_{nullptr}, size_{0}, capacity_{1}
+{
+  if (SIZE_MAX / r < c) throw std::out_of_range("size is too big");
   size_t s = r * c;
   if (s) [[likely]] {
     size_ = s;
     capacity_ = grow_cap(s);
     data_ = objects_.allocate(alloc_, capacity_);
-  } else {
-    data_ = nullptr;
-    size_ = 0;
-    capacity_ = 1;
   }
 }
 
 // COPY CONSTRUCTOR //
 template <storage_t T>
 Storage<T>::Storage(const Storage& other)
-    : size_{other.size_}, capacity_{other.capacity_} {
+    : size_{other.size_}, capacity_{other.capacity_}
+{
   if (other.data_ != nullptr) {
     data_ = objects_.allocate(alloc_, capacity_);
     size_t i{0};
@@ -63,7 +63,8 @@ Storage<T>::Storage(const Storage& other)
 
 // COPY ASSIGNMENT //
 template <storage_t T>
-Storage<T>& Storage<T>::operator=(const Storage<T>& other) {
+Storage<T>& Storage<T>::operator=(const Storage<T>& other)
+{
   if (this == &other) return *this;
   if (other.data_ != nullptr) {
     size_t i{0};
@@ -128,4 +129,4 @@ Storage<T>::~Storage() {
 } // namespace internal
 } // namespace matrix
 
-#endif // SCHUR_STORAGE_CONSTRUCTORS_IMPL_H
+#endif // SCHUR_STORAGE_CONSTRUCTORS_IMPL

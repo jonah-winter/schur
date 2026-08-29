@@ -1,10 +1,10 @@
-#ifndef GLOBAL_DECLS_H_
-#define GLOBAL_DECLS_H_
+#ifndef GLOBAL_DECLS
+#define GLOBAL_DECLS
 
 #include <cstddef>
 #include <type_traits>
 
-namespace matrix {
+namespace schur {
 using index_t = std::ptrdiff_t;
 
 static constexpr index_t Dynamic = -1;

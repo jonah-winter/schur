@@ -1,14 +1,14 @@
-#ifndef SCHUR_STORAGE_SAFE_FUNCS_CPP
-#define SCHUR_STORAGE_SAFE_FUNCS_CPP
+#ifndef SCHUR_STORAGE_SAFE_FUNCS
+#define SCHUR_STORAGE_SAFE_FUNCS
 
 #include <algorithm>
 #include <bit>
 #include <stdexcept>
 #include <type_traits>
 
-#include <matrix/storage_decl_internal.hpp>
+#include <schur/storage/storage_decl_internal.hpp>
 
-namespace matrix {
+namespace schur {
 namespace internal {
 template <storage_t T>
 size_t Storage<T>::grow_cap(size_t s) const {
@@ -16,16 +16,44 @@ size_t Storage<T>::grow_cap(size_t s) const {
   return std::max(capacity_ * 2, std::bit_ceil(s));
 }
 
-
 template <storage_t T>
-T& Storage<T>::at(size_t i) {
-  if (size_ > i) return data_[i];
-  throw std::out_of_range("out of bounds index access");
+void Storage<T>::init()
+{
+  for (size_t i{0}; i < size_; i++) {
+    objects_.construct(alloc_, data_ + i, static_cast<T>(0));
+  }
 }
 
 template <storage_t T>
-const T& Storage<T>::at(size_t i) const {
+void Storage<T>::init(size_t start, size_t end)
+{
+  if (end > size_ || start > size_) throw std::out_of_range("out of bounds access");
+  for (size_t i{0}; i < size_; i++) {
+    objects_.construct(alloc_, data_ + i, static_cast<T>(0));
+  }
+}
 
+template <storage_t T>
+void Storage<T>::init(T val)
+{
+  for (size_t i{0}; i < size_; i++) {
+    objects_.construct(alloc_, data_ + i, val);
+  }
+}
+
+template <storage_t T>
+void Storage<T>::init(size_t start, size_t end, T val)
+{
+  if (end > size_ || start > size_) throw std::out_of_range("out of bounds access");
+  for (size_t i{0}; i < size_; i++) {
+    objects_.construct(alloc_, data_ + i, val);
+  }
+}
+
+template <storage_t T>
+auto& Storage<T>::at(this auto&& self, size_t i) {
+  if (i < self.size_) return self.data_[i];
+  throw std::out_of_range("out of bounds index access");
 }
 
 template <storage_t T>
@@ -70,7 +98,7 @@ void Storage<T>::reserve(size_t s) {
 }
 
 template <storage_t T>
-void Storage<T>::safe_resize(size_t s) {
+void Storage<T>::resize(size_t s) {
   if (s <= size_) {
     for (size_t i{s}; i < size_; i++) {
       objects_.destroy(alloc_, data_ + i);
@@ -97,7 +125,7 @@ void Storage<T>::safe_resize(size_t s) {
 template <storage_t T>
 void Storage<T>::delete_data() {
   if (data_) {
-    for (size_t i{0}; i < size_; i++) { objects_.destroy(alloc_, data_ + i); }
+    for (size_t i{0}; i < size_; i++) objects_.destroy(alloc_, data_ + i);
     objects_.deallocate(alloc_, data_, capacity_);
   }
 }
@@ -113,5 +141,4 @@ size_t Storage<T>::capacity() const {
 }
 } // namespace internal
 } // namespace matrix
-
-#endif // SCHUR_STORAGE_SAFE_FUNCS_CPP
+#endif // SCHUR_STORAGE_SAFE_FUNCS

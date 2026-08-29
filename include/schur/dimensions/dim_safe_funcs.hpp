@@ -1,11 +1,11 @@
-#ifndef SCHUR_DIM_SAFE_FUNCS_HPP_
-#define SCHUR_DIM_SAFE_FUNCS_HPP_
+#ifndef SCHUR_DIM_SAFE_FUNCS
+#define SCHUR_DIM_SAFE_FUNCS
 
-#include <matrix/dimensions_decl_internal.hpp>
-#include <matrix/generic_dim_funcs.hpp>
-#include <matrix/global_decls.hpp>
+#include <schur/dimensions/dimensions_decl_internal.hpp>
+#include <schur/dimensions/generic_dim_funcs.hpp>
+#include <schur/matrix/global_decls.hpp>
 
-namespace matrix {
+namespace schur {
 namespace internal {
 enum class ValidDimStates_ {
   INVALID_DIMS = 0,
@@ -16,7 +16,7 @@ enum class ValidDimStates_ {
 };
 } // namespace internal
 
-constexpr internal::ValidDimStates_ valid_dims_specific_(index_t r, index_t c) {
+constexpr internal::ValidDimStates_ valid_dims_specific(index_t r, index_t c) {
   using V = internal::ValidDimStates_;
   if (r >= 0 && c >= 0) return V::STATIC_R_STATIC_C;
   if (r == Dynamic && c == Dynamic) return V::DYNAMIC_R_DYNAMIC_C;
@@ -54,4 +54,4 @@ inline size_t get_dims_(index_t r, index_t c) {
 }
 } // namespace matrix
 
-#endif // SCHUR_DIM_SAFE_FUNCS_HPP_
+#endif // SCHUR_DIM_SAFE_FUNCS

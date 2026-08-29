@@ -1,10 +1,10 @@
-#ifndef SCHUR_STORAGE_DECL_INTERNAL_HPP_
-#define SCHUR_STORAGE_DECL_INTERNAL_HPP_
+#ifndef SCHUR_STORAGE_DECL_INTERNAL
+#define SCHUR_STORAGE_DECL_INTERNAL
 
-#include <matrix/global_decls.hpp>
+#include <schur/matrix/global_decls.hpp>
 #include <memory>
 
-namespace matrix {
+namespace schur {
 namespace internal {
 
 template <storage_t T>
@@ -30,19 +30,20 @@ public:
   Storage& operator=(Storage&& other) noexcept;
 
   // FUNCTIONS //
+
   // UNSAFE -- FAST
-  T& operator[](size_t i);
-  const T& operator[](size_t i) const;
+  auto& operator[](this auto&& self, size_t i);
+
   // SAFE -- slow?
   /* not really slow but just slower than the fast ones
    * also some of them are inherently safe and theres not
    * reall a point for an unsafe version */
-  T& at(size_t i);
-  const T& at(size_t i) const;
-  void safe_resize(size_t s);
+
+  auto& at(this auto&& self, size_t i);
+  void resize(size_t s);
   void reserve(size_t s);
   // function for growing capacity internally, should not be used externally
-private:
+//private:
   void reserve_copy(size_t s);
   void reserve_move(size_t s);
   size_t grow_cap(size_t s) const;
@@ -58,4 +59,4 @@ public:
 } // namespace internal
 } // namespace matrix
 
-#endif // SCHUR_STORAGE_DECL_INTERNAL_HPP_
+#endif // SCHUR_STORAGE_DECL_INTERNAL

@@ -1,12 +1,12 @@
-#ifndef DIMENSIONS_DECL_INTERNAL_HPP_
-#define DIMENSIONS_DECL_INTERNAL_HPP_
+#ifndef DIMENSIONS_DECL_INTERNAL
+#define DIMENSIONS_DECL_INTERNAL
 
 #include <stdexcept>
 
-#include <matrix/generic_dim_funcs.hpp>
-#include <matrix/global_decls.hpp>
+#include <schur/dimensions/generic_dim_funcs.hpp>
+#include <schur/matrix/global_decls.hpp>
 
-namespace matrix {
+namespace schur {
 namespace internal {
 
 template <index_t Rows, index_t Cols>
@@ -37,6 +37,8 @@ struct Dimensions<Dynamic, Dynamic> {
     if (cols < 0) throw std::invalid_argument("cannot have 0 cols");
   }
 
+  Dimensions() : rows_{1}, cols_{1} {}
+
   // FUNCTIONS //
   [[nodiscard]] index_t rows() const { return rows_; }
 
@@ -52,9 +54,12 @@ struct Dimensions<Rows, Dynamic> {
   index_t cols_;
 
   // CONSTRUCTORS //
+  Dimensions() : cols_{1} {}
+
   explicit Dimensions(index_t cols) : cols_{cols} {
     if (cols < 0) throw std::invalid_argument("cannot have 0 columns");
   }
+  
 
   // FUNCTIONS //
   [[nodiscard]] static constexpr index_t rows() { return Rows; }
@@ -71,6 +76,8 @@ struct Dimensions<Dynamic, Cols> {
   index_t rows_;
 
   // CONSTRUCTORS //
+  Dimensions() : rows_{1} {}
+
   explicit Dimensions(index_t rows) : rows_{rows} {
     if (rows < 0) throw std::invalid_argument("cannot have 0 rows");
   }
@@ -84,4 +91,4 @@ struct Dimensions<Dynamic, Cols> {
 };
 } // namespace internal
 } // namespace matrix
-#endif // DIMENSIONS_DECL_INTERNAL_HPP_
+#endif // DIMENSIONS_DECL_INTERNAL

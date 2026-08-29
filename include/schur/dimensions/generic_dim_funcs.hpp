@@ -1,10 +1,10 @@
-#ifndef SCHUR_GENERIC_DIM_FUNCS_HPP_
-#define SCHUR_GENERIC_DIM_FUNCS_HPP_
+#ifndef SCHUR_GENERIC_DIM_FUNCS
+#define SCHUR_GENERIC_DIM_FUNCS
 
 #include <cstdint>
-#include <matrix/global_decls.hpp>
+#include <schur/matrix/global_decls.hpp>
 
-namespace matrix {
+namespace schur {
 namespace internal {
 constexpr bool valid_dims_(index_t r, index_t c) {
   if (r >= 0 && c >= 0) return true;
@@ -20,4 +20,4 @@ constexpr bool valid_dim_(index_t dim) {
 } // namespace internal
 } // namespace matrix
 
-#endif // SCHUR_GENERIC_DIM_FUNCS_HPP_
+#endif // SCHUR_GENERIC_DIM_FUNCS
