@@ -1,8 +1,0 @@
-#ifndef MATRIX_INCL
-#define MATRIX_INCL
-
-#include <schur/matrix/global_decls.hpp>
-#include <schur/dimensions/dimensions_incl.hpp>
-#include <schur/storage/storage_incl.hpp>
-
-#endif // MATRIX_INCL

@@ -1,9 +1,11 @@
-#ifndef SCHUR_DIM_SAFE_FUNCS
-#define SCHUR_DIM_SAFE_FUNCS
+#ifndef SCHUR_DIM_SAFE_FUNCS_HPP
+#define SCHUR_DIM_SAFE_FUNCS_HPP
 
-#include <schur/dimensions/dimensions_decl_internal.hpp>
-#include <schur/dimensions/generic_dim_funcs.hpp>
-#include <schur/matrix/global_decls.hpp>
+#include <tuple>
+
+#include <schur/dimensions/Dimensions_DeclarationInternal.hpp>
+#include <schur/dimensions/Generic_DimFuncs.hpp>
+#include <schur/Generic_GlobalDeclarations.hpp>
 
 namespace schur {
 namespace internal {
@@ -46,12 +48,10 @@ bool internal::Dimensions<Dynamic, Cols>::valid_dims_overflow() const {
   return false;
 }
 
-inline size_t get_dims_(index_t r, index_t c) {
+inline size_t calculate_dims_(index_t r, index_t c) {
   if (!internal::valid_dims_(r, c))
-    std::__throw_logic_error(
-        "invalid rows and cols, either less than 0 or overflow");
+    throw std::logic_error("invalid rows and cols, either less than 0 or overflow");
   return r * c;
 }
-} // namespace matrix
-
-#endif // SCHUR_DIM_SAFE_FUNCS
+} // namespace schur
+#endif // SCHUR_DIM_SAFE_FUNCS_HPP

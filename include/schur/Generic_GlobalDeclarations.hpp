@@ -1,5 +1,5 @@
-#ifndef GLOBAL_DECLS
-#define GLOBAL_DECLS
+#ifndef GLOBAL_DECLS_HPP
+#define GLOBAL_DECLS_HPP
 
 #include <cstddef>
 #include <type_traits>
@@ -23,7 +23,16 @@ inline constexpr bool is_valid_storage_type_v = is_valid_storage_type<T>::value;
 
 template <typename T>
 concept storage_t = is_valid_storage_type_v<T>;
-} // namespace internal
-} // namespace matrix
 
-#endif
+template <typename M>
+concept MatrixExpr = requires { typename M::matrix_expr_tag; };
+
+// template <MatrixExpr M>
+// struct is_square_matrix :
+
+// template <MatrixExpr M>
+// struct is_complex_matrix : std::false_type {};
+} // namespace internal
+} // namespace Matrix
+
+#endif // GLOBAL_DECLS_HPP

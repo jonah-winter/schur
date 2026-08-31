@@ -1,8 +1,8 @@
-#ifndef SCHUR_GENERIC_DIM_FUNCS
-#define SCHUR_GENERIC_DIM_FUNCS
+#ifndef SCHUR_GENERIC_DIM_FUNCS_HPP
+#define SCHUR_GENERIC_DIM_FUNCS_HPP
 
 #include <cstdint>
-#include <schur/matrix/global_decls.hpp>
+#include <schur/Generic_GlobalDeclarations.hpp>
 
 namespace schur {
 namespace internal {
@@ -17,7 +17,17 @@ constexpr bool valid_dims_(index_t r, index_t c) {
 constexpr bool valid_dim_(index_t dim) {
   return (dim >= 0 && dim <= SIZE_MAX) || dim == Dynamic;
 }
-} // namespace internal
-} // namespace matrix
 
-#endif // SCHUR_GENERIC_DIM_FUNCS
+constexpr auto construct_rows(index_t rows, size_t r)
+{
+  return ((rows == -1) ? r : rows);
+}
+
+constexpr auto construct_cols(index_t cols, size_t c)
+{
+  return ((cols == -1) ? c : cols);
+}
+} // namespace internal
+} // namespace Matrix
+
+#endif // SCHUR_GENERIC_DIM_FUNCS_HPP

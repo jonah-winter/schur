@@ -233,6 +233,6 @@ public:
   // throw std::out_of_range("index is out of bounds");
 };
 } // namespace internal
-} // namespace matrix
+} // namespace Matrix
 
 #endif // STORAGE_H_

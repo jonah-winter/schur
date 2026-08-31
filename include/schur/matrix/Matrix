@@ -1,0 +1,11 @@
+#ifndef MATRIX_INCL
+#define MATRIX_INCL
+
+#include <schur/Generic_GlobalDeclarations.hpp>
+#include <schur/dimensions/Dimensions_Include.hpp>
+#include <schur/storage/Storage_Include.hpp>
+#include <schur/matrix/Matrix_BaseClass.hpp>
+#include <schur/matrix/Matrix_BaseConstructors.hpp>
+#include <schur/matrix/Matrix_BaseFuncs.hpp>
+
+#endif // MATRIX_INCL

@@ -1,10 +1,9 @@
-#ifndef SCHUR_STORAGE_CONSTRUCTORS_IMPL
-#define SCHUR_STORAGE_CONSTRUCTORS_IMPL
+#ifndef SCHUR_STORAGE_CONSTRUCTORS_IMPL_CPP
+#define SCHUR_STORAGE_CONSTRUCTORS_IMPL_CPP
 
 #include <stdexcept>
-#include <iostream>
-#include <schur/matrix/global_decls.hpp>
-#include <schur/storage/storage_decl_internal.hpp>
+#include <schur/Generic_GlobalDeclarations.hpp>
+#include <schur/storage/Storage_DeclarationInternal.hpp>
 
 namespace schur {
 namespace internal {
@@ -127,6 +126,6 @@ Storage<T>::~Storage() {
   capacity_ = 1;
 }
 } // namespace internal
-} // namespace matrix
+} // namespace Matrix
 
-#endif // SCHUR_STORAGE_CONSTRUCTORS_IMPL
+#endif // SCHUR_STORAGE_CONSTRUCTORS_IMPL_CPP

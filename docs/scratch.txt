@@ -1,0 +1,8 @@
+notes:
+
+internals executable is unimplemented, still there but commented out because include files are
+messed up from renames
+
+work on changing cpp to hpp if applicable
+
+make matrix base funcs file and include base funcs at the bottom of matrix base class

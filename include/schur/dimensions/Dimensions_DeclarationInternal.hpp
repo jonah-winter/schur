@@ -1,10 +1,10 @@
-#ifndef DIMENSIONS_DECL_INTERNAL
-#define DIMENSIONS_DECL_INTERNAL
+#ifndef DIMENSIONS_DECL_INTERNAL_HPP
+#define DIMENSIONS_DECL_INTERNAL_HPP
 
 #include <stdexcept>
 
-#include <schur/dimensions/generic_dim_funcs.hpp>
-#include <schur/matrix/global_decls.hpp>
+#include <schur/dimensions/Generic_DimFuncs.hpp>
+#include <schur/Generic_GlobalDeclarations.hpp>
 
 namespace schur {
 namespace internal {
@@ -12,9 +12,13 @@ namespace internal {
 template <index_t Rows, index_t Cols>
   requires(valid_dims_(Rows, Cols))
 struct Dimensions {
+  static constexpr bool has_fixed_rows = true;
+
+  static constexpr bool has_fixed_cols = true;
 
   // CONSTRUCTORS //
   Dimensions() = default;
+  Dimensions(size_t rows, size_t cols) {}
 
   // FUNCTIONS //
 
@@ -28,6 +32,10 @@ struct Dimensions {
 template <>
 struct Dimensions<Dynamic, Dynamic> {
   // STRUCT VARIABLES //
+  static constexpr bool has_fixed_rows = false;
+
+  static constexpr bool has_fixed_cols = false;
+
   index_t rows_;
   index_t cols_;
 
@@ -37,12 +45,16 @@ struct Dimensions<Dynamic, Dynamic> {
     if (cols < 0) throw std::invalid_argument("cannot have 0 cols");
   }
 
-  Dimensions() : rows_{1}, cols_{1} {}
+  Dimensions() : rows_{0}, cols_{0} {}
 
   // FUNCTIONS //
-  [[nodiscard]] index_t rows() const { return rows_; }
+  [[nodiscard]] auto rows(this auto&& self) { return self.rows_; }
 
-  [[nodiscard]] index_t cols() const { return cols_; }
+  [[nodiscard]] auto cols(this auto&& self) { return self.cols_; }
+
+private:
+  [[nodiscard]] auto& row_ref(this auto&& self) { return self.rows_; }
+  [[nodiscard]] auto& col_ref(this auto&& self) { return self.cols_; }
 
   bool valid_dims_overflow() const;
 };
@@ -51,6 +63,10 @@ template <index_t Rows>
   requires(valid_dim_(Rows))
 struct Dimensions<Rows, Dynamic> {
   // STRUCT VARIABLES //
+  static constexpr bool has_fixed_rows = true;
+
+  static constexpr bool has_fixed_cols = false;
+
   index_t cols_;
 
   // CONSTRUCTORS //
@@ -59,12 +75,18 @@ struct Dimensions<Rows, Dynamic> {
   explicit Dimensions(index_t cols) : cols_{cols} {
     if (cols < 0) throw std::invalid_argument("cannot have 0 columns");
   }
-  
+
+  Dimensions(index_t rows, index_t cols) : cols_{cols} {
+    if (cols < 0) throw std::invalid_argument("cannot have 0 cols");
+  }
 
   // FUNCTIONS //
   [[nodiscard]] static constexpr index_t rows() { return Rows; }
 
-  [[nodiscard]] index_t cols() const { return cols_; }
+  [[nodiscard]] auto& cols(this auto&& self) { return self.cols_; }
+
+  // this is for Matrix initialization
+  [[nodiscard]] static size_t size(size_t dim) { return Rows * dim; }
 
   bool valid_dims_overflow() const;
 };
@@ -73,6 +95,10 @@ template <index_t Cols>
   requires(valid_dim_(Cols))
 struct Dimensions<Dynamic, Cols> {
   // STRUCT VARIABLES //
+  static constexpr bool has_fixed_rows = false;
+
+  static constexpr bool has_fixed_cols = true;
+
   index_t rows_;
 
   // CONSTRUCTORS //
@@ -82,13 +108,20 @@ struct Dimensions<Dynamic, Cols> {
     if (rows < 0) throw std::invalid_argument("cannot have 0 rows");
   }
 
+  Dimensions(index_t rows, index_t cols) : rows_{rows} {
+    if (rows < 0) throw std::invalid_argument("cannot have 0 rows");
+  }
+
   // FUNCTIONS //
-  [[nodiscard]] index_t rows() const { return rows_; }
+  [[nodiscard]] auto& rows(this auto&& self) { return self.rows_; }
 
   [[nodiscard]] static constexpr index_t cols() { return Cols; }
+
+  // this is for Matrix initialization
+  [[nodiscard]] static size_t size(size_t dim) { return dim * Cols; }
 
   bool valid_dims_overflow() const;
 };
 } // namespace internal
-} // namespace matrix
-#endif // DIMENSIONS_DECL_INTERNAL
+} // namespace Matrix
+#endif // DIMENSIONS_DECL_INTERNAL_HPP
