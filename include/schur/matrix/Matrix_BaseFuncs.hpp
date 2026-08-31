@@ -35,13 +35,13 @@ cols(this auto&& self)
 
 template <typename T, index_t Rows, index_t Cols, Layout L>
 auto& MatrixBase<T, Rows, Cols, L>::
-operator[](this auto&& self, size_t i) {
+operator()(this auto&& self, size_t i) {
   return self.storage[i];
 }
 
 template <typename T, index_t Rows, index_t Cols, Layout L>
 auto& MatrixBase<T, Rows, Cols, L>::
-operator[](this auto&& self, size_t r, size_t c) {
+operator()(this auto&& self, size_t r, size_t c) {
   if constexpr (L == Layout::ColMajor) {
     return self.storage[c * self.rows() + r];
   } else {

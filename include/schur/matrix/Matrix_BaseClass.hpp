@@ -44,9 +44,9 @@ struct MatrixBase
   [[nodiscard]] auto rows(this auto&& self);
   [[nodiscard]] auto cols(this auto&& self);
 
-  [[nodiscard]] auto& operator[](this auto&& self, size_t r, size_t c);
+  [[nodiscard]] auto& operator()(this auto&& self, size_t r, size_t c);
 private:
-  [[nodiscard]] auto& operator[](this auto&& self, size_t i);
+  [[nodiscard]] auto& operator()(this auto&& self, size_t i);
   [[nodiscard]] auto& row_ref(this auto&& self);
   [[nodiscard]] auto& col_ref(this auto&& self);
 }; // end of matrix struct

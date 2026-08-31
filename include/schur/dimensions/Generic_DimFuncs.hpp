@@ -14,6 +14,24 @@ constexpr bool valid_dims_(index_t r, index_t c) {
   return false;
 }
 
+template <typename Container>
+index_t validate_list_cols(Container& list)
+{
+  if (list.size()) {
+    return list.begin()->size();
+  }
+  return 0;
+}
+
+template <typename T>
+index_t validate_list_cols(std::initializer_list<std::initializer_list<T>> list)
+{
+  if (list.size()) {
+    return list.begin()->size();
+  }
+  return 0;
+}
+
 constexpr bool valid_dim_(index_t dim) {
   return (dim >= 0 && dim <= SIZE_MAX) || dim == Dynamic;
 }

@@ -13,7 +13,12 @@ namespace schur {
 namespace internal {
 template <storage_t T>
 size_t Storage<T>::grow_cap(size_t s) const {
-  if (capacity_ > s) return capacity_;
+  if (capacity_ > SIZE_MAX / 2) {
+    return s;
+  }
+  if (capacity_ >= s) {
+    return capacity_;
+  }
   return std::max(capacity_ * 2, std::bit_ceil(s));
 }
 
@@ -29,7 +34,7 @@ template <storage_t T>
 void Storage<T>::init(size_t start, size_t end)
 {
   if (end > size_ || start > size_) throw std::out_of_range("out of bounds access");
-  for (size_t i{0}; i < size_; i++) {
+  for (size_t i{start}; i < end; i++) {
     objects_.construct(alloc_, data_ + i, static_cast<T>(0));
   }
 }
@@ -46,7 +51,7 @@ template <storage_t T>
 void Storage<T>::init(size_t start, size_t end, T val)
 {
   if (end > size_ || start > size_) throw std::out_of_range("out of bounds access");
-  for (size_t i{0}; i < size_; i++) {
+  for (size_t i{start}; i < end; i++) {
     objects_.construct(alloc_, data_ + i, val);
   }
 }

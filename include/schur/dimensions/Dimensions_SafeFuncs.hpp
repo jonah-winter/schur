@@ -30,27 +30,28 @@ constexpr internal::ValidDimStates_ valid_dims_specific(index_t r, index_t c) {
 template <index_t Rows, index_t Cols>
   requires(internal::valid_dims_(Rows, Cols))
 bool internal::Dimensions<Rows, Cols>::valid_dims_overflow() const {
-  if (SIZE_MAX / Rows > Cols) return true;
+  if (Rows == 0 || Cols <= SIZE_MAX / Rows) return true;
   return false;
 }
 
 template <index_t Rows>
   requires(internal::valid_dim_(Rows))
 bool internal::Dimensions<Rows, Dynamic>::valid_dims_overflow() const {
-  if (SIZE_MAX / Rows > cols_) return true;
+  if (Rows == 0 || cols_ <= SIZE_MAX / Rows) return true;
   return false;
 }
 
 template <index_t Cols>
   requires(internal::valid_dim_(Cols))
 bool internal::Dimensions<Dynamic, Cols>::valid_dims_overflow() const {
-  if (SIZE_MAX / rows_ > Cols) return true;
+  if (rows_ == 0 || Cols <= SIZE_MAX / rows_) return true;
   return false;
 }
 
 inline size_t calculate_dims_(index_t r, index_t c) {
-  if (!internal::valid_dims_(r, c))
+  if (!internal::valid_dims_(r, c)) {
     throw std::logic_error("invalid rows and cols, either less than 0 or overflow");
+  }
   return r * c;
 }
 } // namespace schur
