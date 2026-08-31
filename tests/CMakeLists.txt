@@ -12,6 +12,7 @@
 #        ../include/schur/matrix/matrix_base_funcs.cpp
 #        ../include/schur/matrix/Matrix_BaseConstructors.hpp)
 add_executable(mat matrix_base_test.cpp
+        ../include/schur/matrix/Matrix_MainClass.hpp
 )
 
 target_include_directories(mat PRIVATE

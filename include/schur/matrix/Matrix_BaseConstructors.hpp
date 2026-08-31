@@ -21,8 +21,8 @@ MatrixBase<T, Rows, Cols, L>
 
   for (size_t i{0}; i < r; i++) {
     for (size_t z{0}; z < c; z++) {
-      if (list.begin()[i].size() != dims.rows()) throw std::logic_error("varying column sizes");
-      (*this)(i, z) = (list.begin()[i].begin()[z]);
+      if (list.begin()[i].size() != dims.cols()) throw std::logic_error("varying column sizes");
+      (*this)[i, z] = list.begin()[i].begin()[z];
     }
   }
 }
@@ -41,7 +41,7 @@ MatrixBase<T, Rows, Cols, L>
   for (size_t i{0}; i < r; i++) {
     for (size_t z{0}; z < c; z++) {
       if (list[i].size() != dims.cols()) throw std::logic_error("varying or incorrect column sizes");
-      (*this)(i, z) = list[i][z];
+      (*this)[i, z] = list[i][z];
     }
   }
 }
@@ -56,10 +56,10 @@ MatrixBase<T, Rows, Cols, L>
   if constexpr (has_fixed_cols) static_assert(Cols == arrCols);
 
   if (list.size() != dims.rows()) throw std::logic_error("wrong amount of rows");
-  if (list[0].size() != dims.cols()) throw std::logic_error("wrong amoune or varying cols");
+  if (validate_list_cols(list) != dims.cols()) throw std::logic_error("wrong amount or varying cols");
   for (size_t i{0}; i < arrRows; i++) {
     for (size_t z{0}; z < arrCols; z++) {
-      (*this)(i, z) = list[i][z];
+      (*this)[i, z] = list[i][z];
     }
   }
 }

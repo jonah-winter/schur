@@ -6,8 +6,8 @@ int main(int argc, char* argv[])
 {
   using namespace schur::internal;
   MatrixBase<float, 2, 2> a = {{1, 2}, {3, 4}};
-  a(0, 0) = 5;
-  std::cout << a(0, 0) << '\n';
+  a[0, 0] = 5;
+  std::cout << a[0, 0] << '\n';
   MatrixBase<float, 2, ::schur::Dynamic> b(3);
   std::cout << b.cols() << '\n';
   MatrixBase<float, ::schur::Dynamic, 2> c(20000);
