@@ -5,7 +5,10 @@
 #include <schur/dimensions/Dimensions_Include.hpp>
 #include <schur/storage/Storage_Include.hpp>
 #include <schur/matrix/Matrix_BaseClass.hpp>
-#include <schur/matrix/Matrix_BaseConstructors.hpp>
 #include <schur/matrix/Matrix_BaseFuncs.hpp>
+#include <schur/matrix/Matrix_MainClass.hpp>
+#include <schur/matrix/Matrix_MainConstructors.hpp>
+#include <schur/matrix/Matrix_MainFuncs.hpp>
+#include <schur/matrix/Matrix_Block.hpp>
 
 #endif // MATRIX_INCL

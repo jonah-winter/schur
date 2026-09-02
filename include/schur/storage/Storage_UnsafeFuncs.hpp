@@ -7,7 +7,7 @@
 namespace schur {
 namespace internal {
 template <storage_t T>
-auto& Storage<T>::operator[](this auto&& self, size_t i) {
+auto& Storage<T>::operator[](this auto&& self, index_t i) {
   return self.data_[i];
 }
 

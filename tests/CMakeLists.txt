@@ -10,9 +10,11 @@
 #        ../include/schur/matrix/matrix_base_class.hpp
 #        ../include/schur/matrix/matrix_constants.hpp
 #        ../include/schur/matrix/matrix_base_funcs.cpp
-#        ../include/schur/matrix/Matrix_BaseConstructors.hpp)
+#        ../include/schur/matrix/Matrix_MainConstructors.hpp)
 add_executable(mat matrix_base_test.cpp
         ../include/schur/matrix/Matrix_MainClass.hpp
+        ../include/schur/matrix/Matrix_MainFuncs.hpp
+        ../include/schur/matrix/Matrix_Block.hpp
 )
 
 target_include_directories(mat PRIVATE
@@ -24,7 +26,7 @@ target_sources(mat PRIVATE
         ${CMAKE_SOURCE_DIR}/include/schur/storage/Storage_ConstructorsImpl.hpp
         ${CMAKE_SOURCE_DIR}/include/schur/storage/Storage_SafeFuncs.hpp
         ${CMAKE_SOURCE_DIR}/include/schur/storage/Storage_UnsafeFuncs.hpp
-        ${CMAKE_SOURCE_DIR}/include/schur/matrix/Matrix_BaseConstructors.hpp
+        ${CMAKE_SOURCE_DIR}/include/schur/matrix/Matrix_MainConstructors.hpp
         )
 #find_package(GTest)
 

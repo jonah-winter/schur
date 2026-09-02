@@ -2,6 +2,7 @@
 #define SCHUR_STORAGE_DECL_INTERNAL_HPP
 
 #include <memory>
+#include <schur/Generic_GlobalDeclarations.hpp>
 
 namespace schur {
 namespace internal {
@@ -31,18 +32,17 @@ public:
   // FUNCTIONS //
 
   // UNSAFE -- fast
-  auto& operator[](this auto&& self, size_t i);
+  auto& operator[](this auto&& self, index_t i);
 
   // SAFE -- slow?
   /* not really slow but just slower than the fast ones
    * also some of them are inherently safe and theres not
    * really a point for an unsafe version */
 
-  auto& at(this auto&& self, size_t i);
+  auto& at(this auto&& self, index_t i);
   auto& data(this auto&& self);
   void resize(size_t s);
   void reserve(size_t s);
-  // function for growing capacity internally, should not be used externally
 private:
   void reserve_copy(size_t s);
   void reserve_move(size_t s);
@@ -50,9 +50,9 @@ private:
   void delete_data();
 public:
   void init();
-  void init(size_t start, size_t end);
+  void init(index_t start, index_t end);
   void init(T val);
-  void init(size_t start, size_t end, T val);
+  void init(index_t start, index_t end, T val);
   size_t size() const;
   size_t capacity() const;
 };

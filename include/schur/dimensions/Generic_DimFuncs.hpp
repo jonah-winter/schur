@@ -2,6 +2,7 @@
 #define SCHUR_GENERIC_DIM_FUNCS_HPP
 
 #include <cstdint>
+#include <initializer_list>
 #include <schur/Generic_GlobalDeclarations.hpp>
 
 namespace schur {

@@ -31,10 +31,12 @@ void Storage<T>::init()
 }
 
 template <storage_t T>
-void Storage<T>::init(size_t start, size_t end)
+void Storage<T>::init(index_t start, index_t end)
 {
   if (end > size_ || start > size_) throw std::out_of_range("out of bounds access");
-  for (size_t i{start}; i < end; i++) {
+  if (start < 0 || end < 0) throw std::out_of_range("out of bounds access");
+  // TODO: negative index access, instance here
+  for (index_t i{start}; i < end; i++) {
     objects_.construct(alloc_, data_ + i, static_cast<T>(0));
   }
 }
@@ -48,16 +50,20 @@ void Storage<T>::init(T val)
 }
 
 template <storage_t T>
-void Storage<T>::init(size_t start, size_t end, T val)
+void Storage<T>::init(index_t start, index_t end, T val)
 {
   if (end > size_ || start > size_) throw std::out_of_range("out of bounds access");
-  for (size_t i{start}; i < end; i++) {
+  if (start < 0 || end < 0) throw std::out_of_range("out of bounds access");
+  // TODO: negative index access, instance here
+  for (index_t i{start}; i < end; i++) {
     objects_.construct(alloc_, data_ + i, val);
   }
 }
 
 template <storage_t T>
-auto& Storage<T>::at(this auto&& self, size_t i) {
+auto& Storage<T>::at(this auto&& self, index_t i) {
+  if (i < 0) throw std::out_of_range("out of bounds access");
+  // TODO: negative index access, instance here
   if (i < self.size_) return self.data_[i];
   throw std::out_of_range("out of bounds index access");
 }
