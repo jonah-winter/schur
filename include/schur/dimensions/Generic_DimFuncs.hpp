@@ -3,7 +3,7 @@
 
 #include <cstdint>
 #include <initializer_list>
-#include <schur/Generic_GlobalDeclarations.hpp>
+#include <schur/core/Types.hpp>
 
 namespace schur {
 namespace internal {

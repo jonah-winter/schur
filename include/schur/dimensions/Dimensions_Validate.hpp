@@ -3,10 +3,6 @@
 
 #include <tuple>
 
-#include <schur/dimensions/Dimensions_DeclarationInternal.hpp>
-#include <schur/dimensions/Generic_DimFuncs.hpp>
-#include <schur/Generic_GlobalDeclarations.hpp>
-
 namespace schur {
 namespace internal {
 enum class ValidDimStates_ {

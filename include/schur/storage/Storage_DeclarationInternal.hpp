@@ -2,7 +2,7 @@
 #define SCHUR_STORAGE_DECL_INTERNAL_HPP
 
 #include <memory>
-#include <schur/Generic_GlobalDeclarations.hpp>
+#include <schur/core/Concepts.hpp>
 
 namespace schur {
 namespace internal {

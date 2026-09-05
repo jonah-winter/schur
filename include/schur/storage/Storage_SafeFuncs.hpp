@@ -6,7 +6,7 @@
 #include <stdexcept>
 #include <type_traits>
 
-#include <schur/Generic_GlobalDeclarations.hpp>
+#include <schur/core/Concepts.hpp>
 #include <schur/storage/Storage_DeclarationInternal.hpp>
 
 namespace schur {

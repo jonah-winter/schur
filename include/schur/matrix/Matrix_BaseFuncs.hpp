@@ -31,39 +31,41 @@ cols(this auto&& self)
   return self.dims.cols();
 }
 
-template <typename Derived, typename T, index_t Rows, index_t Cols, Layout L>
-constexpr T& MatrixBase<Derived, T, Rows, Cols, L>::
- operator[](this auto&& self, index_t i) {
-  return self.begin()[i];
-}
 
 template <typename Derived, typename T, index_t Rows, index_t Cols, Layout L>
-constexpr auto& MatrixBase<Derived, T, Rows, Cols, L>::
-operator[](this auto&& self, index_t r, index_t c) {
-  if constexpr (L == Layout::ColMajor) {
-    return self.begin()[c * self.rows() + r];
-  } else {
-    return self.begin()[r * self.cols() + c];
-  }
-}
-
-template <typename Derived, typename T, index_t Rows, index_t Cols, Layout L>
-size_t MatrixBase<Derived, T, Rows, Cols, L>::size(this auto&& self)
+[[nodiscard]] size_t MatrixBase<Derived, T, Rows, Cols, L>::size(this auto&& self)
 {
   return self.dims.rows() * self.dims.cols();
 }
 
-template<typename Derived, typename T, index_t Rows, index_t Cols, Layout L>
-auto& MatrixBase<Derived, T, Rows, Cols,  L>
-::at(this auto &&self, index_t r, index_t c)
+template <typename Derived, typename T, index_t Rows, index_t Cols, Layout L>
+[[nodiscard]] T* MatrixBase<Derived, T, Rows, Cols, L>::data(this auto&& self)
 {
-  if (r > self.dims.rows() || r < 0) { throw std::out_of_range("row index is out of bounds"); }
-  if (c > self.dims.cols() || r < 0) { throw std::out_of_range("col index is out of bounds"); }
-  if constexpr (L == Layout::ColMajor) {
-    return self.storage.at(c * self.dims.rows() + r);
-  } else {
-    return self.storage.at(r * self.dims.cols() + c);
-  }
+  return self.storage.data();
+}
+
+template <typename Derived, typename T, index_t Rows, index_t Cols, Layout L>
+void MatrixBase<Derived, T, Rows, Cols, L>::init(this auto&& self)
+{
+  self.storage.init();
+}
+
+template <typename Derived, typename T, index_t Rows, index_t Cols, Layout L>
+void MatrixBase<Derived, T, Rows, Cols, L>::init(this auto&& self, index_t start, index_t end)
+{
+  self.storage.init(start, end);
+}
+
+template <typename Derived, typename T, index_t Rows, index_t Cols, Layout L>
+void MatrixBase<Derived, T, Rows, Cols, L>::init(this auto&& self, T val)
+{
+  self.storage.init(val);
+}
+
+template <typename Derived, typename T, index_t Rows, index_t Cols, Layout L>
+void MatrixBase<Derived, T, Rows, Cols, L>::init(this auto&& self, index_t start, index_t end, T val)
+{
+  self.storage.init(start, end, val);
 }
 } // namespace internal
 } // namespace schur

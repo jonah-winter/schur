@@ -1,7 +1,6 @@
 #ifndef STORAGE_UNSAFE_FUNCS_CPP
 #define STORAGE_UNSAFE_FUNCS_CPP
 
-#include <schur/Generic_GlobalDeclarations.hpp>
 #include <schur/storage/Storage_DeclarationInternal.hpp>
 
 namespace schur {
@@ -16,7 +15,7 @@ auto& Storage<T>::data(this auto&& self)
 {
   return self.data_;
 }
-} // namespace Matrix
-} // namespace Matrix
+} // namespace internal
+} // namespace schur
 
 #endif // STORAGE_UNSAFE_FUNCS_CPP

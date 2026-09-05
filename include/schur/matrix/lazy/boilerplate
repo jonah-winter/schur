@@ -1,0 +1,6 @@
+using Base = internal::MatrixBase<Matrix, T, Rows, Cols, L>;
+using dims_t = internal::Dimensions<Rows, Cols>;
+using val_t  = T;
+//friend Base;
+
+dims_t and val_t are necessary for concept samedims and others like it

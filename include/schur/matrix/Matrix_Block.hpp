@@ -2,10 +2,10 @@
 #define SCHUR_MATRIX_BLOCK_HPP
 
 #include <schur/matrix/Matrix_BaseClass.hpp>
-#include <schur/matrix/Matrix_MainClass.hpp>
+#include <schur/matrix/lazy/Forward_Lazy.hpp>
 
 namespace schur {
-template <typename T, internal::Layout L>
+template <typename T, Layout L>
 struct BlockView : internal::MatrixBase<BlockView<T, L>, T, -1, -1, L>
 {
   using Base = internal::MatrixBase<BlockView, T, -1, -1, L>;
@@ -29,35 +29,35 @@ public:
   T* data() { return data_; }
 };
 
-template <typename T, internal::Layout L>
+template <typename T, Layout L>
 auto& BlockView<T, L>::operator[](this auto&& self, index_t r, index_t c) {
   return self.data_[r * self.row_stride_ + c * self.col_stride_];
 }
 
-template <typename T, internal::Layout L>
+template <typename T, Layout L>
 auto& BlockView<T, L>::at(this auto&& self, index_t r, index_t c)
 {
   if (r > self.dims.rows() || r < 0) { throw std::out_of_range("row index is out of bounds"); }
   if (c > self.dims.cols() || c < 0) { throw std::out_of_range("col index is out of bounds"); }
 
-  if constexpr (L == internal::Layout::ColMajor) {
+  if constexpr (L == Layout::ColMajor) {
     return self.storage.at(c * self.rows() + r);
   } else {
     return self.storage.at(r * self.cols() + c);
   }
 }
 
-template <typename T, internal::Layout L>
+template <typename T, Layout L>
 auto& BlockView<T, L>::operator[](this auto&& self, index_t i) {
   return self.data_[i];
 }
 
-template <typename T, internal::Layout L>
+template <typename T, Layout L>
 template <index_t Rows, index_t Cols>
 BlockView<T, L>::BlockView(Matrix<T, Rows, Cols, L>* m, size_t start_rows, size_t start_cols, size_t rows, size_t cols)
-  : rows_(rows), cols_(cols), data_()
+  : rows_(rows), cols_(cols), data_(&(*m)[start_rows, start_cols])
 {
-  if constexpr (L == internal::Layout::RowMajor) {
+  if constexpr (L == Layout::RowMajor) {
     row_stride_ = m->cols();
     col_stride_ = 1;
   } else {
