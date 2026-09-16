@@ -6,8 +6,8 @@
 #include <stdexcept>
 #include <type_traits>
 
-#include <schur/core/Concepts.hpp>
-#include <schur/storage/Storage_DeclarationInternal.hpp>
+#include "schur/core/Concepts.hpp"
+#include "schur/storage/Storage_DeclarationInternal.hpp"
 
 namespace schur {
 namespace internal {

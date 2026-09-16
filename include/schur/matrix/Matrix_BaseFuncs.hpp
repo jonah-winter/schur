@@ -1,7 +1,7 @@
 #ifndef MATRIX_BASE_FUNCS_HPP
 #define MATRIX_BASE_FUNCS_HPP
 
-#include <schur/matrix/Matrix_BaseClass.hpp>
+#include "schur/matrix/Matrix_BaseClass.hpp"
 
 namespace schur {
 namespace internal {

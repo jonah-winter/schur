@@ -11,4 +11,14 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
   #set(CMAKE_CXX_INCLUDE_WHAT_YOU_USE "${IWYU_PATH}")
 #endif()
 
+add_library(schur INTERFACE
+        include/schur/matrix/lazy/Matrix_SubtView.hpp
+        include/schur/matrix/lazy/Matrix_Transpose.hpp
+        include/schur/matrix/mult/Matrix_MultMain.hpp)
+
+target_include_directories(schur INTERFACE
+        ${CMAKE_CURRENT_SOURCE_DIR}/include
+        ${CMAKE_SOURCE_DIR}/src
+        ${CMAKE_SOURCE_DIR})
+
 add_subdirectory(tests)

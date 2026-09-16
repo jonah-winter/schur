@@ -30,7 +30,7 @@ static void BM_BLOCK_SM_MATRIX(benchmark::State& state)
   Matrix<float, 4, 4> m;
   m.init();
   timeFunc(state, [&m]() {
-    return m.block(1, 1, 2, 2);
+    return block(m, 1, 1, 2, 2);
   });
 }
 
@@ -40,7 +40,7 @@ static void BM_BLOCK_LG_MATRIX(benchmark::State& state)
   Matrix<float, 1024, 1024> m;
   m.init();
   timeFunc(state, [&m]() {
-    return m.block(1, 1, 2, 2);
+    return block(m, 1, 1, 2, 2);
   });
 }
 } // namespace benchmarking

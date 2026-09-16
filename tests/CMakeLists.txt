@@ -11,9 +11,9 @@
 #        ../include/schur/matrix/matrix_constants.hpp
 #        ../include/schur/matrix/matrix_base_funcs.cpp
 #        ../include/schur/matrix/Matrix_MainConstructors.hpp)
-add_executable(mat matrix_base_test.cpp ../include/schur/matrix/Matrix
-        ../include/schur/matrix/Matrix_Operations.hpp
-        util/Operations_Benchmarking.hpp
+add_executable(mat matrix_base_test.cpp
+        #../include/schur/matrix/Matrix_Operations.hpp
+        #util/Operations_Benchmarking.hpp
         #        ../include/schur/matrix/Matrix_MainClass.hpp
 #        ../include/schur/matrix/Matrix_MainFuncs.hpp
 #        ../include/schur/matrix/Matrix_Block.hpp
@@ -24,8 +24,13 @@ add_executable(mat matrix_base_test.cpp ../include/schur/matrix/Matrix
 #        ../include/schur/core/Forward_Lazy.hpp
 )
 
-target_include_directories(mat PRIVATE
-        ${CMAKE_SOURCE_DIR}/include)
+#target_include_directories(mat PRIVATE
+#        ${CMAKE_SOURCE_DIR}/include
+#        ${CMAKE_SOURCE_DIR}/src
+#        ${CMAKE_SOURCE_DIR})
+
+target_link_libraries(mat schur)
+target_include_directories(mat PRIVATE ${CMAKE_SOURCE_DIR}/include ${CMAKE_SOURCE_DIR}/src)
 
 target_sources(mat PRIVATE
 #        ${CMAKE_SOURCE_DIR}/include/schur/dimensions/Dimensions_Validate.hpp
@@ -39,9 +44,14 @@ find_package(benchmark REQUIRED)
 
 add_executable(bench test_funcs.cpp)
 
-target_link_libraries(bench PRIVATE benchmark::benchmark)
+#target_include_directories(bench PRIVATE
+#        ${CMAKE_SOURCE_DIR}/include
+#        ${CMAKE_SOURCE_DIR})
 
-target_include_directories(bench PRIVATE ${CMAKE_SOURCE_DIR}/tests ${CMAKE_SOURCE_DIR}/include)
+target_link_libraries(bench PRIVATE benchmark::benchmark schur)
+target_include_directories(bench PRIVATE ${CMAKE_SOURCE_DIR}/include ${CMAKE_SOURCE_DIR}/src)
+
+#target_include_directories(bench PRIVATE ${CMAKE_SOURCE_DIR}/tests ${CMAKE_SOURCE_DIR}/include ${CMAKE_SOURCE_DIR}/src)
 
 #target_link_libraries(internals PRIVATE GTest::gtest_main)
 

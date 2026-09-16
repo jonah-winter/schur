@@ -1,8 +1,6 @@
 #ifndef SCHUR_DIM_SAFE_FUNCS_HPP
 #define SCHUR_DIM_SAFE_FUNCS_HPP
 
-#include <tuple>
-
 namespace schur {
 namespace internal {
 enum class ValidDimStates_ {

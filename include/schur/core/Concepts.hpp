@@ -1,8 +1,8 @@
 #ifndef SCHUR_CONCEPTS_HPP
 #define SCHUR_CONCEPTS_HPP
 
-#include <schur/core/Types.hpp>
-#include <schur/core/Traits.hpp>
+#include "schur/core/Types.hpp"
+#include "schur/core/Traits.hpp"
 
 namespace schur {
 namespace internal {
@@ -11,7 +11,7 @@ concept storage_t = is_valid_storage_type_v<T>;
 
 // MatrixExpr is any type derived from MatrixBase, MatrixType is specifically the main matrix type
 template <typename M>
-concept MatrixExpr = requires { typename M::matrix_expr_tag; };
+concept MatrixExpr = requires { typename std::remove_cvref_t<M>::matrix_expr_tag; };
 
 template <typename M>
 concept MatrixType = is_matrix<std::remove_cvref_t<M>>::value;

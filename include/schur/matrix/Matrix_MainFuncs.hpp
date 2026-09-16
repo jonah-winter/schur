@@ -43,15 +43,5 @@ auto& Matrix<T, Rows, Cols, L>::operator[](this auto&& self, index_t r, index_t 
     return self.storage[r * self.dims.cols() + c];
   }
 }
-
-template <typename T, index_t Rows, index_t Cols, Layout L>
-template <index_t R, index_t C>
-requires((R == Rows || R == Dynamic) && (C == Cols || C == Dynamic))
-Matrix<T, Rows, Cols, L> Matrix<T, Rows, Cols, L>::operator=(const Matrix<T, R, C, L>& other)
-{
-  dims = other.dims;
-  storage = other.storage;
-  return *this;
-}
 } // namespace schur
 #endif //SCHUR_MATRIX_MAIN_FUNCS_HPP

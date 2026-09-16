@@ -1,8 +1,8 @@
 #ifndef SCHUR_MATRIX_TO_LAZY_CONSTRUCTORS_HPP
 #define SCHUR_MATRIX_TO_LAZY_CONSTRUCTORS_HPP
 
-#include <schur/core/Concepts.hpp>
-#include <schur/matrix/Matrix_MainClass.hpp>
+#include "schur/core/Concepts.hpp"
+#include "schur/matrix/Matrix_MainClass.hpp"
 
 namespace schur {
 template <typename T, index_t Rows, index_t Cols, Layout L>

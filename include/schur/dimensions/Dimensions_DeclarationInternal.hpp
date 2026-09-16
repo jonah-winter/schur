@@ -3,12 +3,12 @@
 
 #include <stdexcept>
 
-#include <schur/core/Types.hpp>
-#include <schur/dimensions/Generic_DimFuncs.hpp>
+#include "schur/core/Types.hpp"
+#include "schur/dimensions/Generic_DimFuncs.hpp"
 
 namespace schur {
 namespace internal {
-
+// no move constructors because it doesnt own anything that would take a long time to copy
 template <index_t Rows, index_t Cols>
   requires(valid_dims_(Rows, Cols))
 struct Dimensions {
@@ -19,12 +19,13 @@ struct Dimensions {
 
   // CONSTRUCTORS //
   Dimensions() = default;
+  // these two are valid but nothing will happen
   Dimensions(size_t rows, size_t cols) {}
   template <index_t R, index_t C>
-  Dimensions(const Dimensions<R, C>& other);
+  Dimensions(const Dimensions<R, C>& other) {}
 
   template <index_t R, index_t C>
-  Dimensions operator=(const Dimensions<R, C>& other);
+  Dimensions operator=(const Dimensions<R, C>& other) { return *this; }
 
   // FUNCTIONS //
   [[nodiscard]] static constexpr index_t rows() { return Rows; }
@@ -45,9 +46,15 @@ struct Dimensions<Dynamic, Dynamic> {
 
   // CONSTRUCTORS //
   Dimensions(index_t rows, index_t cols) : rows_{rows}, cols_{cols} {
-    if (rows < 0) throw std::invalid_argument("cannot have 0 rows");
-    if (cols < 0) throw std::invalid_argument("cannot have 0 cols");
+    if (rows < 0) throw std::invalid_argument("cannot have less than 0 rows");
+    if (cols < 0) throw std::invalid_argument("cannot have less than 0 cols");
   }
+
+  template <index_t R, index_t C>
+  Dimensions(const Dimensions<R, C>& other);
+
+  template <index_t R, index_t C>
+  Dimensions operator=(const Dimensions<R, C>& other);
 
   Dimensions() : rows_{0}, cols_{0} {}
 
@@ -79,6 +86,12 @@ struct Dimensions<Rows, Dynamic> {
     if (cols < 0) throw std::invalid_argument("cannot have 0 cols");
   }
 
+  template <index_t R, index_t C>
+  Dimensions(const Dimensions<R, C>& other);
+
+  template <index_t R, index_t C>
+  Dimensions operator=(const Dimensions<R, C>& other);
+
   // FUNCTIONS //
   [[nodiscard]] static constexpr index_t rows() { return Rows; }
   [[nodiscard]] auto& cols(this auto&& self) { return self.cols_; }
@@ -108,6 +121,12 @@ struct Dimensions<Dynamic, Cols> {
   Dimensions(index_t rows, index_t cols) : rows_{rows} {
     if (rows < 0) throw std::invalid_argument("cannot have 0 rows");
   }
+
+  template <index_t R, index_t C>
+  Dimensions(const Dimensions<R, C>& other);
+
+  template <index_t R, index_t C>
+  Dimensions operator=(const Dimensions<R, C>& other);
 
   // FUNCTIONS //
   [[nodiscard]] auto& rows(this auto&& self) { return self.rows_; }

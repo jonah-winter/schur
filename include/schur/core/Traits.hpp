@@ -1,7 +1,7 @@
 #ifndef SCHUR_TRAITS_HPP
 #define SCHUR_TRAITS_HPP
 
-#include <schur/core/Types.hpp>
+#include "schur/core/Types.hpp"
 #include <type_traits>
 
 namespace schur {

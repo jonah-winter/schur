@@ -29,7 +29,10 @@ public:
   size_t rows() const { return rows_; }
   size_t cols() const { return cols_; }
   size_t size() const { return rows_ * cols_; }
-  T* data() { return data_; }
+  T* data() noexcept { return data_; }
+  T* begin() noexcept { return data_; }
+  T* end() noexcept { return data_ + size(); }
+
 };
 
 template <typename T, Layout L>

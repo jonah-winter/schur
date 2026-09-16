@@ -60,30 +60,35 @@ Matrix<T, Rows, Cols, L>
   }
 }
 
-// template <typename T, index_t Rows, index_t Cols, Layout L>
-// Matrix<T, Rows, Cols, L>
-// ::Matrix(BlockView<T, L> block)
-//   : dims(block.rows(), block.cols()), storage(block.size())
-// {
-//   size_t r = block.rows();
-//   size_t c = block.cols();
-//   if (has_fixed_rows && Rows != r) { throw std::invalid_argument("wrong amount of rows"); }
-//   if (has_fixed_cols && Cols != c) { throw std::invalid_argument("wrong amount of cols"); }
-//   for (size_t i{0}; i < r; i++) {
-//     for (size_t z{0}; z < c; z++) {
-//       (*this)[i, z] = block[i, z];
-//     }
-//   }
-// }
-
 template <typename T, index_t Rows, index_t Cols, Layout L>
 template <index_t R, index_t C>
 requires((R == Rows || R == Dynamic) && (C == Cols || C == Dynamic))
 Matrix<T, Rows, Cols, L>
 ::Matrix(const Matrix<T, R, C, L>& other)
 {
+  if (R == Dynamic && Rows != Dynamic && other.rows() != Rows) { throw std::logic_error("wrong row size currently"); }
+  if (C == Dynamic && Cols != Dynamic && other.cols() != Cols) { throw std::logic_error("wrong col size currently"); }
   dims = other.dims;
   storage = other.storage;
+}
+
+template <typename T, index_t Rows, index_t Cols, Layout L>
+template <index_t R, index_t C>
+requires((R == Rows || R == Dynamic || Rows == Dynamic) && (C == Cols || C == Dynamic || Cols == Dynamic))
+Matrix<T, Rows, Cols, L>& Matrix<T, Rows, Cols, L>::operator=(const Matrix<T, R, C, L>& other)
+{
+  if (R == Dynamic && Rows != Dynamic && other.rows() != Rows) { throw std::logic_error("wrong row size currently"); }
+  if (C == Dynamic && Cols != Dynamic && other.cols() != Cols) { throw std::logic_error("wrong col size currently"); }
+  dims = other.dims;
+  storage = other.storage;
+  return *this;
+}
+
+template <typename T, index_t Rows, index_t Cols, Layout L>
+Matrix<T, Rows, Cols, L>& Matrix<T, Rows, Cols, L>::operator=(const Matrix<T, Rows, Cols, L>& other)
+{
+  storage = other.storage;
+  return *this;
 }
 
 // template <typename T, index_t Rows, index_t Cols, Layout L>

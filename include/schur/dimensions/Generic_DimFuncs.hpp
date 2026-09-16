@@ -3,7 +3,7 @@
 
 #include <cstdint>
 #include <initializer_list>
-#include <schur/core/Types.hpp>
+#include "schur/core/Types.hpp"
 
 namespace schur {
 namespace internal {
@@ -48,5 +48,4 @@ constexpr auto construct_cols(index_t cols, size_t c)
 }
 } // namespace internal
 } // namespace Matrix
-
 #endif // SCHUR_GENERIC_DIM_FUNCS_HPP

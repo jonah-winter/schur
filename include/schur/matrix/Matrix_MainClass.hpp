@@ -3,9 +3,11 @@
 
 #include <vector>
 
-#include <schur/matrix/lazy/Forward_Lazy.hpp>
-#include <schur/matrix/Matrix_BaseClass.hpp>
-#include <schur/matrix/Matrix_Block.hpp>
+#include "schur/matrix/lazy/Forward_Lazy.hpp"
+#include "schur/matrix/Matrix_BaseClass.hpp"
+#include "lazy/Matrix_Block.hpp"
+#include "schur/matrix/mult/Matrix_MultMain.hpp"
+#include "schur/matrix/misc.hpp"
 
 namespace schur {
 template <typename T, index_t Rows, index_t Cols,
@@ -15,6 +17,7 @@ struct Matrix : public internal::MatrixBase<Matrix<T, Rows, Cols, L>, T, Rows, C
   using Base = internal::MatrixBase<Matrix, T, Rows, Cols, L>;
   using dims_t = internal::Dimensions<Rows, Cols>;
   using val_t  = T;
+
   friend Base;
   template <typename OtherT, index_t OtherRows, index_t OtherCols, Layout OtherL>
   friend struct Matrix;
@@ -35,25 +38,29 @@ public:
   Matrix(std::vector<std::vector<T>> list);
   template <size_t arrRows, size_t arrCols>
   Matrix(std::array<std::array<T, arrCols>, arrRows> arr);
-  //Matrix(BlockView<T, L> block);
-  Matrix(const Matrix&) = default;
+  Matrix(const Matrix& other)
+    : storage{other.storage}, dims{construct_dims_rows_(other), construct_dims_cols_(other)} {}
   Matrix(Matrix&&) noexcept = default;
 
   template <index_t R, index_t C>
   requires((R == Rows || R == Dynamic) && (C == Cols || C == Dynamic))
   Matrix(const Matrix<T, R, C, L>& other);
 
-  Matrix& operator=(const Matrix&) = default;
+  Matrix& operator=(const Matrix<T, Rows, Cols, L>& other);
   Matrix& operator=(Matrix&&) = default;
+
   template <index_t R, index_t C>
-  requires((R == Rows || R == Dynamic) && (C == Cols || C == Dynamic))
-  Matrix<T, Rows, Cols, L> operator=(const Matrix<T, R, C, L>& other);
+  requires((R == Rows || R == Dynamic || Rows == Dynamic) && (C == Cols || C == Dynamic || Cols == Dynamic))
+  Matrix& operator=(const Matrix<T, R, C, L>& other);
+
+  // Lazy constructors
+  Matrix(BlockView<T, L> block);
 
   [[nodiscard]] T* begin() { return storage.data(); }
   [[nodiscard]] T* end()   { return storage.data() + (*this).size(); }
   [[nodiscard]] auto& at(this auto&& self, index_t r, index_t c);
   [[nodiscard]] auto& operator[](this auto&& self, index_t r, index_t c);
-  BlockView<T, L> block(size_t start_rows, size_t start_cols, size_t rows, size_t cols);
+  //BlockView<T, L> block(size_t start_rows, size_t start_cols, size_t rows, size_t cols);
 private:
   auto& operator[](this auto&& self, index_t i);
 };
