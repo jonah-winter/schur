@@ -1,8 +1,8 @@
 #ifndef SCHUR_DIM_DYNAMIC_SAFE_FUNCS_CPP
 #define SCHUR_DIM_DYNAMIC_SAFE_FUNCS_CPP
 
-#include <../include/schur/core/Generic_GlobalDeclarations.hpp>
-#include <schur/dimensions/Dimensions_SafeFuncs.hpp>
+#include "schur/core/Types.hpp"
+#include "schur/dimensions/Dimensions_DeclarationInternal.hpp"
 
 namespace schur {
 namespace internal {

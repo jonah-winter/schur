@@ -1,15 +1,18 @@
 #ifndef SCHUR_MATRIX_BLOCK_HPP
 #define SCHUR_MATRIX_BLOCK_HPP
 
-#include <schur/matrix/Matrix_BaseClass.hpp>
-#include <schur/matrix/lazy/Forward_Lazy.hpp>
+#include "schur/matrix/Matrix_BaseClass.hpp"
+#include "schur/matrix/lazy/Forward_Lazy.hpp"
 
 namespace schur {
 template <typename T, Layout L>
-struct BlockView : internal::MatrixBase<BlockView<T, L>, T, -1, -1, L>
+struct BlockView : internal::MatrixBase<BlockView<T, L>, T, Dynamic, Dynamic, L>
 {
-  using Base = internal::MatrixBase<BlockView, T, -1, -1, L>;
+  using Base = internal::MatrixBase<BlockView, T, Dynamic, Dynamic, L>;
   using matrix_expr_tag = Base::matrix_expr_tag;
+  using val_t = T;
+  // static constexpr size_t Rows = Dynamic;
+  // static constexpr size_t Cols = Dynamic;
 private:
   size_t rows_;
   size_t cols_;
@@ -19,8 +22,8 @@ private:
 
   auto& operator[](this auto&& self, index_t i);
 public:
-  template <index_t Rows, index_t Cols>
-  BlockView(Matrix<T, Rows, Cols, L>* m, size_t start_rows, size_t start_cols, size_t rows, size_t cols);
+  template <typename Derived>
+  BlockView(Derived* m, size_t start_rows, size_t start_cols, size_t rows, size_t cols);
   auto& operator[](this auto&& self, index_t r, index_t c);
   auto& at(this auto&& self, index_t r, index_t c);
   size_t rows() const { return rows_; }
@@ -53,20 +56,20 @@ auto& BlockView<T, L>::operator[](this auto&& self, index_t i) {
 }
 
 template <typename T, Layout L>
-template <index_t Rows, index_t Cols>
-BlockView<T, L>::BlockView(Matrix<T, Rows, Cols, L>* m, size_t start_rows, size_t start_cols, size_t rows, size_t cols)
+template <typename Derived>
+BlockView<T, L>::BlockView(Derived* m, size_t start_rows, size_t start_cols, size_t rows, size_t cols)
   : rows_(rows), cols_(cols), data_(&(*m)[start_rows, start_cols])
 {
-  if constexpr (L == Layout::RowMajor) {
-    row_stride_ = m->cols();
-    col_stride_ = 1;
-  } else {
+  if constexpr (L == Layout::ColMajor) {
     row_stride_ = 1;
     col_stride_ = m->rows();
+  } else {
+    row_stride_ = m->cols();
+    col_stride_ = 1;
   }
 
-  if (start_rows + rows > Rows) throw std::out_of_range("rows are out of bounds");
-  if (start_cols + cols > Cols) throw std::out_of_range("Cols are out of bounds");
+  if (start_rows + rows > m->rows()) throw std::out_of_range("Rows are out of bounds");
+  if (start_cols + cols > m->cols()) throw std::out_of_range("Cols are out of bounds");
 }
 } // namespace schur
 #endif //SCHUR_MATRIX_BLOCK_HPP

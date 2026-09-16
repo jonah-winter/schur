@@ -1,0 +1,8 @@
+//
+// Created by Jonah Winter on 9/11/26.
+//
+
+#ifndef SCHUR_MATRIX_TRANSPOSE_HPP
+#define SCHUR_MATRIX_TRANSPOSE_HPP
+
+#endif //SCHUR_MATRIX_TRANSPOSE_HPP
