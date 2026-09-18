@@ -24,7 +24,8 @@ template <MatrixExpr D>
 struct Transposed;
 
 template <MatrixExpr L, MatrixExpr R>
-requires(SameDims<std::remove_cvref_t<L>, std::remove_cvref_t<R>>
+requires((get_cols<L> == Dynamic || get_cols<L> == get_rows<R>)
+      && (get_rows<R> == Dynamic || get_cols<L> == get_rows<R>)
       && std::same_as<typename std::remove_cvref_t<L>::val_t, typename std::remove_cvref_t<R>::val_t>)
 struct Mult;
 } // namespace internal

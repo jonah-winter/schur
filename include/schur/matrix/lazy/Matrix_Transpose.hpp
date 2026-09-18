@@ -13,13 +13,13 @@ struct Transposed : MatrixBase
   <
   Transposed<D>,
   typename std::remove_cvref_t<D>::val_t,
-  get_rows<D>,
-  get_cols<D>
+  get_cols<D>,
+  get_rows<D>
   >
 {
-  using derived_t  = operand_t<D>;
-  using val_t   = typename std::remove_cvref_t<D>::val_t;
-  using dims_t  = typename std::remove_cvref_t<D>::dims_t;
+  using derived_t = operand_t<D>;
+  using val_t     = typename std::remove_cvref_t<D>::val_t;
+  using dims_t    = typename std::remove_cvref_t<D>::dims_t;
 
   derived_t derived;
 
@@ -31,12 +31,17 @@ struct Transposed : MatrixBase
 
   size_t rows() const
   {
-    return derived.rows();
+    return derived.cols();
   }
 
   size_t cols() const
   {
-    return derived.cols();
+    return derived.rows();
+  }
+
+  size_t size() const
+  {
+    return derived.rows() * derived.cols();
   }
 };
 } // namespace internal

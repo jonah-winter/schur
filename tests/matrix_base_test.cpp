@@ -55,6 +55,10 @@ int main(int argc, char* argv[])
   auto o = n * transpose(n);
   std::cout << o << '\n';
   std::cout << Matrix<float, 2, 2>({{1, 2}, {3, 4}}) * Matrix<float, 2, 2>({{1, 2}, {3, 4}}) << '\n';
-
+  Matrix<float, 3, 2> A = {{1, 2}, {3, 4}, {5, 6}};
+  Matrix<float, 2, 3> B = {{1, 2, 3}, {4, 5, 6}};
+  //auto C = transpose(A) * transpose(B);
+  auto C = A * transpose(B);
+  std::cout << C << '\n';
   return 0;
 }

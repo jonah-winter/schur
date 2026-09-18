@@ -8,14 +8,15 @@
 namespace schur {
 namespace internal {
 template <MatrixExpr L, MatrixExpr R>
-requires(SameDims<std::remove_cvref_t<L>, std::remove_cvref_t<R>>
+requires((get_cols<L> == Dynamic || get_cols<L> == get_rows<R>)
+      && (get_rows<R> == Dynamic || get_cols<L> == get_rows<R>)
       && std::same_as<typename std::remove_cvref_t<L>::val_t, typename std::remove_cvref_t<R>::val_t>)
 struct Mult : MatrixBase
   <
     Mult<L, R>,
     typename std::remove_cvref_t<L>::val_t,
     get_rows<L>,
-    get_cols<L>
+    get_cols<R>
   >
 {
   using left_t  = operand_t<L>;
@@ -44,6 +45,11 @@ struct Mult : MatrixBase
   size_t cols() const
   {
     return left.cols();
+  }
+
+  size_t size() const
+  {
+    return left.rows() * left.cols();
   }
 };
 } // namespace internal

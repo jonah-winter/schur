@@ -41,6 +41,11 @@ struct AddView : MatrixBase
   {
     return left.cols();
   }
+
+  size_t size() const
+  {
+    return left.rows() * left.cols();
+  }
 };
 } // namespace schur
 } // namespace internal

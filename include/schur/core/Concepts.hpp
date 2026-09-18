@@ -3,6 +3,7 @@
 
 #include "schur/core/Types.hpp"
 #include "schur/core/Traits.hpp"
+#include "schur/matrix/lazy/Forward_Lazy.hpp"
 
 namespace schur {
 namespace internal {
