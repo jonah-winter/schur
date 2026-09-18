@@ -3,8 +3,8 @@
 
 #include <type_traits>
 
-#include <schur/core/Concepts.hpp>
-#include <schur/matrix/Matrix_BaseClass.hpp>
+#include "schur/core/Concepts.hpp"
+#include "schur/matrix/Matrix_BaseClass.hpp"
 
 namespace schur {
 namespace internal {
@@ -19,7 +19,7 @@ struct Transposed : MatrixBase
 {
   using derived_t = operand_t<D>;
   using val_t     = typename std::remove_cvref_t<D>::val_t;
-  using dims_t    = typename std::remove_cvref_t<D>::dims_t;
+  using dims_t    = Dimensions<std::remove_cvref_t<D>::dims_t::static_cols, std::remove_cvref_t<D>::dims_t::static_rows>;
 
   derived_t derived;
 

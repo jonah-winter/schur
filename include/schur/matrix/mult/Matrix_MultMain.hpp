@@ -22,7 +22,7 @@ struct Mult : MatrixBase
   using left_t  = operand_t<L>;
   using right_t = operand_t<R>;
   using val_t   = typename std::remove_cvref_t<L>::val_t;
-  using dims_t  = typename std::remove_cvref_t<L>::dims_t;
+  using dims_t  = Dimensions<std::remove_cvref_t<L>::dims_t::static_rows, std::remove_cvref_t<R>::dims_t::static_cols>;
 
   left_t left;
   right_t right;
