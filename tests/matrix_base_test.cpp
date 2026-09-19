@@ -1,7 +1,8 @@
 #include <iostream>
+#include <unordered_map>
 #include <schur/matrix/Matrix>
 
-#define cout(x) std::cout << x
+#define print(x) std::cout << x
 
 int main(int argc, char* argv[])
 {
@@ -9,6 +10,7 @@ int main(int argc, char* argv[])
   Matrix<float, 3, 2> A = {{1, 2}, {3, 4}, {5, 6}};
   Matrix<float, 3, 2> B = A;
   auto C = A * transpose(B);
-  cout(C);
+  print(C.rows() << '\n');
+  print(C.cols());
   return 0;
 }
