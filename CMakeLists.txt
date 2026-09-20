@@ -6,16 +6,7 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON) 
 
-#find_program(IWYU_PATH NAMES include-what-you-use iwyu)
-#if(IWYU_PATH)
-  #set(CMAKE_CXX_INCLUDE_WHAT_YOU_USE "${IWYU_PATH}")
-#endif()
-
-add_library(schur INTERFACE
-        include/schur/matrix/lazy/Matrix_SubtView.hpp
-        include/schur/matrix/lazy/Matrix_Transpose.hpp
-        include/schur/matrix/mult/Matrix_MultMain.hpp
-        include/schur/quaternion/Quaternion.hpp)
+add_library(schur INTERFACE)
 
 target_include_directories(schur INTERFACE
         ${CMAKE_CURRENT_SOURCE_DIR}/include

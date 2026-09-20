@@ -11,6 +11,7 @@
 #include "schur/matrix/lazy/Matrix_AddView.hpp"
 #include "schur/matrix/lazy/Matrix_SubtView.hpp"
 #include "schur/matrix/lazy/Matrix_Transpose.hpp"
+#include "schur/matrix/mult/Matrix_MultMain.hpp"
 #include "schur/matrix/Matrix_Operations.hpp"
 #include "schur/matrix/Matrix_FromLazyConstructors.hpp"
 #include "schur/matrix/misc.hpp"
