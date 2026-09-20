@@ -1,5 +1,5 @@
-#ifndef MATRIX_BASE_CONSTRUCTORS_HPP
-#define MATRIX_BASE_CONSTRUCTORS_HPP
+#ifndef MATRIX_BASE_CONSTRUCTORS_HPP_
+#define MATRIX_BASE_CONSTRUCTORS_HPP_
 
 #include <vector>
 
@@ -109,4 +109,4 @@ Matrix<T, Rows, Cols, L>& Matrix<T, Rows, Cols, L>::operator=(const Matrix<T, Ro
 //   }
 // }
 } // namespace schur
-#endif // MATRIX_BASE_CONSTRUCTORS_HPP
+#endif // MATRIX_BASE_CONSTRUCTORS_HPP_

@@ -1,8 +1,8 @@
-#ifndef SCHUR_DIMENSIONS_CONSTRUCTORS_HPP
-#define SCHUR_DIMENSIONS_CONSTRUCTORS_HPP
+#ifndef SCHUR_DIMENSIONS_CONSTRUCTORS_HPP_
+#define SCHUR_DIMENSIONS_CONSTRUCTORS_HPP_
 
 #include "schur/core/Types.hpp"
-#include "schur/dimensions/Dimensions_DeclarationInternal.hpp"
+#include "schur/matrix/dimensions/Dimensions_DeclarationInternal.hpp"
 
 namespace schur {
 namespace internal {
@@ -52,4 +52,4 @@ Dimensions<Dynamic, Cols> Dimensions<Dynamic, Cols>::operator=(const Dimensions<
 }
 } // namespace schur
 } // namespace internal
-#endif //SCHUR_DIMENSIONS_CONSTRUCTORS_HPP
+#endif //SCHUR_DIMENSIONS_CONSTRUCTORS_HPP_

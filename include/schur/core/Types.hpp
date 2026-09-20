@@ -1,5 +1,5 @@
-#ifndef SCHUR_TYPES_HPP
-#define SCHUR_TYPES_HPP
+#ifndef SCHUR_TYPES_HPP_
+#define SCHUR_TYPES_HPP_
 
 #include <cstddef>
 
@@ -14,4 +14,4 @@ enum class Layout
   RowMajor = 1
 };
 } // namespace schur
-#endif //SCHUR_TYPES_HPP
+#endif //SCHUR_TYPES_HPP_

@@ -1,9 +1,9 @@
-#ifndef SCHUR_STORAGE_CONSTRUCTORS_IMPL_CPP
-#define SCHUR_STORAGE_CONSTRUCTORS_IMPL_CPP
+#ifndef SCHUR_STORAGE_CONSTRUCTORS_IMPL_HPP_
+#define SCHUR_STORAGE_CONSTRUCTORS_IMPL_HPP_
 
 #include <stdexcept>
 #include "schur/core/Concepts.hpp"
-#include "schur/storage/Storage_DeclarationInternal.hpp"
+#include "schur/matrix/storage/Storage_DeclarationInternal.hpp"
 
 namespace schur {
 namespace internal {
@@ -128,4 +128,4 @@ Storage<T>::~Storage() {
 } // namespace internal
 } // namespace Matrix
 
-#endif // SCHUR_STORAGE_CONSTRUCTORS_IMPL_CPP
+#endif // SCHUR_STORAGE_CONSTRUCTORS_IMPL_HPP_

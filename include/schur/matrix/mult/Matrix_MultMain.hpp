@@ -1,5 +1,5 @@
-#ifndef SCHUR_MATRIX_MULT_MAIN_HPP
-#define SCHUR_MATRIX_MULT_MAIN_HPP
+#ifndef SCHUR_MATRIX_MULT_MAIN_HPP_
+#define SCHUR_MATRIX_MULT_MAIN_HPP_
 
 #include <concepts>
 #include "schur/core/Concepts.hpp"
@@ -37,21 +37,21 @@ struct Mult : MatrixBase
     return total;
   }
 
-  size_t rows() const
+  size_t rows()
   {
     return left.rows();
   }
 
-  size_t cols() const
+  size_t cols()
   {
     return left.cols();
   }
 
-  size_t size() const
+  size_t size()
   {
     return left.rows() * left.cols();
   }
 };
 } // namespace internal
 } // namespace schur
-#endif //SCHUR_MATRIX_MULT_MAIN_HPP
+#endif //SCHUR_MATRIX_MULT_MAIN_HPP_

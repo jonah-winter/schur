@@ -14,7 +14,8 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 add_library(schur INTERFACE
         include/schur/matrix/lazy/Matrix_SubtView.hpp
         include/schur/matrix/lazy/Matrix_Transpose.hpp
-        include/schur/matrix/mult/Matrix_MultMain.hpp)
+        include/schur/matrix/mult/Matrix_MultMain.hpp
+        include/schur/quaternion/Quaternion.hpp)
 
 target_include_directories(schur INTERFACE
         ${CMAKE_CURRENT_SOURCE_DIR}/include

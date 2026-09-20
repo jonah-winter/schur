@@ -1,7 +1,7 @@
-#ifndef STORAGE_UNSAFE_FUNCS_CPP
-#define STORAGE_UNSAFE_FUNCS_CPP
+#ifndef STORAGE_UNSAFE_FUNCS_HPP_
+#define STORAGE_UNSAFE_FUNCS_HPP_
 
-#include "schur/storage/Storage_DeclarationInternal.hpp"
+#include "schur/matrix/storage/Storage_DeclarationInternal.hpp"
 
 namespace schur {
 namespace internal {
@@ -18,4 +18,4 @@ auto& Storage<T>::data(this auto&& self)
 } // namespace internal
 } // namespace schur
 
-#endif // STORAGE_UNSAFE_FUNCS_CPP
+#endif // STORAGE_UNSAFE_FUNCS_HPP_

@@ -1,5 +1,5 @@
-#ifndef SCHUR_MISC_HPP
-#define SCHUR_MISC_HPP
+#ifndef SCHUR_MISC_HPP_
+#define SCHUR_MISC_HPP_
 
 #include "schur/core/Types.hpp"
 #include "schur/matrix/Matrix_MainClass.hpp"
@@ -25,8 +25,7 @@ constexpr index_t construct_dims_cols_(const Matrix<T, Rows, Cols, L>& other)
     return Cols;
   }
 }
-template <typename Derived>
-requires(internal::MatrixExpr<Derived>)
+template <internal::MatrixExpr Derived>
 std::ostream& operator<<(std::ostream& os, const Derived& m)
 {
   os << "[";
@@ -48,5 +47,29 @@ std::ostream& operator<<(std::ostream& os, const Derived& m)
   os << "]";
   return os;
 }
+
+template <internal::MatrixExpr Derived>
+requires(internal::QuaternionType<typename Derived::val_t>)
+std::ostream& operator<<(std::ostream& os, const Derived& m)
+{
+  os << "[";
+  for (size_t idx{0}; idx < m.rows(); idx++) {
+    os << "[";
+    for (size_t idx2{0}; idx2 < m.cols(); idx2++) {
+      os << '(' << m[idx, idx2] << ')';
+      if (idx2 + 1 < m.cols()) {
+        os << ", ";
+      } else {
+        if (idx + 1 < m.rows()) {
+          os << "], ";
+        } else {
+          os << "]";
+        }
+      }
+    }
+  }
+  os << "]";
+  return os;
+}
 } // namespace schur
-#endif //SCHUR_MISC_HPP
+#endif //SCHUR_MISC_HPP_

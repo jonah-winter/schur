@@ -1,5 +1,5 @@
-#ifndef SCHUR_MATRIX_ADDVIEW_HPP
-#define SCHUR_MATRIX_ADDVIEW_HPP
+#ifndef SCHUR_MATRIX_ADDVIEW_HPP_
+#define SCHUR_MATRIX_ADDVIEW_HPP_
 
 #include "schur/matrix/Matrix_BaseClass.hpp"
 #include "schur/core/Concepts.hpp"
@@ -22,6 +22,7 @@ struct AddView : MatrixBase
   using right_t = operand_t<R>;
   using val_t   = typename std::remove_cvref_t<L>::val_t;
   using dims_t  = typename std::remove_cvref_t<L>::dims_t;
+  static constexpr bool test = true;
 
   left_t left;
   right_t right;
@@ -32,12 +33,12 @@ struct AddView : MatrixBase
     return self.left[r, c] + self.right[r, c];
   }
 
-  size_t rows() const
+  size_t rows()
   {
     return left.rows();
   }
 
-  size_t cols() const
+  size_t cols()
   {
     return left.cols();
   }
@@ -49,4 +50,4 @@ struct AddView : MatrixBase
 };
 } // namespace schur
 } // namespace internal
-#endif //SCHUR_MATRIX_ADDVIEW_HPP
+#endif //SCHUR_MATRIX_ADDVIEW_HPP_

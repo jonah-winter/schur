@@ -1,5 +1,5 @@
-#ifndef SCHUR_MATRIX_SUBTVIEW_HPP
-#define SCHUR_MATRIX_SUBTVIEW_HPP
+#ifndef SCHUR_MATRIX_SUBTVIEW_HPP_
+#define SCHUR_MATRIX_SUBTVIEW_HPP_
 
 //#include <type_traits>
 #include <concepts>
@@ -52,4 +52,4 @@ struct SubtView : MatrixBase
 } // namespace internal
 } // namespace schur
 
-#endif //SCHUR_MATRIX_SUBTVIEW_HPP
+#endif //SCHUR_MATRIX_SUBTVIEW_HPP_

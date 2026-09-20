@@ -1,5 +1,5 @@
-#ifndef SCHUR_MATRIX_TO_LAZY_CONSTRUCTORS_HPP
-#define SCHUR_MATRIX_TO_LAZY_CONSTRUCTORS_HPP
+#ifndef SCHUR_MATRIX_TO_LAZY_CONSTRUCTORS_HPP_
+#define SCHUR_MATRIX_TO_LAZY_CONSTRUCTORS_HPP_
 
 #include "schur/core/Concepts.hpp"
 #include "schur/matrix/Matrix_MainClass.hpp"
@@ -21,4 +21,4 @@ Matrix<T, Rows, Cols, L>
   }
 }
 } // namespace schur
-#endif //SCHUR_MATRIX_TO_LAZY_CONSTRUCTORS_HPP
+#endif //SCHUR_MATRIX_TO_LAZY_CONSTRUCTORS_HPP_

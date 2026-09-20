@@ -1,7 +1,8 @@
-#ifndef SCHUR_TRAITS_HPP
-#define SCHUR_TRAITS_HPP
+#ifndef SCHUR_TRAITS_HPP_
+#define SCHUR_TRAITS_HPP_
 
 #include "schur/core/Types.hpp"
+#include "schur/quaternion/Quaternion.hpp"
 #include <type_traits>
 
 namespace schur {
@@ -14,8 +15,21 @@ template <typename T>
 requires(std::is_arithmetic_v<T>)
 struct is_valid_storage_type<T> : std::true_type {};
 
+template <typename Q>
+requires(std::is_arithmetic_v<Q>)
+struct is_valid_storage_type<Quaternion<Q>> : std::true_type {};
+
 template <typename T>
 inline constexpr bool is_valid_storage_type_v = is_valid_storage_type<T>::value;
+
+template <typename Q>
+struct is_quaternion : std::false_type {};
+
+template <typename Q>
+struct is_quaternion<Quaternion<Q>> : std::true_type {};
+
+template <typename Q>
+inline constexpr bool is_quaternion_v = is_quaternion<Q>::value;
 
 // forward declaration for is_matrix
 template <typename T, index_t Rows, index_t Cols, Layout L>
@@ -36,4 +50,4 @@ template <typename M>
 inline constexpr bool is_matrix_v = is_matrix<M>::value;
 }
 } // namespace schur
-#endif //SCHUR_TRAITS_HPP
+#endif //SCHUR_TRAITS_HPP_

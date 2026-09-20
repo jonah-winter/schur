@@ -1,8 +1,8 @@
-#ifndef SCHUR_DIM_DYNAMIC_SAFE_FUNCS_CPP
-#define SCHUR_DIM_DYNAMIC_SAFE_FUNCS_CPP
+#ifndef SCHUR_DIM_DYNAMIC_SAFE_FUNCS_HPP_
+#define SCHUR_DIM_DYNAMIC_SAFE_FUNCS_HPP_
 
 #include "schur/core/Types.hpp"
-#include "schur/dimensions/Dimensions_DeclarationInternal.hpp"
+#include "schur/matrix/dimensions/Dimensions_DeclarationInternal.hpp"
 
 namespace schur {
 namespace internal {
@@ -12,4 +12,4 @@ inline bool Dimensions<Dynamic, Dynamic>::valid_dims_overflow() const {
 }
 } // namespace internal
 } // namespace schur
-#endif //SCHUR_DIM_DYNAMIC_SAFE_FUNCS_CPP
+#endif //SCHUR_DIM_DYNAMIC_SAFE_FUNCS_HPP_

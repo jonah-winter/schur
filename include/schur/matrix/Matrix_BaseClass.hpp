@@ -1,14 +1,16 @@
-#ifndef SCHUR_MATRIX_BASE_CLASS_HPP
-#define SCHUR_MATRIX_BASE_CLASS_HPP
+#ifndef SCHUR_MATRIX_BASE_CLASS_HPP_
+#define SCHUR_MATRIX_BASE_CLASS_HPP_
+
+#include "schur/core/Types.hpp"
 
 namespace schur {
 namespace internal {
 struct MatrixExprTag {};
-
-template <typename Derived, typename T, index_t Rows, index_t Cols, Layout L = Layout::ColMajor>
+template <typename _Derived, typename T, index_t Rows, index_t Cols, Layout L = Layout::ColMajor>
 struct MatrixBase
 {
   using matrix_expr_tag = MatrixExprTag;
+  using Derived = _Derived;
   //using this_t = std::remove_cvref_t<decltype(*this)>;
 
   // [[nodiscard]] Derived& derived();
@@ -28,4 +30,4 @@ protected:
 }; // end of matrix struct
 } // namespace internal
 } // namespace schur
-#endif //SCHUR_MATRIX_BASE_CLASS_HPP
+#endif //SCHUR_MATRIX_BASE_CLASS_HPP_

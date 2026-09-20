@@ -1,5 +1,5 @@
-#ifndef SCHUR_MATRIX_BLOCK_HPP
-#define SCHUR_MATRIX_BLOCK_HPP
+#ifndef SCHUR_MATRIX_BLOCK_HPP_
+#define SCHUR_MATRIX_BLOCK_HPP_
 
 #include "schur/matrix/Matrix_BaseClass.hpp"
 #include "schur/matrix/lazy/Forward_Lazy.hpp"
@@ -75,4 +75,4 @@ BlockView<T, L>::BlockView(Derived* m, size_t start_rows, size_t start_cols, siz
   if (start_cols + cols > m->cols()) throw std::out_of_range("Cols are out of bounds");
 }
 } // namespace schur
-#endif //SCHUR_MATRIX_BLOCK_HPP
+#endif //SCHUR_MATRIX_BLOCK_HPP_

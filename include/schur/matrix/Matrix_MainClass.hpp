@@ -1,12 +1,14 @@
-#ifndef SCHUR_MATRIX_MAIN_CLASS_HPP
-#define SCHUR_MATRIX_MAIN_CLASS_HPP
+#ifndef SCHUR_MATRIX_MAIN_CLASS_HPP_
+#define SCHUR_MATRIX_MAIN_CLASS_HPP_
 
 #include <vector>
 
 #include "schur/matrix/lazy/Forward_Lazy.hpp"
+// #include "schur/matrix/dimensions/Dimensions_Include.hpp"
+// #include "schur/matrix/storage/Storage_Include.hpp"
 #include "schur/matrix/Matrix_BaseClass.hpp"
 #include "lazy/Matrix_Block.hpp"
-#include "schur/matrix/mult/Matrix_MultMain.hpp"
+//#include "schur/matrix/mult/Matrix_MultMain.hpp"
 #include "schur/matrix/misc.hpp"
 
 namespace schur {
@@ -66,4 +68,4 @@ private:
 };
 }
 
-#endif //SCHUR_MATRIX_MAIN_CLASS_HPP
+#endif //SCHUR_MATRIX_MAIN_CLASS_HPP_

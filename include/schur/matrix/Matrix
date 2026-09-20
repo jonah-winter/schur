@@ -1,7 +1,7 @@
 #ifndef MATRIX_INCL
 #define MATRIX_INCL
-#include "schur/dimensions/Dimensions_Include.hpp"
-#include "schur/storage/Storage_Include.hpp"
+#include "schur/matrix/dimensions/Dimensions_Include.hpp"
+#include "schur/matrix/storage/Storage_Include.hpp"
 #include "schur/matrix/Matrix_BaseClass.hpp"
 #include "schur/matrix/Matrix_BaseFuncs.hpp"
 #include "schur/matrix/Matrix_MainClass.hpp"

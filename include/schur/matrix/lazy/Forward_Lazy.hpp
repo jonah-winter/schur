@@ -1,5 +1,5 @@
-#ifndef SCHUR_FORWARD_HPP
-#define SCHUR_FORWARD_HPP
+#ifndef SCHUR_FORWARD_HPP_
+#define SCHUR_FORWARD_HPP_
 
 #include "schur/core/Types.hpp"
 
@@ -31,4 +31,4 @@ struct Mult;
 } // namespace internal
 } // namespace schur
 
-#endif //SCHUR_FORWARD_HPP
+#endif //SCHUR_FORWARD_HPP_

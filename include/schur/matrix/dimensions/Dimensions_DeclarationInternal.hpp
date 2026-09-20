@@ -1,10 +1,10 @@
-#ifndef DIMENSIONS_DECL_INTERNAL_HPP
-#define DIMENSIONS_DECL_INTERNAL_HPP
+#ifndef DIMENSIONS_DECL_INTERNAL_HPP_
+#define DIMENSIONS_DECL_INTERNAL_HPP_
 
 #include <stdexcept>
 
 #include "schur/core/Types.hpp"
-#include "schur/dimensions/Generic_DimFuncs.hpp"
+#include "schur/matrix/dimensions/Generic_DimFuncs.hpp"
 
 namespace schur {
 namespace internal {
@@ -137,4 +137,4 @@ struct Dimensions<Dynamic, Cols> {
 };
 } // namespace internal
 } // namespace Matrix
-#endif // DIMENSIONS_DECL_INTERNAL_HPP
+#endif // DIMENSIONS_DECL_INTERNAL_HPP_

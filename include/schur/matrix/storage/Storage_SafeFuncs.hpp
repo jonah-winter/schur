@@ -1,5 +1,5 @@
-#ifndef SCHUR_STORAGE_SAFE_FUNCS_CPP
-#define SCHUR_STORAGE_SAFE_FUNCS_CPP
+#ifndef SCHUR_STORAGE_SAFE_FUNCS_HPP_
+#define SCHUR_STORAGE_SAFE_FUNCS_HPP_
 
 #include <algorithm>
 #include <bit>
@@ -7,7 +7,7 @@
 #include <type_traits>
 
 #include "schur/core/Concepts.hpp"
-#include "schur/storage/Storage_DeclarationInternal.hpp"
+#include "schur/matrix/storage/Storage_DeclarationInternal.hpp"
 
 namespace schur {
 namespace internal {
@@ -153,4 +153,4 @@ size_t Storage<T>::capacity() const {
 }
 } // namespace internal
 } // namespace Matrix
-#endif // SCHUR_STORAGE_SAFE_FUNCS_CPP
+#endif // SCHUR_STORAGE_SAFE_FUNCS_HPP_

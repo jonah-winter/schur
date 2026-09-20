@@ -1,5 +1,5 @@
-#ifndef SCHUR_MATRIX_TRANSPOSE_HPP
-#define SCHUR_MATRIX_TRANSPOSE_HPP
+#ifndef SCHUR_MATRIX_TRANSPOSE_HPP_
+#define SCHUR_MATRIX_TRANSPOSE_HPP_
 
 #include <type_traits>
 
@@ -29,21 +29,21 @@ struct Transposed : MatrixBase
     return self.derived[c, r];
   }
 
-  size_t rows() const
+  [[nodiscard]] size_t rows(this auto&& self)
   {
-    return derived.cols();
+    return self.derived.cols();
   }
 
-  size_t cols() const
+  [[nodiscard]] size_t cols(this auto&& self)
   {
-    return derived.rows();
+    return self.derived.rows();
   }
 
-  size_t size() const
-  {
-    return derived.rows() * derived.cols();
-  }
+  // size_t size() const
+  // {
+  //   return derived.rows() * derived.cols();
+  // }
 };
 } // namespace internal
 } // namespace schur
-#endif //SCHUR_MATRIX_TRANSPOSE_HPP
+#endif //SCHUR_MATRIX_TRANSPOSE_HPP_

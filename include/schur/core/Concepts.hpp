@@ -1,5 +1,5 @@
-#ifndef SCHUR_CONCEPTS_HPP
-#define SCHUR_CONCEPTS_HPP
+#ifndef SCHUR_CONCEPTS_HPP_
+#define SCHUR_CONCEPTS_HPP_
 
 #include "schur/core/Types.hpp"
 #include "schur/core/Traits.hpp"
@@ -15,6 +15,9 @@ concept MatrixExpr = requires { typename std::remove_cvref_t<M>::matrix_expr_tag
 
 template <typename M>
 concept MatrixType = is_matrix<std::remove_cvref_t<M>>::value;
+
+template <typename Q>
+concept QuaternionType = is_quaternion_v<Q>;
 
 template <typename M>
 struct operand_storage
@@ -52,6 +55,19 @@ concept SameDims =
      (get_cols<L> == Dynamic
   ||  get_cols<R> == Dynamic
   ||  get_cols<L> == get_cols<R>);
+
+template <typename _Dimensions>
+concept DimensionsType = requires(_Dimensions dims)
+{
+  { _Dimensions::static_rows } -> std::same_as<size_t>;
+  { _Dimensions::static_cols } -> std::same_as<size_t>;
+};
+
+template <typename _Dimensions>
+struct _TransposeDims
+{
+  using type = Dimensions<_Dimensions::static_cols, _Dimensions::static_rows>;
+};
 } // namespace internal
 } // namespace schur
-#endif //SCHUR_CONCEPTS_HPP
+#endif //SCHUR_CONCEPTS_HPP_

@@ -1,5 +1,5 @@
-#ifndef SCHUR_GENERIC_DIM_FUNCS_HPP
-#define SCHUR_GENERIC_DIM_FUNCS_HPP
+#ifndef SCHUR_GENERIC_DIM_FUNCS_HPP_
+#define SCHUR_GENERIC_DIM_FUNCS_HPP_
 
 #include <cstdint>
 #include <initializer_list>
@@ -48,4 +48,4 @@ constexpr auto construct_cols(index_t cols, size_t c)
 }
 } // namespace internal
 } // namespace Matrix
-#endif // SCHUR_GENERIC_DIM_FUNCS_HPP
+#endif // SCHUR_GENERIC_DIM_FUNCS_HPP_

@@ -1,5 +1,5 @@
-#ifndef SCHUR_STORAGE_DECL_INTERNAL_HPP
-#define SCHUR_STORAGE_DECL_INTERNAL_HPP
+#ifndef SCHUR_STORAGE_DECL_INTERNAL_HPP_
+#define SCHUR_STORAGE_DECL_INTERNAL_HPP_
 
 #include <memory>
 #include "schur/core/Concepts.hpp"
@@ -58,4 +58,4 @@ public:
 };
 } // namespace internal
 } // namespace Matrix
-#endif // SCHUR_STORAGE_DECL_INTERNAL_HPP
+#endif // SCHUR_STORAGE_DECL_INTERNAL_HPP_

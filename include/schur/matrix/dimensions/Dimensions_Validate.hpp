@@ -1,5 +1,9 @@
-#ifndef SCHUR_DIM_SAFE_FUNCS_HPP
-#define SCHUR_DIM_SAFE_FUNCS_HPP
+#ifndef SCHUR_DIM_SAFE_FUNCS_HPP_
+#define SCHUR_DIM_SAFE_FUNCS_HPP_
+
+#include "schur/core/Types.hpp"
+#include "schur/matrix/dimensions/Generic_DimFuncs.hpp"
+#include "schur/matrix/dimensions/Dimensions_DeclarationInternal.hpp"
 
 namespace schur {
 namespace internal {
@@ -49,4 +53,4 @@ inline size_t calculate_dims_(index_t r, index_t c) {
   return r * c;
 }
 } // namespace schur
-#endif // SCHUR_DIM_SAFE_FUNCS_HPP
+#endif // SCHUR_DIM_SAFE_FUNCS_HPP_

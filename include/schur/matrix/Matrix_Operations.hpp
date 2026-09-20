@@ -1,5 +1,5 @@
-#ifndef SCHUR_MATRIX_OPERATIONS_HPP
-#define SCHUR_MATRIX_OPERATIONS_HPP
+#ifndef SCHUR_MATRIX_OPERATIONS_HPP_
+#define SCHUR_MATRIX_OPERATIONS_HPP_
 
 #include <schur/core/Concepts.hpp>
 #include <schur/matrix/Matrix_MainClass.hpp>
@@ -62,4 +62,4 @@ template <internal::MatrixExpr L, internal::MatrixExpr R>
     );
 }
 } // namespace schur
-#endif //SCHUR_MATRIX_OPERATIONS_HPP
+#endif //SCHUR_MATRIX_OPERATIONS_HPP_

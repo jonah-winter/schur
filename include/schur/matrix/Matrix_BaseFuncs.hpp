@@ -1,5 +1,5 @@
-#ifndef MATRIX_BASE_FUNCS_HPP
-#define MATRIX_BASE_FUNCS_HPP
+#ifndef MATRIX_BASE_FUNCS_HPP_
+#define MATRIX_BASE_FUNCS_HPP_
 
 #include "schur/matrix/Matrix_BaseClass.hpp"
 
@@ -17,15 +17,15 @@ namespace internal {
 //  return static_cast<const Derived&>(*this);
 //}
 
-template <typename Derived, typename T, index_t Rows, index_t Cols, Layout L>
-[[nodiscard]] size_t MatrixBase<Derived, T, Rows, Cols, L>::
+template <typename _Derived, typename T, index_t Rows, index_t Cols, Layout L>
+[[nodiscard]] size_t MatrixBase<_Derived, T, Rows, Cols, L>::
 rows(this auto&& self)
 {
   return self.dims.rows();
 }
 
-template <typename Derived, typename T, index_t Rows, index_t Cols, Layout L>
-[[nodiscard]] size_t MatrixBase<Derived, T, Rows, Cols, L>::
+template <typename _Derived, typename T, index_t Rows, index_t Cols, Layout L>
+[[nodiscard]] size_t MatrixBase<_Derived, T, Rows, Cols, L>::
 cols(this auto&& self)
 {
   return self.dims.cols();
@@ -69,4 +69,4 @@ void MatrixBase<Derived, T, Rows, Cols, L>::init(this auto&& self, index_t start
 }
 } // namespace internal
 } // namespace schur
-#endif // MATRIX_BASE_FUNCS_HPP
+#endif // MATRIX_BASE_FUNCS_HPP_

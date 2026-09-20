@@ -1,5 +1,5 @@
-#ifndef SCHUR_MATRIX_MAIN_FUNCS_HPP
-#define SCHUR_MATRIX_MAIN_FUNCS_HPP
+#ifndef SCHUR_MATRIX_MAIN_FUNCS_HPP_
+#define SCHUR_MATRIX_MAIN_FUNCS_HPP_
 
 #include <schur/matrix/Matrix_MainClass.hpp>
 
@@ -44,4 +44,4 @@ auto& Matrix<T, Rows, Cols, L>::operator[](this auto&& self, index_t r, index_t 
   }
 }
 } // namespace schur
-#endif //SCHUR_MATRIX_MAIN_FUNCS_HPP
+#endif //SCHUR_MATRIX_MAIN_FUNCS_HPP_
