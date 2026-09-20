@@ -7,7 +7,7 @@
 
 namespace schur {
 namespace internal {
-constexpr bool valid_dims_(index_t r, index_t c) {
+constexpr bool valid_dims(index_t r, index_t c) {
   if (r >= 0 && c >= 0) return true;
   if (r == Dynamic && c == Dynamic) return true;
   if (r == Dynamic && c >= 0) return true;
@@ -15,8 +15,8 @@ constexpr bool valid_dims_(index_t r, index_t c) {
   return false;
 }
 
-template <typename Container>
-index_t validate_list_cols(Container& list)
+template <typename _Container>
+index_t validate_list_cols(_Container& list)
 {
   if (list.size()) {
     return list.begin()->size();
@@ -33,7 +33,7 @@ index_t validate_list_cols(std::initializer_list<std::initializer_list<T>> list)
   return 0;
 }
 
-constexpr bool valid_dim_(index_t dim) {
+constexpr bool valid_dim(index_t dim) {
   return (dim >= 0 && dim <= SIZE_MAX) || dim == Dynamic;
 }
 

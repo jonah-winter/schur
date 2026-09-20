@@ -9,13 +9,13 @@
 namespace schur {
 namespace internal {
 // no move constructors because it doesnt own anything that would take a long time to copy
-template <index_t Rows, index_t Cols>
-  requires(valid_dims_(Rows, Cols))
+template <index_t _Rows, index_t _Cols>
+  requires(valid_dims(_Rows, _Cols))
 struct Dimensions {
   static constexpr bool has_fixed_rows = true;
   static constexpr bool has_fixed_cols = true;
-  static constexpr index_t static_rows = Rows;
-  static constexpr index_t static_cols = Cols;
+  static constexpr index_t static_rows = _Rows;
+  static constexpr index_t static_cols = _Cols;
 
   // CONSTRUCTORS //
   Dimensions() = default;
@@ -28,8 +28,8 @@ struct Dimensions {
   Dimensions operator=(const Dimensions<R, C>& other) { return *this; }
 
   // FUNCTIONS //
-  [[nodiscard]] static constexpr index_t rows() { return Rows; }
-  [[nodiscard]] static constexpr index_t cols() { return Cols; }
+  [[nodiscard]] static constexpr index_t rows() { return _Rows; }
+  [[nodiscard]] static constexpr index_t cols() { return _Cols; }
   bool valid_dims_overflow() const;
 };
 
@@ -64,13 +64,13 @@ struct Dimensions<Dynamic, Dynamic> {
   bool valid_dims_overflow() const;
 };
 
-template <index_t Rows>
-  requires(valid_dim_(Rows))
-struct Dimensions<Rows, Dynamic> {
+template <index_t _Rows>
+  requires(valid_dim(_Rows))
+struct Dimensions<_Rows, Dynamic> {
   // STRUCT VARIABLES //
   static constexpr bool has_fixed_rows = true;
   static constexpr bool has_fixed_cols = false;
-  static constexpr index_t static_rows = Rows;
+  static constexpr index_t static_rows = _Rows;
   static constexpr index_t static_cols = Dynamic;
 
   index_t cols_;
@@ -93,21 +93,21 @@ struct Dimensions<Rows, Dynamic> {
   Dimensions operator=(const Dimensions<R, C>& other);
 
   // FUNCTIONS //
-  [[nodiscard]] static constexpr index_t rows() { return Rows; }
+  [[nodiscard]] static constexpr index_t rows() { return _Rows; }
   [[nodiscard]] auto& cols(this auto&& self) { return self.cols_; }
   // this is for Matrix initialization
-  [[nodiscard]] static size_t size(size_t dim) { return Rows * dim; }
+  [[nodiscard]] static size_t size(size_t dim) { return _Rows * dim; }
   bool valid_dims_overflow() const;
 };
 
-template <index_t Cols>
-  requires(valid_dim_(Cols))
-struct Dimensions<Dynamic, Cols> {
+template <index_t _Cols>
+  requires(valid_dim(_Cols))
+struct Dimensions<Dynamic, _Cols> {
   // STRUCT VARIABLES //
   static constexpr bool has_fixed_rows = false;
   static constexpr bool has_fixed_cols = true;
   static constexpr index_t static_rows = Dynamic;
-  static constexpr index_t static_cols = Cols;
+  static constexpr index_t static_cols = _Cols;
 
   index_t rows_;
 
@@ -130,9 +130,9 @@ struct Dimensions<Dynamic, Cols> {
 
   // FUNCTIONS //
   [[nodiscard]] auto& rows(this auto&& self) { return self.rows_; }
-  [[nodiscard]] static constexpr index_t cols() { return Cols; }
+  [[nodiscard]] static constexpr index_t cols() { return _Cols; }
   // this is for Matrix initialization, not to be used
-  [[nodiscard]] static size_t size(size_t dim) { return dim * Cols; }
+  [[nodiscard]] static size_t size(size_t dim) { return dim * _Cols; }
   bool valid_dims_overflow() const;
 };
 } // namespace internal

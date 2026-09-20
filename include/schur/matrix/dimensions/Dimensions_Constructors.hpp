@@ -21,31 +21,31 @@ Dimensions<Dynamic, Dynamic> Dimensions<Dynamic, Dynamic>::operator=(const Dimen
   return *this;
 }
 
-template<index_t Rows> requires (valid_dim_(Rows))
+template<index_t _Rows> requires (valid_dim(_Rows))
 template<index_t R, index_t C>
-Dimensions<Rows, Dynamic>::Dimensions(const Dimensions<R, C> &other)
+Dimensions<_Rows, Dynamic>::Dimensions(const Dimensions<R, C> &other)
 {
   cols_ = other.cols();
 }
 
-template<index_t Rows> requires (valid_dim_(Rows))
+template<index_t _Rows> requires (valid_dim(_Rows))
 template<index_t R, index_t C>
-Dimensions<Rows, Dynamic> Dimensions<Rows, Dynamic>::operator=(const Dimensions<R, C> &other)
+Dimensions<_Rows, Dynamic> Dimensions<_Rows, Dynamic>::operator=(const Dimensions<R, C> &other)
 {
   cols_ = other.cols();
   return *this;
 }
 
-template<index_t Cols> requires (valid_dim_(Cols))
+template<index_t _Cols> requires (valid_dim(_Cols))
 template<index_t R, index_t C>
-Dimensions<Dynamic, Cols>::Dimensions(const Dimensions<R, C> &other)
+Dimensions<Dynamic, _Cols>::Dimensions(const Dimensions<R, C> &other)
 {
   rows_ = other.rows();
 }
 
-template<index_t Cols> requires (valid_dim_(Cols))
+template<index_t _Cols> requires (valid_dim(_Cols))
 template<index_t R, index_t C>
-Dimensions<Dynamic, Cols> Dimensions<Dynamic, Cols>::operator=(const Dimensions<R, C> &other)
+Dimensions<Dynamic, _Cols> Dimensions<Dynamic, _Cols>::operator=(const Dimensions<R, C> &other)
 {
   rows_ = other.rows();
   return *this;

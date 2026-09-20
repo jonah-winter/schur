@@ -7,7 +7,7 @@
 
 namespace schur {
 namespace internal {
-enum class ValidDimStates_ {
+enum class _ValidDimStates {
   INVALID_DIMS = 0,
   STATIC_R_STATIC_C = 1,
   DYNAMIC_R_DYNAMIC_C = 2,
@@ -16,8 +16,8 @@ enum class ValidDimStates_ {
 };
 } // namespace internal
 
-constexpr internal::ValidDimStates_ valid_dims_specific(index_t r, index_t c) {
-  using V = internal::ValidDimStates_;
+constexpr internal::_ValidDimStates valid_dims_specific(index_t r, index_t c) {
+  using V = internal::_ValidDimStates;
   if (r >= 0 && c >= 0) return V::STATIC_R_STATIC_C;
   if (r == Dynamic && c == Dynamic) return V::DYNAMIC_R_DYNAMIC_C;
   if (r == Dynamic && c >= 0) return V::DYNAMIC_R_STATIC_C;
@@ -25,29 +25,29 @@ constexpr internal::ValidDimStates_ valid_dims_specific(index_t r, index_t c) {
   return V::INVALID_DIMS;
 }
 
-template <index_t Rows, index_t Cols>
-  requires(internal::valid_dims_(Rows, Cols))
-bool internal::Dimensions<Rows, Cols>::valid_dims_overflow() const {
-  if (Rows == 0 || Cols <= SIZE_MAX / Rows) return true;
+template <index_t _Rows, index_t _Cols>
+  requires(internal::valid_dims(_Rows, _Cols))
+bool internal::Dimensions<_Rows, _Cols>::valid_dims_overflow() const {
+  if (_Rows == 0 || _Cols <= SIZE_MAX / _Rows) return true;
   return false;
 }
 
-template <index_t Rows>
-  requires(internal::valid_dim_(Rows))
-bool internal::Dimensions<Rows, Dynamic>::valid_dims_overflow() const {
-  if (Rows == 0 || cols_ <= SIZE_MAX / Rows) return true;
+template <index_t _Rows>
+  requires(internal::valid_dim(_Rows))
+bool internal::Dimensions<_Rows, Dynamic>::valid_dims_overflow() const {
+  if (_Rows == 0 || cols_ <= SIZE_MAX / _Rows) return true;
   return false;
 }
 
-template <index_t Cols>
-  requires(internal::valid_dim_(Cols))
-bool internal::Dimensions<Dynamic, Cols>::valid_dims_overflow() const {
-  if (rows_ == 0 || Cols <= SIZE_MAX / rows_) return true;
+template <index_t _Cols>
+  requires(internal::valid_dim(_Cols))
+bool internal::Dimensions<Dynamic, _Cols>::valid_dims_overflow() const {
+  if (rows_ == 0 || _Cols <= SIZE_MAX / rows_) return true;
   return false;
 }
 
-inline size_t calculate_dims_(index_t r, index_t c) {
-  if (!internal::valid_dims_(r, c)) {
+inline size_t calculate_dims(index_t r, index_t c) {
+  if (!internal::valid_dims(r, c)) {
     throw std::logic_error("invalid rows and cols, either less than 0 or overflow");
   }
   return r * c;

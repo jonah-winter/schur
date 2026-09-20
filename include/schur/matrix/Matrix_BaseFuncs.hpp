@@ -17,53 +17,53 @@ namespace internal {
 //  return static_cast<const Derived&>(*this);
 //}
 
-template <typename _Derived, typename T, index_t Rows, index_t Cols, Layout L>
-[[nodiscard]] size_t MatrixBase<_Derived, T, Rows, Cols, L>::
+template <typename _Derived, typename _Scalar, index_t _Rows, index_t _Cols, Layout _Layout>
+[[nodiscard]] size_t MatrixBase<_Derived, _Scalar, _Rows, _Cols, _Layout>::
 rows(this auto&& self)
 {
   return self.dims.rows();
 }
 
-template <typename _Derived, typename T, index_t Rows, index_t Cols, Layout L>
-[[nodiscard]] size_t MatrixBase<_Derived, T, Rows, Cols, L>::
+template <typename _Derived, typename _Scalar, index_t _Rows, index_t _Cols, Layout _Layout>
+[[nodiscard]] size_t MatrixBase<_Derived, _Scalar, _Rows, _Cols, _Layout>::
 cols(this auto&& self)
 {
   return self.dims.cols();
 }
 
 
-template <typename Derived, typename T, index_t Rows, index_t Cols, Layout L>
-[[nodiscard]] size_t MatrixBase<Derived, T, Rows, Cols, L>::size(this auto&& self)
+template <typename _Derived, typename _Scalar, index_t _Rows, index_t _Cols, Layout _Layout>
+[[nodiscard]] size_t MatrixBase<_Derived, _Scalar, _Rows, _Cols, _Layout>::size(this auto&& self)
 {
   return self.dims.rows() * self.dims.cols();
 }
 
-template <typename Derived, typename T, index_t Rows, index_t Cols, Layout L>
-[[nodiscard]] T* MatrixBase<Derived, T, Rows, Cols, L>::data(this auto&& self)
+template <typename _Derived, typename _Scalar, index_t _Rows, index_t _Cols, Layout _Layout>
+[[nodiscard]] _Scalar* MatrixBase<_Derived, _Scalar, _Rows, _Cols, _Layout>::data(this auto&& self)
 {
   return self.storage.data();
 }
 
-template <typename Derived, typename T, index_t Rows, index_t Cols, Layout L>
-void MatrixBase<Derived, T, Rows, Cols, L>::init(this auto&& self)
+template <typename _Derived, typename _Scalar, index_t _Rows, index_t _Cols, Layout _Layout>
+void MatrixBase<_Derived, _Scalar, _Rows, _Cols, _Layout>::init(this auto&& self)
 {
   self.storage.init();
 }
 
-template <typename Derived, typename T, index_t Rows, index_t Cols, Layout L>
-void MatrixBase<Derived, T, Rows, Cols, L>::init(this auto&& self, index_t start, index_t end)
+template <typename _Derived, typename _Scalar, index_t _Rows, index_t _Cols, Layout _Layout>
+void MatrixBase<_Derived, _Scalar, _Rows, _Cols, _Layout>::init(this auto&& self, index_t start, index_t end)
 {
   self.storage.init(start, end);
 }
 
-template <typename Derived, typename T, index_t Rows, index_t Cols, Layout L>
-void MatrixBase<Derived, T, Rows, Cols, L>::init(this auto&& self, T val)
+template <typename Derived, typename T, index_t Rows, index_t Cols, Layout _Layout>
+void MatrixBase<Derived, T, Rows, Cols, _Layout>::init(this auto&& self, T val)
 {
   self.storage.init(val);
 }
 
-template <typename Derived, typename T, index_t Rows, index_t Cols, Layout L>
-void MatrixBase<Derived, T, Rows, Cols, L>::init(this auto&& self, index_t start, index_t end, T val)
+template <typename Derived, typename T, index_t Rows, index_t Cols, Layout _Layout>
+void MatrixBase<Derived, T, Rows, Cols, _Layout>::init(this auto&& self, index_t start, index_t end, T val)
 {
   self.storage.init(start, end, val);
 }

@@ -4,7 +4,7 @@
 #include "schur/core/Types.hpp"
 
 namespace schur {
-template <typename T, index_t Rows, index_t Cols, Layout L>
+template <typename _Scalar, index_t _Rows, index_t _Cols, Layout _Layout>
 struct Matrix;
 namespace internal {
 template <MatrixExpr L, MatrixExpr R>
@@ -17,7 +17,7 @@ requires(SameDims<std::remove_cvref_t<L>, std::remove_cvref_t<R>>
       && std::same_as<typename std::remove_cvref_t<L>::val_t, typename std::remove_cvref_t<R>::val_t>)
 struct SubtView;
 
-template <typename T, Layout L>
+template <typename _Scalar, Layout _Layout>
 struct BlockView;
 
 template <MatrixExpr D>
