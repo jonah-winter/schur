@@ -2,6 +2,8 @@
 #define SCHUR_QUATERNION_HPP_
 
 #include <complex>
+#include "schur/core/Numbers.hpp"
+#include "schur/matrix/Matrix"
 
 namespace schur {
 template <typename T>
@@ -25,6 +27,14 @@ struct Quaternion
 
   Quaternion operator<=>(const Quaternion& q) const = default;
 
+  void rotate(int angle, Matrix<T, 1, 3> axisVec)
+  {
+    double s = std::sin(angle * pi<> / 360);
+    w = std::cos(angle * pi<> / 360);
+    x = axisVec[0, 0] * s;
+    y = axisVec[0, 1] * s;
+    z = axisVec[0, 2] * s;
+  }
   T abs() { return std::sqrt(w*w+x*x+y*y+z*z); }
 };
 
@@ -35,5 +45,4 @@ std::ostream& operator<<(std::ostream& os, const Quaternion<T>& q)
   return os;
 }
 } // namespace schur
-
 #endif //SCHUR_QUATERNION_HPP_

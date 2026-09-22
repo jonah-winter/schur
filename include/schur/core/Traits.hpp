@@ -2,11 +2,13 @@
 #define SCHUR_TRAITS_HPP_
 
 #include "schur/core/Types.hpp"
-#include "schur/quaternion/Quaternion.hpp"
+//#include "schur/quaternion/Quaternion.hpp"
 #include <type_traits>
 
 namespace schur {
 namespace internal {
+template <typename T>
+struct Quaternion;
 // TODO: Eventually expand to complex numbers
 template <typename T>
 struct is_valid_storage_type : std::false_type {};
