@@ -35,5 +35,6 @@
 int main(int argc, char* argv[])
 {
   using namespace schur;
+  Matrix<2, 2> mat1 = {{1, 2}, {3, 4}};
   return 0;
 }

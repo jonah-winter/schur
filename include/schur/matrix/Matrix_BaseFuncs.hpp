@@ -5,65 +5,65 @@
 
 namespace schur {
 namespace internal {
-//template <typename Derived, typename T, msize_t Rows, msize_t Cols, Layout L>
-//[[nodiscard]] Derived& MatrixBase<Derived, T, Rows, Cols, L>::derived()
+//template <typename Derived, msize_t Rows, msize_t Cols, typename Scalar, Layout L>
+//[[nodiscard]] Derived& MatrixBase<Derived, Rows, Cols, Scalar, L>::derived()
 //{
 //  return static_cast<Derived&>(*this);
 //}
 //
-//template <typename Derived, typename T, msize_t Rows, msize_t Cols, Layout L>
-//[[nodiscard]] const Derived& MatrixBase<Derived, T, Rows, Cols, L>::derived() const
+//template <typename Derived, msize_t Rows, msize_t Cols, typename Scalar, Layout L>
+//[[nodiscard]] const Derived& MatrixBase<Derived, Rows, Cols, Scalar, L>::derived() const
 //{
 //  return static_cast<const Derived&>(*this);
 //}
 
-template <typename Derived, typename Scalar, msize_t Rows, msize_t Cols, Layout L>
-[[nodiscard]] size_t MatrixBase<Derived, Scalar, Rows, Cols, L>::
+template <typename Derived, msize_t Rows, msize_t Cols, typename Scalar, Layout L>
+[[nodiscard]] size_t MatrixBase<Derived, Rows, Cols, Scalar, L>::
 rows(this auto&& self)
 {
   return self.dims.rows();
 }
 
-template <typename Derived, typename Scalar, msize_t Rows, msize_t Cols, Layout L>
-[[nodiscard]] size_t MatrixBase<Derived, Scalar, Rows, Cols, L>::
+template <typename Derived, msize_t Rows, msize_t Cols, typename Scalar, Layout L>
+[[nodiscard]] size_t MatrixBase<Derived, Rows, Cols, Scalar, L>::
 cols(this auto&& self)
 {
   return self.dims.cols();
 }
 
 
-template <typename Derived, typename Scalar, msize_t Rows, msize_t Cols, Layout L>
-[[nodiscard]] size_t MatrixBase<Derived, Scalar, Rows, Cols, L>::size(this auto&& self)
+template <typename Derived, msize_t Rows, msize_t Cols, typename Scalar, Layout L>
+[[nodiscard]] size_t MatrixBase<Derived, Rows, Cols, Scalar, L>::size(this auto&& self)
 {
   return self.dims.rows() * self.dims.cols();
 }
 
-template <typename Derived, typename Scalar, msize_t Rows, msize_t Cols, Layout L>
-[[nodiscard]] Scalar* MatrixBase<Derived, Scalar, Rows, Cols, L>::data(this auto&& self)
+template <typename Derived, msize_t Rows, msize_t Cols, typename Scalar, Layout L>
+[[nodiscard]] Scalar* MatrixBase<Derived, Rows, Cols, Scalar, L>::data(this auto&& self)
 {
   return self.storage.data();
 }
 
-template <typename Derived, typename Scalar, msize_t Rows, msize_t Cols, Layout L>
-void MatrixBase<Derived, Scalar, Rows, Cols, L>::init(this auto&& self)
+template <typename Derived, msize_t Rows, msize_t Cols, typename Scalar, Layout L>
+void MatrixBase<Derived, Rows, Cols, Scalar, L>::init(this auto&& self)
 {
   self.storage.init();
 }
 
-template <typename Derived, typename Scalar, msize_t Rows, msize_t Cols, Layout L>
-void MatrixBase<Derived, Scalar, Rows, Cols, L>::init(this auto&& self, msize_t start, msize_t end)
+template <typename Derived, msize_t Rows, msize_t Cols, typename Scalar, Layout L>
+void MatrixBase<Derived, Rows, Cols, Scalar, L>::init(this auto&& self, msize_t start, msize_t end)
 {
   self.storage.init(start, end);
 }
 
-template <typename Derived, typename Scalar, msize_t Rows, msize_t Cols, Layout L>
-void MatrixBase<Derived, Scalar, Rows, Cols, L>::init(this auto&& self, Scalar val)
+template <typename Derived, msize_t Rows, msize_t Cols, typename Scalar, Layout L>
+void MatrixBase<Derived, Rows, Cols, Scalar, L>::init(this auto&& self, Scalar val)
 {
   self.storage.init(val);
 }
 
-template <typename Derived, typename Scalar, msize_t Rows, msize_t Cols, Layout L>
-void MatrixBase<Derived, Scalar, Rows, Cols, L>::init(this auto&& self, msize_t start, msize_t end, Scalar val)
+template <typename Derived, msize_t Rows, msize_t Cols, typename Scalar, Layout L>
+void MatrixBase<Derived, Rows, Cols, Scalar, L>::init(this auto&& self, msize_t start, msize_t end, Scalar val)
 {
   self.storage.init(start, end, val);
 }

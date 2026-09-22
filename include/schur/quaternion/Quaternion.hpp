@@ -28,7 +28,7 @@ struct Quaternion
 
   Quaternion operator<=>(const Quaternion& q) const = default;
 
-  void rotate(int angle, Matrix<Scalar, 1, 3> axisVec)
+  void rotate(int angle, Matrix<1, 3, Scalar> axisVec)
   {
     double s = std::sin(angle * pi<> / 360);
     w = std::cos(angle * pi<> / 360);

@@ -5,8 +5,8 @@
 #include "schur/matrix/Matrix_MainClass.hpp"
 
 namespace schur {
-template <typename Scalar, msize_t Rows, msize_t Cols, Layout L>
-Matrix<Scalar, Rows, Cols, L>
+template <msize_t Rows, msize_t Cols, typename Scalar, Layout L>
+Matrix<Rows, Cols, Scalar, L>
 ::Matrix(BlockView<Scalar, L> block)
   : dims(block.rows(), block.cols()), storage(block.size())
 {

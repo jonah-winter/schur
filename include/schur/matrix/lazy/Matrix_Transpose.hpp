@@ -12,9 +12,10 @@ template <MatrixExpr D>
 struct Transposed : MatrixBase
   <
   Transposed<D>,
-  typename std::remove_cvref_t<D>::val_t,
   get_cols<D>,
-  get_rows<D>
+  get_rows<D>,
+  typename std::remove_cvref_t<D>::val_t,
+  std::remove_cvref_t<D>::layout()
   >
 {
   using derived_t = operand_t<D>;

@@ -6,9 +6,9 @@
 
 namespace schur {
 template <typename Scalar, Layout L>
-struct BlockView : internal::MatrixBase<BlockView<Scalar, L>, Scalar, Dynamic, Dynamic, L>
+struct BlockView : internal::MatrixBase<BlockView<Scalar, L>, Dynamic, Dynamic, Scalar, L>
 {
-  using Base = internal::MatrixBase<BlockView, Scalar, Dynamic, Dynamic, L>;
+  using Base = internal::MatrixBase<BlockView, Dynamic, Dynamic, Scalar, L>;
   using matrix_expr_tag = Base::matrix_expr_tag;
   using val_t = Scalar;
   // static constexpr size_t Rows = Dynamic;

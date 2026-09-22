@@ -10,13 +10,15 @@ namespace internal {
 template <MatrixExpr L, MatrixExpr R>
 requires((get_cols<L> == Dynamic || get_cols<L> == get_rows<R>)
       && (get_rows<R> == Dynamic || get_cols<L> == get_rows<R>)
-      && std::same_as<typename std::remove_cvref_t<L>::val_t, typename std::remove_cvref_t<R>::val_t>)
+      && std::same_as<typename std::remove_cvref_t<L>::val_t, typename std::remove_cvref_t<R>::val_t>
+      && std::same_as<typename std::remove_cvref_t<L>::layout(), typename std::remove_cvref_t<R>::layout()>)
 struct Mult : MatrixBase
   <
     Mult<L, R>,
-    typename std::remove_cvref_t<L>::val_t,
     get_rows<L>,
-    get_cols<R>
+    get_cols<R>,
+    typename std::remove_cvref_t<L>::val_t,
+    L::layout()
   >
 {
   using left_t  = operand_t<L>;

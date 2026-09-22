@@ -4,8 +4,8 @@
 #include <schur/matrix/Matrix_MainClass.hpp>
 
 namespace schur {
-template <typename Scalar, msize_t Rows, msize_t Cols, Layout L>
-auto& Matrix<Scalar, Rows, Cols, L>::at(this auto&& self, index_t r, index_t c)
+template <msize_t Rows, msize_t Cols, typename Scalar, Layout L>
+auto& Matrix<Rows, Cols, Scalar, L>::at(this auto&& self, index_t r, index_t c)
 {
   if (r > self.dims.rows() || r < 0) { throw std::out_of_range("row index is out of bounds"); }
   if (c > self.dims.cols() || c < 0) { throw std::out_of_range("col index is out of bounds"); }
@@ -18,22 +18,22 @@ auto& Matrix<Scalar, Rows, Cols, L>::at(this auto&& self, index_t r, index_t c)
   }
 }
 
-// template <typename Scalar, msize_t Rows, msize_t Cols, Layout L>
-// BlockView<T, L> Matrix<Scalar, Rows, Cols, L>::block(size_t start_rows, size_t start_cols, size_t rows, size_t cols)
+// template <msize_t Rows, msize_t Cols, typename Scalar, Layout L>
+// BlockView<T, L> Matrix<Rows, Cols, Scalar, L>::block(size_t start_rows, size_t start_cols, size_t rows, size_t cols)
 // {
 //   return BlockView<T, L>(this, start_rows, start_cols, rows, cols);
 // }
 
-template <typename Scalar, msize_t Rows, msize_t Cols, Layout L>
-auto& Matrix<Scalar, Rows, Cols, L>::operator[](this auto&& self, index_t i)
+template <msize_t Rows, msize_t Cols, typename Scalar, Layout L>
+auto& Matrix<Rows, Cols, Scalar, L>::operator[](this auto&& self, index_t i)
 {
   if (i < 0) throw std::out_of_range("out of bounds access");
   // TODO: negative index access, instance here
   return self.storage[i];
 }
 
-template <typename Scalar, msize_t Rows, msize_t Cols, Layout L>
-auto& Matrix<Scalar, Rows, Cols, L>::operator[](this auto&& self, index_t r, index_t c)
+template <msize_t Rows, msize_t Cols, typename Scalar, Layout L>
+auto& Matrix<Rows, Cols, Scalar, L>::operator[](this auto&& self, index_t r, index_t c)
 {
   if (r < 0 || c < 0) throw std::out_of_range("out of bounds access");
   // TODO: negative index access, instance here

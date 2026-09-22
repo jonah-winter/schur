@@ -5,8 +5,8 @@
 #include "schur/matrix/Matrix_MainClass.hpp"
 
 namespace schur {
-template <typename T, msize_t Rows, msize_t Cols, Layout L>
-constexpr msize_t construct_dims_rows(const Matrix<T, Rows, Cols, L>& other)
+template <msize_t Rows, msize_t Cols, typename Scalar, Layout L>
+constexpr msize_t construct_dims_rows(const Matrix<Rows, Cols, Scalar, L>& other)
 {
   if constexpr (Rows == Dynamic) {
     return other.rows();
@@ -15,8 +15,8 @@ constexpr msize_t construct_dims_rows(const Matrix<T, Rows, Cols, L>& other)
     return Rows;
   }
 }
-template <typename T, msize_t Rows, msize_t Cols, Layout L>
-constexpr msize_t construct_dims_cols(const Matrix<T, Rows, Cols, L>& other)
+template <msize_t Rows, msize_t Cols, typename Scalar, Layout L>
+constexpr msize_t construct_dims_cols(const Matrix<Rows, Cols, Scalar, L>& other)
 {
   if constexpr (Cols == Dynamic) {
     return other.cols();

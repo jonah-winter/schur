@@ -12,16 +12,16 @@
 #include "schur/matrix/misc.hpp"
 
 namespace schur {
-template <msize_t Rows, msize_t Cols, typename Scalar,
+template <msize_t Rows, msize_t Cols, typename Scalar = float,
           Layout L = Layout::ColMajor>
-struct Matrix : internal::MatrixBase<Matrix<Rows, Cols, Scalar, L>, Scalar, Rows, Cols, L>
+struct Matrix : internal::MatrixBase<Matrix<Rows, Cols, Scalar, L>, Rows, Cols, Scalar, L>
 {
-  using Base = internal::MatrixBase<Matrix, Scalar, Rows, Cols, L>;
+  using Base   = internal::MatrixBase<Matrix, Rows, Cols, Scalar, L>;
   using dims_t = internal::Dimensions<Rows, Cols>;
   using val_t  = Scalar;
 
   friend Base;
-  template <typename OS, msize_t OR, msize_t OC, Layout OL>
+  template <msize_t OR, msize_t OC, typename OS, Layout OL>
   friend struct Matrix;
 private:
   dims_t dims;
