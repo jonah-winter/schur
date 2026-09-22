@@ -8,7 +8,8 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 add_library(schur INTERFACE
         include/schur/core/Numbers.hpp
-        include/schur/core/Range.hpp)
+        include/schur/core/Range.hpp
+)
 
 target_include_directories(schur INTERFACE
         ${CMAKE_CURRENT_SOURCE_DIR}/include

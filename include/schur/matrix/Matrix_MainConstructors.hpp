@@ -6,9 +6,9 @@
 //#include <schur/matrix/Matrix_MainClass.hpp>
 
 namespace schur {
-template <typename T, index_t Rows, index_t Cols, Layout L>
-Matrix<T, Rows, Cols, L>
-::Matrix(std::initializer_list<std::initializer_list<T>> list)
+template <msize_t Rows, msize_t Cols, typename Scalar, Layout L>
+Matrix<Rows, Cols, Scalar, L>
+::Matrix(std::initializer_list<std::initializer_list<Scalar>> list)
   : dims(list.size(), internal::validate_list_cols(list)), storage(list.size() * internal::validate_list_cols(list))
 {
   size_t r = list.size();
@@ -23,9 +23,9 @@ Matrix<T, Rows, Cols, L>
   }
 }
 
-template <typename T, index_t Rows, index_t Cols, Layout L>
-Matrix<T, Rows, Cols, L>
-::Matrix(std::vector<std::vector<T>> list)
+template <msize_t Rows, msize_t Cols, typename Scalar, Layout L>
+Matrix<Rows, Cols, Scalar, L>
+::Matrix(std::vector<std::vector<Scalar>> list)
   : dims(list.size(), internal::validate_list_cols(list)), storage(list.size() * internal::validate_list_cols(list))
 {
   size_t r = list.size();
@@ -42,10 +42,10 @@ Matrix<T, Rows, Cols, L>
   }
 }
 
-template <typename T, index_t Rows, index_t Cols, Layout L>
+template <msize_t Rows, msize_t Cols, typename Scalar, Layout L>
 template <size_t arrRows, size_t arrCols>
-Matrix<T, Rows, Cols, L>
-::Matrix(std::array<std::array<T, arrCols>, arrRows> list)
+Matrix<Rows, Cols, Scalar, L>
+::Matrix(std::array<std::array<Scalar, arrCols>, arrRows> list)
   : dims(Rows, Cols), storage(Rows * Cols)
 {
   if constexpr (has_fixed_rows) static_assert(Rows == arrRows);
@@ -60,11 +60,11 @@ Matrix<T, Rows, Cols, L>
   }
 }
 
-template <typename T, index_t Rows, index_t Cols, Layout L>
-template <index_t R, index_t C>
+template <msize_t Rows, msize_t Cols, typename Scalar, Layout L>
+template <msize_t R, msize_t C>
 requires((R == Rows || R == Dynamic) && (C == Cols || C == Dynamic))
-Matrix<T, Rows, Cols, L>
-::Matrix(const Matrix<T, R, C, L>& other)
+Matrix<Rows, Cols, Scalar, L>
+::Matrix(const Matrix<R, C, Scalar, L>& other)
 {
   if (R == Dynamic && Rows != Dynamic && other.rows() != Rows) { throw std::logic_error("wrong row size currently"); }
   if (C == Dynamic && Cols != Dynamic && other.cols() != Cols) { throw std::logic_error("wrong col size currently"); }
@@ -72,10 +72,10 @@ Matrix<T, Rows, Cols, L>
   storage = other.storage;
 }
 
-template <typename T, index_t Rows, index_t Cols, Layout L>
-template <index_t R, index_t C>
+template <msize_t Rows, msize_t Cols, typename Scalar, Layout L>
+template <msize_t R, msize_t C>
 requires((R == Rows || R == Dynamic || Rows == Dynamic) && (C == Cols || C == Dynamic || Cols == Dynamic))
-Matrix<T, Rows, Cols, L>& Matrix<T, Rows, Cols, L>::operator=(const Matrix<T, R, C, L>& other)
+Matrix<Rows, Cols, Scalar, L>& Matrix<Rows, Cols, Scalar, L>::operator=(const Matrix<R, C, Scalar, L>& other)
 {
   if (R == Dynamic && Rows != Dynamic && other.rows() != Rows) { throw std::logic_error("wrong row size currently"); }
   if (C == Dynamic && Cols != Dynamic && other.cols() != Cols) { throw std::logic_error("wrong col size currently"); }
@@ -84,14 +84,14 @@ Matrix<T, Rows, Cols, L>& Matrix<T, Rows, Cols, L>::operator=(const Matrix<T, R,
   return *this;
 }
 
-template <typename T, index_t Rows, index_t Cols, Layout L>
-Matrix<T, Rows, Cols, L>& Matrix<T, Rows, Cols, L>::operator=(const Matrix<T, Rows, Cols, L>& other)
+template <msize_t Rows, msize_t Cols, typename Scalar, Layout L>
+Matrix<Rows, Cols, Scalar, L>& Matrix<Rows, Cols, Scalar, L>::operator=(const Matrix<Rows, Cols, Scalar, L>& other)
 {
   storage = other.storage;
   return *this;
 }
 
-// template <typename T, index_t Rows, index_t Cols, Layout L>
+// template <typename T, msize_t Rows, msize_t Cols, Layout L>
 // template <size_t arrRows, size_t arrCols>
 // Matrix<T, Rows, Cols, L>
 // ::Matrix(T list[arrRows][arrCols])

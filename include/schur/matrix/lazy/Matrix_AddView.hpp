@@ -9,7 +9,8 @@ namespace internal {
 template <MatrixExpr L, MatrixExpr R>
 requires(
       SameDims<std::remove_cvref_t<L>, std::remove_cvref_t<R>>
-      && std::same_as<typename std::remove_cvref_t<L>::val_t, typename std::remove_cvref_t<R>::val_t>)
+      && std::same_as<typename std::remove_cvref_t<L>::val_t,
+      typename std::remove_cvref_t<R>::val_t>)
 struct AddView : MatrixBase
   <
     AddView<L, R>,
@@ -22,7 +23,6 @@ struct AddView : MatrixBase
   using right_t = operand_t<R>;
   using val_t   = typename std::remove_cvref_t<L>::val_t;
   using dims_t  = typename std::remove_cvref_t<L>::dims_t;
-  static constexpr bool test = true;
 
   left_t left;
   right_t right;

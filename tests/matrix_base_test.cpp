@@ -3,31 +3,34 @@
 #include <schur/matrix/Matrix>
 #include <schur/quaternion/Quaternion.hpp>
 #include <schur/core/Numbers.hpp>
-#include <schur/core/Range.hpp>
+#include <variant>
 
-#define TYPEDEF(X, Y) typedef X Y
-#define _BEGIN_NAMESPACE_SCHUR namespace schur {
-#define _END_NAMESPACE_SCHUR }
-
-/*
-namespace schur {
-template <size_t... _Args>
-using range = typename internal::range_dispatch<_Args...>::type;
-struct sizetype
-{
-
-  template <typename _Ar>
-  requires(std::is_arithmetic_v<_Ar>)
-  sizetype(_Ar a)
-  {
-    if (a & 1) {
-      *this -= 2;
-    }
-
-  }
-};
-} // namespace schur
-*/
+// #define TYPEDEF(X, Y) typedef X Y
+//
+// #if defined(_WIN32)
+// #define BEGIN_NAMESPACE_SCHUR \
+//   namespace schur {
+// #define END_NAMESPACE_SCHUR \
+//   }
+// #endif
+//
+// #if defined(__APPLE__)
+// #define BEGIN_NAMESPACE_SCHUR \
+//   namespace schur {
+// #define END_NAMESPACE_SCHUR \
+//   }
+// #endif
+//
+// #if defined(__linux__)
+// #define BEGIN_NAMESPACE_SCHUR \
+//   namespace schur {
+// #define END_NAMESPACE_SCHUR \
+//   }
+// #endif
+//
+// BEGIN_NAMESPACE_SCHUR
+//
+// END_NAMESPACE_SCHUR
 
 int main(int argc, char* argv[])
 {

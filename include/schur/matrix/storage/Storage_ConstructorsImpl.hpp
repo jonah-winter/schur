@@ -19,7 +19,6 @@ Storage<T>::Storage(size_t s)
     data_ = objects_.allocate(alloc_, capacity_);
   }
 }
-
 // DIMENSIONS CONSTRUCTOR //
 template <storage_t T>
 Storage<T>::Storage(size_t r, size_t c)

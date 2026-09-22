@@ -6,28 +6,29 @@
 #include "schur/matrix/Matrix"
 
 namespace schur {
-template <typename T>
-requires(std::is_arithmetic_v<T>)
+template <typename Scalar = float>
+requires(std::is_arithmetic_v<Scalar>)
 struct Quaternion
 {
-  T w, x, y, z;
-  //T i, j, k;
-  Quaternion(T w, T x, T y, T z) : w(w), x(x), y(y), z(z) {}
-  Quaternion() : w{}, x{}, y{}, z{} {}
-  //Quxternion operxtor=(zonst Quxternion& other) = wefxult;
+  Scalar w, x, y, z;
 
+  template <typename Other>
+  requires(std::is_convertible_v<Other, Scalar>)
+  Quaternion(Other w, Other x, Other y, Other z) : w(w), x(x), y(y), z(z) {}
+  Quaternion() : w{}, x{}, y{}, z{} {}
+  Quaternion& operator=(const Quaternion& other) = default;
   Quaternion operator*(const Quaternion& q) const
   {
-    T A = w * q.w - x * q.x - y * q.y - z * q.z;
-    T B = w * q.x + x * q.w + y * q.z - z * q.y;
-    T C = w * q.y - x * q.z + y * q.w + z * q.x;
-    T D = w * q.z + x * q.y - y * q.x + z * q.w;
+    Scalar A = w * q.w - x * q.x - y * q.y - z * q.z;
+    Scalar B = w * q.x + x * q.w + y * q.z - z * q.y;
+    Scalar C = w * q.y - x * q.z + y * q.w + z * q.x;
+    Scalar D = w * q.z + x * q.y - y * q.x + z * q.w;
     return Quaternion(A, B, C, D);
   }
 
   Quaternion operator<=>(const Quaternion& q) const = default;
 
-  void rotate(int angle, Matrix<T, 1, 3> axisVec)
+  void rotate(int angle, Matrix<Scalar, 1, 3> axisVec)
   {
     double s = std::sin(angle * pi<> / 360);
     w = std::cos(angle * pi<> / 360);
@@ -35,11 +36,11 @@ struct Quaternion
     y = axisVec[0, 1] * s;
     z = axisVec[0, 2] * s;
   }
-  T abs() { return std::sqrt(w*w+x*x+y*y+z*z); }
+  Scalar abs() { return static_cast<Scalar>(std::sqrt(w*w+x*x+y*y+z*z)); }
 };
 
-template <typename T>
-std::ostream& operator<<(std::ostream& os, const Quaternion<T>& q)
+template <typename Scalar>
+std::ostream& operator<<(std::ostream& os, const Quaternion<Scalar>& q)
 {
   os << q.w << ", " << q.x << "i, " << q.y << "j, " << q.z << "k";
   return os;

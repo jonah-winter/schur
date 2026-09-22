@@ -31,7 +31,7 @@ struct Mult : MatrixBase
 
   auto operator[](this auto&& self, index_t r, index_t c) {
     val_t total{0};
-    for (index_t i{0}; i < self.rows(); i++) {
+    for (index_t i{0}; i < static_cast<index_t>(self.rows()); i++) {
       total += self.left[r, i] * self.right[i, c];
     }
     return total;

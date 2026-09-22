@@ -6,14 +6,14 @@
 
 namespace schur {
 namespace internal {
-template <index_t R, index_t C>
+template <msize_t R, msize_t C>
 Dimensions<Dynamic, Dynamic>::Dimensions(const Dimensions<R, C> &other)
 {
   rows_ = other.rows();
   cols_ = other.cols();
 }
 
-template <index_t R, index_t C>
+template <msize_t R, msize_t C>
 Dimensions<Dynamic, Dynamic> Dimensions<Dynamic, Dynamic>::operator=(const Dimensions<R, C>& other)
 {
   rows_ = other.rows();
@@ -21,31 +21,31 @@ Dimensions<Dynamic, Dynamic> Dimensions<Dynamic, Dynamic>::operator=(const Dimen
   return *this;
 }
 
-template<index_t _Rows> requires (valid_dim(_Rows))
-template<index_t R, index_t C>
-Dimensions<_Rows, Dynamic>::Dimensions(const Dimensions<R, C> &other)
+template<msize_t Rows> requires (valid_dim(Rows))
+template<msize_t R, msize_t C>
+Dimensions<Rows, Dynamic>::Dimensions(const Dimensions<R, C> &other)
 {
   cols_ = other.cols();
 }
 
-template<index_t _Rows> requires (valid_dim(_Rows))
-template<index_t R, index_t C>
-Dimensions<_Rows, Dynamic> Dimensions<_Rows, Dynamic>::operator=(const Dimensions<R, C> &other)
+template<msize_t Rows> requires (valid_dim(Rows))
+template<msize_t R, msize_t C>
+Dimensions<Rows, Dynamic> Dimensions<Rows, Dynamic>::operator=(const Dimensions<R, C> &other)
 {
   cols_ = other.cols();
   return *this;
 }
 
-template<index_t _Cols> requires (valid_dim(_Cols))
-template<index_t R, index_t C>
-Dimensions<Dynamic, _Cols>::Dimensions(const Dimensions<R, C> &other)
+template<msize_t Cols> requires (valid_dim(Cols))
+template<msize_t R, msize_t C>
+Dimensions<Dynamic, Cols>::Dimensions(const Dimensions<R, C> &other)
 {
   rows_ = other.rows();
 }
 
-template<index_t _Cols> requires (valid_dim(_Cols))
-template<index_t R, index_t C>
-Dimensions<Dynamic, _Cols> Dimensions<Dynamic, _Cols>::operator=(const Dimensions<R, C> &other)
+template<msize_t Cols> requires (valid_dim(Cols))
+template<msize_t R, msize_t C>
+Dimensions<Dynamic, Cols> Dimensions<Dynamic, Cols>::operator=(const Dimensions<R, C> &other)
 {
   rows_ = other.rows();
   return *this;

@@ -7,7 +7,7 @@
 
 namespace schur {
 namespace internal {
-constexpr bool valid_dims(index_t r, index_t c) {
+constexpr bool valid_dims(msize_t r, msize_t c) {
   if (r >= 0 && c >= 0) return true;
   if (r == Dynamic && c == Dynamic) return true;
   if (r == Dynamic && c >= 0) return true;
@@ -15,8 +15,8 @@ constexpr bool valid_dims(index_t r, index_t c) {
   return false;
 }
 
-template <typename _Container>
-index_t validate_list_cols(_Container& list)
+template <typename Container>
+msize_t validate_list_cols(Container& list)
 {
   if (list.size()) {
     return list.begin()->size();
@@ -25,7 +25,7 @@ index_t validate_list_cols(_Container& list)
 }
 
 template <typename T>
-index_t validate_list_cols(std::initializer_list<std::initializer_list<T>> list)
+msize_t validate_list_cols(std::initializer_list<std::initializer_list<T>> list)
 {
   if (list.size()) {
     return list.begin()->size();
@@ -33,16 +33,16 @@ index_t validate_list_cols(std::initializer_list<std::initializer_list<T>> list)
   return 0;
 }
 
-constexpr bool valid_dim(index_t dim) {
+constexpr bool valid_dim(msize_t dim) {
   return (dim >= 0 && dim <= SIZE_MAX) || dim == Dynamic;
 }
 
-constexpr auto construct_rows(index_t rows, size_t r)
+constexpr auto construct_rows(msize_t rows, size_t r)
 {
   return ((rows == -1) ? r : rows);
 }
 
-constexpr auto construct_cols(index_t cols, size_t c)
+constexpr auto construct_cols(msize_t cols, size_t c)
 {
   return ((cols == -1) ? c : cols);
 }

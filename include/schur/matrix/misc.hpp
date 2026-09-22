@@ -5,8 +5,8 @@
 #include "schur/matrix/Matrix_MainClass.hpp"
 
 namespace schur {
-template <typename T, index_t Rows, index_t Cols, Layout L>
-constexpr index_t construct_dims_rows_(const Matrix<T, Rows, Cols, L>& other)
+template <typename T, msize_t Rows, msize_t Cols, Layout L>
+constexpr msize_t construct_dims_rows(const Matrix<T, Rows, Cols, L>& other)
 {
   if constexpr (Rows == Dynamic) {
     return other.rows();
@@ -15,8 +15,8 @@ constexpr index_t construct_dims_rows_(const Matrix<T, Rows, Cols, L>& other)
     return Rows;
   }
 }
-template <typename T, index_t Rows, index_t Cols, Layout L>
-constexpr index_t construct_dims_cols_(const Matrix<T, Rows, Cols, L>& other)
+template <typename T, msize_t Rows, msize_t Cols, Layout L>
+constexpr msize_t construct_dims_cols(const Matrix<T, Rows, Cols, L>& other)
 {
   if constexpr (Cols == Dynamic) {
     return other.cols();
@@ -25,6 +25,8 @@ constexpr index_t construct_dims_cols_(const Matrix<T, Rows, Cols, L>& other)
     return Cols;
   }
 }
+
+// print for matrix
 template <internal::MatrixExpr Derived>
 std::ostream& operator<<(std::ostream& os, const Derived& m)
 {

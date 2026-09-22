@@ -34,19 +34,19 @@ template <typename Q>
 inline constexpr bool is_quaternion_v = is_quaternion<Q>::value;
 
 // forward declaration for is_matrix
-template <typename T, index_t Rows, index_t Cols, Layout L>
+template <typename T, msize_t Rows, msize_t Cols, Layout L>
 struct Matrix;
 
 // is_matrix_impl preserves const
 template <typename M>
 struct is_matrix_impl : std::false_type {};
 
-template <typename T, index_t Rows, index_t Cols, Layout L>
+template <typename T, msize_t Rows, msize_t Cols, Layout L>
 struct is_matrix_impl<Matrix<T, Rows, Cols, L>> : std::true_type {};
 
 // just checks if its a matrix
 template <typename M>
-struct is_matrix : is_matrix<std::remove_cv_t<M>> {};
+struct is_matrix : is_matrix_impl<std::remove_cvref_t<M>> {};
 
 template <typename M>
 inline constexpr bool is_matrix_v = is_matrix<M>::value;

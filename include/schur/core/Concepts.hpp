@@ -41,10 +41,10 @@ template <typename M>
 using operand_t = typename operand_storage<M>::type;
 
 template <typename M>
-inline constexpr index_t get_rows = std::remove_cvref_t<M>::dims_t::static_rows;
+inline constexpr msize_t get_rows = std::remove_cvref_t<M>::dims_t::static_rows;
 
 template <typename M>
-inline constexpr index_t get_cols = std::remove_cvref_t<M>::dims_t::static_cols;
+inline constexpr msize_t get_cols = std::remove_cvref_t<M>::dims_t::static_cols;
 
 template <typename L, typename R>
 concept SameDims =
@@ -56,17 +56,17 @@ concept SameDims =
   ||  get_cols<R> == Dynamic
   ||  get_cols<L> == get_cols<R>);
 
-template <typename _Dimensions>
-concept DimensionsType = requires(_Dimensions dims)
+template <typename Dimensions_>
+concept DimensionsType = requires(Dimensions_ dims)
 {
-  { _Dimensions::static_rows } -> std::same_as<size_t>;
-  { _Dimensions::static_cols } -> std::same_as<size_t>;
+  { Dimensions_::static_rows } -> std::same_as<msize_t>;
+  { Dimensions_::static_cols } -> std::same_as<msize_t>;
 };
 
-template <typename _Dimensions>
-struct _TransposeDims
+template <typename Dimensions_>
+struct TransposeDims
 {
-  using type = Dimensions<_Dimensions::static_cols, _Dimensions::static_rows>;
+  using type = Dimensions<Dimensions_::static_cols, Dimensions_::static_rows>;
 };
 } // namespace internal
 } // namespace schur

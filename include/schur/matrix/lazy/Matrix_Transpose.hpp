@@ -39,10 +39,10 @@ struct Transposed : MatrixBase
     return self.derived.rows();
   }
 
-  // size_t size() const
-  // {
-  //   return derived.rows() * derived.cols();
-  // }
+  size_t size() const
+  {
+    return derived.rows() * derived.cols();
+  }
 };
 } // namespace internal
 } // namespace schur

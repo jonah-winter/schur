@@ -6,11 +6,10 @@
 namespace schur {
 namespace internal {
 struct MatrixExprTag {};
-template <typename _Derived, typename _Scalar, index_t _Rows, index_t _Cols, Layout _Layout = Layout::ColMajor>
+template <typename Derived, typename Scalar, msize_t Rows, msize_t Cols, Layout L = Layout::ColMajor>
 struct MatrixBase
 {
   using matrix_expr_tag = MatrixExprTag;
-  using Derived = _Derived;
   //using this_t = std::remove_cvref_t<decltype(*this)>;
 
   // [[nodiscard]] Derived& derived();
@@ -18,13 +17,13 @@ struct MatrixBase
   [[nodiscard]] size_t rows(this auto&& self);
   [[nodiscard]] size_t cols(this auto&& self);
   [[nodiscard]] size_t size(this auto&& self);
-  [[nodiscard]] _Scalar* data(this auto&& self);
-  [[nodiscard]] constexpr Layout layout() { return _Layout; }
+  [[nodiscard]] Scalar* data(this auto&& self);
+  [[nodiscard]] constexpr Layout layout() { return L; }
 
   void init(this auto&& self);
-  void init(this auto&& self, index_t start, index_t end);
-  void init(this auto&& self, _Scalar val);
-  void init(this auto&& self, index_t start, index_t end, _Scalar val);
+  void init(this auto&& self, msize_t start, msize_t end);
+  void init(this auto&& self, Scalar val);
+  void init(this auto&& self, msize_t start, msize_t end, Scalar val);
 protected:
   MatrixBase() = default;
 }; // end of matrix struct

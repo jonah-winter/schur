@@ -5,8 +5,10 @@
 
 namespace schur {
 using index_t = std::ptrdiff_t;
+using msize_t = int32_t;
+using size_t = std::size_t;
 
-static constexpr index_t Dynamic = -1;
+static constexpr msize_t Dynamic = -1;
 
 enum class Layout
 {
