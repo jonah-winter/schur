@@ -11,14 +11,14 @@ requires(
       SameDims<std::remove_cvref_t<L>, std::remove_cvref_t<R>>
       && std::same_as<typename std::remove_cvref_t<L>::val_t,
       typename std::remove_cvref_t<R>::val_t>
-      && std::same_as<typename std::remove_cvref_t<L>::layout(), typename std::remove_cvref_t<R>::layout()>)
+    )//&& std::remove_cvref_t<L>::layout() == std::remove_cvref_t<R>::layout())
 struct AddView : MatrixBase
   <
     AddView<L, R>,
     get_rows<L>,
     get_cols<L>,
     typename std::remove_cvref_t<L>::val_t,
-    L::layout()
+    std::remove_cvref_t<L>::layout()
   >
 {
   using left_t  = operand_t<L>;
@@ -35,12 +35,12 @@ struct AddView : MatrixBase
     return self.left[r, c] + self.right[r, c];
   }
 
-  size_t rows()
+  size_t rows() const
   {
     return left.rows();
   }
 
-  size_t cols()
+  size_t cols() const
   {
     return left.cols();
   }

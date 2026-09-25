@@ -1,8 +1,8 @@
 #ifndef SCHUR_MATRIX_MULT_MAIN_HPP_
 #define SCHUR_MATRIX_MULT_MAIN_HPP_
 
-#include <concepts>
 #include "schur/core/Concepts.hpp"
+#include "schur/matrix/dimensions/Dimensions_DeclarationInternal.hpp"
 #include "schur/matrix/Matrix_BaseClass.hpp"
 
 namespace schur {
@@ -10,15 +10,14 @@ namespace internal {
 template <MatrixExpr L, MatrixExpr R>
 requires((get_cols<L> == Dynamic || get_cols<L> == get_rows<R>)
       && (get_rows<R> == Dynamic || get_cols<L> == get_rows<R>)
-      && std::same_as<typename std::remove_cvref_t<L>::val_t, typename std::remove_cvref_t<R>::val_t>
-      && std::same_as<typename std::remove_cvref_t<L>::layout(), typename std::remove_cvref_t<R>::layout()>)
+      && std::same_as<typename std::remove_cvref_t<L>::val_t, typename std::remove_cvref_t<R>::val_t>)//&& std::same_as<typename std::remove_cvref_t<L>::layout(), typename std::remove_cvref_t<R>::layout()>)
 struct Mult : MatrixBase
   <
     Mult<L, R>,
     get_rows<L>,
     get_cols<R>,
     typename std::remove_cvref_t<L>::val_t,
-    L::layout()
+    std::remove_cvref_t<L>::layout()
   >
 {
   using left_t  = operand_t<L>;
@@ -39,17 +38,17 @@ struct Mult : MatrixBase
     return total;
   }
 
-  size_t rows()
+  size_t rows() const
   {
     return left.rows();
   }
 
-  size_t cols()
+  size_t cols() const
   {
     return left.cols();
   }
 
-  size_t size()
+  size_t size() const
   {
     return left.rows() * left.cols();
   }

@@ -1,7 +1,7 @@
 #ifndef SCHUR_QUATERNION_HPP_
 #define SCHUR_QUATERNION_HPP_
 
-#include <complex>
+#include <type_traits>
 #include "schur/core/Numbers.hpp"
 #include "schur/matrix/Matrix"
 
@@ -26,12 +26,15 @@ struct Quaternion
     return Quaternion(A, B, C, D);
   }
 
+  Quaternion operator+(const Quaternion& q) const 
+  { return Quaternion(w + q.w, x + q.x, y + q.y, z + q.z); }
+
   Quaternion operator<=>(const Quaternion& q) const = default;
 
   void rotate(int angle, Matrix<1, 3, Scalar> axisVec)
   {
-    double s = std::sin(angle * pi<> / 360);
-    w = std::cos(angle * pi<> / 360);
+    double s = std::sin(angle * pi / 360);
+    w = std::cos(angle * pi / 360);
     x = axisVec[0, 0] * s;
     y = axisVec[0, 1] * s;
     z = axisVec[0, 2] * s;

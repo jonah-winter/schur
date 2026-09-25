@@ -3,7 +3,7 @@
 
 #include <vector>
 
-//#include <schur/matrix/Matrix_MainClass.hpp>
+#include <schur/matrix/Matrix_MainClass.hpp>
 
 namespace schur {
 template <msize_t Rows, msize_t Cols, typename Scalar, Layout L>

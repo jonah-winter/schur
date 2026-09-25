@@ -4,12 +4,12 @@
 #include <vector>
 
 #include "schur/matrix/lazy/Forward_Lazy.hpp"
-// #include "schur/matrix/dimensions/Dimensions_Include.hpp"
-// #include "schur/matrix/storage/Storage_Include.hpp"
+ #include "schur/matrix/dimensions/Dimensions_Include.hpp"
+ #include "schur/matrix/storage/Storage_Include.hpp"
 #include "schur/matrix/Matrix_BaseClass.hpp"
 #include "lazy/Matrix_Block.hpp"
 //#include "schur/matrix/mult/Matrix_MultMain.hpp"
-#include "schur/matrix/misc.hpp"
+//#include "schur/matrix/misc.hpp"
 
 namespace schur {
 template <msize_t Rows, msize_t Cols, typename Scalar = float,
@@ -19,6 +19,7 @@ struct Matrix : internal::MatrixBase<Matrix<Rows, Cols, Scalar, L>, Rows, Cols, 
   using Base   = internal::MatrixBase<Matrix, Rows, Cols, Scalar, L>;
   using dims_t = internal::Dimensions<Rows, Cols>;
   using val_t  = Scalar;
+  using main_matrix_tag = internal::MainMatrixTag;
 
   friend Base;
   template <msize_t OR, msize_t OC, typename OS, Layout OL>
@@ -55,6 +56,9 @@ public:
   template <msize_t OR, msize_t OC>
   requires((OR == Rows || OR == Dynamic || Rows == Dynamic) && (OC == Cols || OC == Dynamic || Cols == Dynamic))
   Matrix& operator=(const Matrix<OR, OC, Scalar, L>& other);
+
+  template <internal::MatrixExpr Derived>
+  Matrix(const Derived& other);
 
   [[nodiscard]] Scalar* begin() { return storage.data(); }
   [[nodiscard]] Scalar* end()   { return storage.data() + (*this).size(); }

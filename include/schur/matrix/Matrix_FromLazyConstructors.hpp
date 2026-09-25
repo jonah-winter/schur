@@ -3,6 +3,7 @@
 
 #include "schur/core/Concepts.hpp"
 #include "schur/matrix/Matrix_MainClass.hpp"
+#include "schur/matrix/eval.hpp"
 
 namespace schur {
 template <msize_t Rows, msize_t Cols, typename Scalar, Layout L>
@@ -19,6 +20,14 @@ Matrix<Rows, Cols, Scalar, L>
       (*this)[i, z] = block[i, z];
     }
   }
+}
+
+template <msize_t Rows, msize_t Cols, typename Scalar, Layout L>
+template <internal::MatrixExpr Derived>
+Matrix<Rows, Cols, Scalar, L>
+::Matrix(const Derived& other) 
+{
+  *this = eval(other);
 }
 } // namespace schur
 #endif //SCHUR_MATRIX_TO_LAZY_CONSTRUCTORS_HPP_

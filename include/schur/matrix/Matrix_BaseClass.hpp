@@ -5,11 +5,11 @@
 
 namespace schur {
 namespace internal {
-struct MatrixExprTag {};
 template <typename Derived, msize_t Rows, msize_t Cols, typename Scalar, Layout L>
 struct MatrixBase
 {
   using matrix_expr_tag = MatrixExprTag;
+  using main_matrix_tag = NonMainMatrixTag;
   //using this_t = std::remove_cvref_t<decltype(*this)>;
 
   // [[nodiscard]] Derived& derived();

@@ -5,6 +5,7 @@
 
 #include "schur/core/Concepts.hpp"
 #include "schur/matrix/Matrix_BaseClass.hpp"
+#include "schur/matrix/dimensions/Dimensions_DeclarationInternal.hpp"
 
 namespace schur {
 namespace internal {
@@ -30,14 +31,14 @@ struct Transposed : MatrixBase
     return self.derived[c, r];
   }
 
-  [[nodiscard]] size_t rows(this auto&& self)
+  [[nodiscard]] size_t rows() const
   {
-    return self.derived.cols();
+    return derived.cols();
   }
 
-  [[nodiscard]] size_t cols(this auto&& self)
+  [[nodiscard]] size_t cols() const
   {
-    return self.derived.rows();
+    return derived.rows();
   }
 
   size_t size() const

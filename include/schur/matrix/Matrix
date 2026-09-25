@@ -1,5 +1,6 @@
-#ifndef MATRIX_INCL
-#define MATRIX_INCL
+#ifndef SCHUR_MATRIX_INCL
+#define SCHUR_MATRIX_INCL
+#include "schur/core/Macros.hpp"
 #include "schur/matrix/dimensions/Dimensions_Include.hpp"
 #include "schur/matrix/storage/Storage_Include.hpp"
 #include "schur/matrix/Matrix_BaseClass.hpp"
@@ -15,4 +16,5 @@
 #include "schur/matrix/Matrix_Operations.hpp"
 #include "schur/matrix/Matrix_FromLazyConstructors.hpp"
 #include "schur/matrix/misc.hpp"
-#endif // MATRIX_INCL
+#include "schur/matrix/eval.hpp"
+#endif // SCHUR_MATRIX_INCL

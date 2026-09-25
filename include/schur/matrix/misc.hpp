@@ -1,6 +1,8 @@
 #ifndef SCHUR_MISC_HPP_
 #define SCHUR_MISC_HPP_
 
+#include <iostream>
+
 #include "schur/core/Types.hpp"
 #include "schur/matrix/Matrix_MainClass.hpp"
 
@@ -58,7 +60,7 @@ std::ostream& operator<<(std::ostream& os, const Derived& m)
   for (size_t idx{0}; idx < m.rows(); idx++) {
     os << "[";
     for (size_t idx2{0}; idx2 < m.cols(); idx2++) {
-      os << '(' << m[idx, idx2] << ')';
+      os << m[idx, idx2];
       if (idx2 + 1 < m.cols()) {
         os << ", ";
       } else {

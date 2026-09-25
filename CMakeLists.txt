@@ -6,10 +6,7 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-add_library(schur INTERFACE
-        include/schur/core/Numbers.hpp
-        include/schur/core/Range.hpp
-)
+add_library(schur INTERFACE)
 
 target_include_directories(schur INTERFACE
         ${CMAKE_CURRENT_SOURCE_DIR}/include
