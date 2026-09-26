@@ -8,7 +8,6 @@ namespace schur {
 template <internal::NonMatrixMatrixExpr M>
 auto eval(const M& m)
 {
-  using namespace schur;
   Matrix<internal::get_rows<M>, internal::get_cols<M>, typename M::val_t, M::layout()> t{m.rows(), m.cols()};
   for (msize_t i{0}; i < m.rows(); i++) {
     for (msize_t i2{0}; i2 < m.cols(); i2++) {
@@ -17,5 +16,7 @@ auto eval(const M& m)
   }
   return t;
 }
+template <msize_t Rows, msize_t Cols, typename Scalar, Layout L>
+auto eval(const Matrix<Rows, Cols, Scalar, L>& m) { return m; }
 } // namespace schur
 #endif // SCHUR_EVAL_HPP_
