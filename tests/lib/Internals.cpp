@@ -37,7 +37,7 @@ TEST(MATRIX_STORAGE, _COPY_CONSTRUCTOR)
   using namespace schur::internal;
   Storage<float> fir(10);
   Storage<float> sec = fir;
-  fir[0] = 100;
+  fir[0]             = 100;
   EXPECT_NE(sec[0], 100);
   EXPECT_EQ(fir[0], 100);
 }
@@ -63,7 +63,7 @@ TEST(MATRIX_STORAGE, _RESIZE)
 {
   using namespace schur::internal;
   Storage<float> fir(10);
-  size_t cap = fir.capacity();
+  size_t cap       = fir.capacity();
   size_t new_size1 = 3;
   fir.resize(new_size1);
   EXPECT_EQ(fir.size(), new_size1);
@@ -80,7 +80,7 @@ TEST(MATRIX_STORAGE, _RESERVE)
   size_t size = 10;
   Storage<float> storage_test(0);
   Storage<float> fir(size);
-  size_t cap = 16;
+  size_t cap      = 16;
   size_t new_cap1 = 20;
   EXPECT_EQ(fir.capacity(), cap);
   fir.reserve(new_cap1);

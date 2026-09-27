@@ -1,22 +1,12 @@
-add_executable(mat matrix_base_test.cpp
-)
+cmake_minimum_required(VERSION 3.20)
+project(SchurLibTest LANGUAGES CXX)
 
-#target_include_directories(mat PRIVATE
-#        ${CMAKE_SOURCE_DIR}/include
-#        ${CMAKE_SOURCE_DIR}/src
-#        ${CMAKE_SOURCE_DIR})
+add_subdirectory(.. schur)
+add_subdirectory(lib lib)
+add_subdirectory(package pkg)
+find_package(GTest REQUIRED)
+find_package(benchmark REQUIRED)
 
-target_link_libraries(mat PRIVATE schur)
-target_include_directories(mat PRIVATE ${CMAKE_SOURCE_DIR}/include ${CMAKE_SOURCE_DIR}/src)
-
-target_sources(mat PRIVATE
-#        ${CMAKE_SOURCE_DIR}/include/schur/dimensions/Dimensions_Validate.hpp
-#        ${CMAKE_SOURCE_DIR}/src/Dimensions_DynamicSafeFuncs.hpp
-#        ${CMAKE_SOURCE_DIR}/include/schur/storage/Storage_ConstructorsImpl.hpp
-#        ${CMAKE_SOURCE_DIR}/include/schur/storage/Storage_SafeFuncs.hpp
-#        ${CMAKE_SOURCE_DIR}/include/schur/storage/Storage_UnsafeFuncs.hpp
-#        ${CMAKE_SOURCE_DIR}/include/schur/matrix/Matrix_MainConstructors.hpp
-        )
 #find_package(benchmark REQUIRED)
 
 #add_executable(bench test_funcs.cpp)

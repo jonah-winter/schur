@@ -7,19 +7,19 @@
 
 namespace schur {
 namespace internal {
-template <MatrixExpr L, MatrixExpr R>
-requires((get_cols<L> == Dynamic || get_cols<L> == get_rows<R>)
-      && (get_rows<R> == Dynamic || get_cols<L> == get_rows<R>)
-      && std::same_as<typename std::remove_cvref_t<L>::val_t, typename std::remove_cvref_t<R>::val_t>)//&& std::same_as<typename std::remove_cvref_t<L>::layout(), typename std::remove_cvref_t<R>::layout()>)
+template<MatrixExpr L, MatrixExpr R>
+  requires((get_cols<L> == Dynamic || get_cols<L> == get_rows<R>)
+           && (get_rows<R> == Dynamic || get_cols<L> == get_rows<R>)
+           && std::same_as<typename std::remove_cvref_t<L>::val_t, typename std::remove_cvref_t<R>::val_t>)
+//&& std::same_as<typename std::remove_cvref_t<L>::layout(), typename std::remove_cvref_t<R>::layout()>)
 struct Mult : MatrixBase
-  <
-    Mult<L, R>,
-    get_rows<L>,
-    get_cols<R>,
-    typename std::remove_cvref_t<L>::val_t,
-    std::remove_cvref_t<L>::layout()
-  >
-{
+    <
+      Mult<L, R>,
+      get_rows<L>,
+      get_cols<R>,
+      typename std::remove_cvref_t<L>::val_t,
+      std::remove_cvref_t<L>::layout()
+    > {
   using left_t  = operand_t<L>;
   using right_t = operand_t<R>;
   using val_t   = typename std::remove_cvref_t<L>::val_t;
@@ -30,28 +30,18 @@ struct Mult : MatrixBase
 
   Mult(L&& l, R&& r) : left(std::forward<L>(l)), right(std::forward<R>(r)) {}
 
-  auto operator[](this auto&& self, index_t r, index_t c) {
+  auto operator[](this auto&& self, index_t r, index_t c)
+  {
     val_t total{0};
-    for (index_t i{0}; i < static_cast<index_t>(self.rows()); i++) {
-      total += self.left[r, i] * self.right[i, c];
-    }
+    for(index_t i{0}; i < static_cast<index_t>(self.rows()); i++) { total += self.left[r, i] * self.right[i, c]; }
     return total;
   }
 
-  size_t rows() const
-  {
-    return left.rows();
-  }
+  size_t rows() const { return left.rows(); }
 
-  size_t cols() const
-  {
-    return left.cols();
-  }
+  size_t cols() const { return left.cols(); }
 
-  size_t size() const
-  {
-    return left.rows() * left.cols();
-  }
+  size_t size() const { return left.rows() * left.cols(); }
 };
 } // namespace internal
 } // namespace schur

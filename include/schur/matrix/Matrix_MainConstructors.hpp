@@ -6,85 +6,81 @@
 #include <schur/matrix/Matrix_MainClass.hpp>
 
 namespace schur {
-template <msize_t Rows, msize_t Cols, typename Scalar, Layout L>
+template<msize_t Rows, msize_t Cols, typename Scalar, Layout L>
 Matrix<Rows, Cols, Scalar, L>
-::Matrix(std::initializer_list<std::initializer_list<Scalar>> list)
+::Matrix(std::initializer_list<std::initializer_list<Scalar> > list)
   : dims(list.size(), internal::validate_list_cols(list)), storage(list.size() * internal::validate_list_cols(list))
 {
   size_t r = list.size();
   size_t c = internal::validate_list_cols(list);
-  if (has_fixed_rows && Rows != r) { throw std::invalid_argument("wrong amount of rows"); }
-  if (has_fixed_cols && Cols != c) { throw std::invalid_argument("wrong amount of cols"); }
-  for (size_t i{0}; i < r; i++) {
-    for (size_t z{0}; z < c; z++) {
-      if (list.begin()[i].size() != dims.cols()) throw std::logic_error("varying column sizes");
+  if(has_fixed_rows && Rows != r) { throw std::invalid_argument("wrong amount of rows"); }
+  if(has_fixed_cols && Cols != c) { throw std::invalid_argument("wrong amount of cols"); }
+  for(size_t i{0}; i < r; i++) {
+    for(size_t z{0}; z < c; z++) {
+      if(list.begin()[i].size() != dims.cols()) throw std::logic_error("varying column sizes");
       (*this)[i, z] = list.begin()[i].begin()[z];
     }
   }
 }
 
-template <msize_t Rows, msize_t Cols, typename Scalar, Layout L>
+template<msize_t Rows, msize_t Cols, typename Scalar, Layout L>
 Matrix<Rows, Cols, Scalar, L>
-::Matrix(std::vector<std::vector<Scalar>> list)
+::Matrix(std::vector<std::vector<Scalar> > list)
   : dims(list.size(), internal::validate_list_cols(list)), storage(list.size() * internal::validate_list_cols(list))
 {
   size_t r = list.size();
   size_t c = list.begin()->size();
-  if (has_fixed_rows && Rows != r) { throw std::invalid_argument("wrong amount of rows"); }
-  if (has_fixed_cols && Cols != c) { throw std::invalid_argument("wrong amount of cols"); }
+  if(has_fixed_rows && Rows != r) { throw std::invalid_argument("wrong amount of rows"); }
+  if(has_fixed_cols && Cols != c) { throw std::invalid_argument("wrong amount of cols"); }
 
-  if (list.size() != dims.rows()) throw std::logic_error("wrong amount of rows");
-  for (size_t i{0}; i < r; i++) {
-    for (size_t z{0}; z < c; z++) {
-      if (list[i].size() != dims.cols()) throw std::logic_error("varying or incorrect column sizes");
+  if(list.size() != dims.rows()) throw std::logic_error("wrong amount of rows");
+  for(size_t i{0}; i < r; i++) {
+    for(size_t z{0}; z < c; z++) {
+      if(list[i].size() != dims.cols()) throw std::logic_error("varying or incorrect column sizes");
       (*this)[i, z] = list[i][z];
     }
   }
 }
 
-template <msize_t Rows, msize_t Cols, typename Scalar, Layout L>
-template <size_t arrRows, size_t arrCols>
+template<msize_t Rows, msize_t Cols, typename Scalar, Layout L>
+template<size_t arrRows, size_t arrCols>
 Matrix<Rows, Cols, Scalar, L>
 ::Matrix(std::array<std::array<Scalar, arrCols>, arrRows> list)
   : dims(Rows, Cols), storage(Rows * Cols)
 {
-  if constexpr (has_fixed_rows) static_assert(Rows == arrRows);
-  if constexpr (has_fixed_cols) static_assert(Cols == arrCols);
+  if constexpr(has_fixed_rows) static_assert(Rows == arrRows);
+  if constexpr(has_fixed_cols) static_assert(Cols == arrCols);
 
-  if (list.size() != dims.rows()) throw std::logic_error("wrong amount of rows");
-  if (internal::validate_list_cols(list) != dims.cols()) throw std::logic_error("wrong amount or varying cols");
-  for (size_t i{0}; i < arrRows; i++) {
-    for (size_t z{0}; z < arrCols; z++) {
-      (*this)[i, z] = list[i][z];
-    }
-  }
+  if(list.size() != dims.rows()) throw std::logic_error("wrong amount of rows");
+  if(internal::validate_list_cols(list) != dims.cols()) throw std::logic_error("wrong amount or varying cols");
+  for(size_t i{0}; i < arrRows; i++) { for(size_t z{0}; z < arrCols; z++) { (*this)[i, z] = list[i][z]; } }
 }
 
-template <msize_t Rows, msize_t Cols, typename Scalar, Layout L>
-template <msize_t R, msize_t C>
-requires((R == Rows || R == Dynamic) && (C == Cols || C == Dynamic))
+template<msize_t Rows, msize_t Cols, typename Scalar, Layout L>
+template<msize_t R, msize_t C>
+  requires((R == Rows || R == Dynamic) && (C == Cols || C == Dynamic))
 Matrix<Rows, Cols, Scalar, L>
 ::Matrix(const Matrix<R, C, Scalar, L>& other)
 {
-  if (R == Dynamic && Rows != Dynamic && other.rows() != Rows) { throw std::logic_error("wrong row size currently"); }
-  if (C == Dynamic && Cols != Dynamic && other.cols() != Cols) { throw std::logic_error("wrong col size currently"); }
-  dims = other.dims;
+  if(R == Dynamic && Rows != Dynamic && other.rows() != Rows) { throw std::logic_error("wrong row size currently"); }
+  if(C == Dynamic && Cols != Dynamic && other.cols() != Cols) { throw std::logic_error("wrong col size currently"); }
+  dims    = other.dims;
   storage = other.storage;
 }
 
-template <msize_t Rows, msize_t Cols, typename Scalar, Layout L>
-template <msize_t R, msize_t C>
-requires((R == Rows || R == Dynamic || Rows == Dynamic) && (C == Cols || C == Dynamic || Cols == Dynamic))
+template<msize_t Rows, msize_t Cols, typename Scalar, Layout L>
+template<msize_t R, msize_t C>
+  requires((R == Rows || R == Dynamic || Rows == Dynamic) && (C == Cols || C == Dynamic || Cols == Dynamic))
 Matrix<Rows, Cols, Scalar, L>& Matrix<Rows, Cols, Scalar, L>::operator=(const Matrix<R, C, Scalar, L>& other)
 {
-  if (R == Dynamic && Rows != Dynamic && other.rows() != Rows) { throw std::logic_error("wrong row size currently"); }
-  if (C == Dynamic && Cols != Dynamic && other.cols() != Cols) { throw std::logic_error("wrong col size currently"); }
-  dims = other.dims;
+  if(R == Dynamic && Rows != Dynamic && other.rows() != Rows) { throw std::logic_error("wrong row size currently"); }
+  if(C == Dynamic && Cols != Dynamic && other.cols() != Cols) { throw std::logic_error("wrong col size currently"); }
+  dims    = other.dims;
   storage = other.storage;
   return *this;
 }
 
-template <msize_t Rows, msize_t Cols, typename Scalar, Layout L>
+template<msize_t Rows, msize_t Cols, typename Scalar, Layout L>
 Matrix<Rows, Cols, Scalar, L>& Matrix<Rows, Cols, Scalar, L>::operator=(const Matrix<Rows, Cols, Scalar, L>& other)
 {
   storage = other.storage;

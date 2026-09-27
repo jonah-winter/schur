@@ -10,8 +10,7 @@
 
 namespace matrix {
 namespace internal {
-
-template <typename T>
+template<typename T>
 struct Storage {
   // STRUCT VARIABLES //
 private:
@@ -29,32 +28,28 @@ public:
   explicit Storage(size_t s)
     : data_{nullptr}, size_{s}, capacity_{1}
   {
-    if (s) [[likely]] {
+    if(s) [[likely]] {
       capacity_ = grow_cap_(s);
-      data_ = alloc_.allocate(capacity_);
+      data_     = alloc_.allocate(capacity_);
     }
   }
 
   Storage(size_t r, size_t c)
-    : data_{nullptr}, size_{r * c} 
+    : data_{nullptr}, size_{r * c}
   {
-    if (r * c) [[likely]] {
+    if(r * c) [[likely]] {
       capacity_ = grow_cap_(r * c);
-      data_ = alloc_.allocate(capacity_);
-    } else {
-      capacity_ = 1;
-    }
+      data_     = alloc_.allocate(capacity_);
+    } else { capacity_ = 1; }
   }
 
   // big 5 //
 
   // destructor
-  ~Storage() 
+  ~Storage()
   {
-    if (data_ != nullptr) [[likely]] {
-      for (size_t i{0}; i < size_; i++) {
-        alloc_.destroy(data_ + i);
-      }
+    if(data_ != nullptr) [[likely]] {
+      for(size_t i{0}; i < size_; i++) { alloc_.destroy(data_ + i); }
       alloc_.deallocate(data_, capacity_);
     }
   }
@@ -65,29 +60,29 @@ public:
       size_{storage.size_},
       capacity_{storage.capacity_}
   {
-    if (capacity_ > 1) {
+    if(capacity_ > 1) {
       data_ = alloc_.allocate(storage.capacity_);
       copy_init_(storage.data_, 0, storage.size_);
     }
   }
 
   // copy assignment
-  Storage& operator=(const Storage& storage) 
+  Storage& operator=(const Storage& storage)
   {
-    if (this == &storage) return *this;
-    
-    if (capacity_ < storage.size_) {
-      size_t new_cap_ = grow_cap_(storage.size_);
-      T* new_ = alloc_.allocate(new_cap_);
+    if(this == &storage) return *this;
 
-      for (size_t i{0}; i < storage.size_; i++) {
+    if(capacity_ < storage.size_) {
+      size_t new_cap_ = grow_cap_(storage.size_);
+      T* new_         = alloc_.allocate(new_cap_);
+
+      for(size_t i{0}; i < storage.size_; i++) {
         alloc_.construct(new_ + i, storage[i]);
         alloc_.destroy(data_ + i);
       }
       alloc_.deallocate(data_, capacity_);
-      data_ = new_;
+      data_     = new_;
       capacity_ = new_cap_;
-      size_ = storage.size_;
+      size_     = storage.size_;
     } else {
       copy_init_(storage.data_, 0, storage.size_);
       size_ = storage.size_;
@@ -101,24 +96,22 @@ public:
       size_{storage.size_},
       capacity_{storage.capacity_}
   {
-    storage.data_ = nullptr;
-    storage.size_ = 0;
+    storage.data_     = nullptr;
+    storage.size_     = 0;
     storage.capacity_ = 1;
   }
 
   // move assignment
   Storage& operator=(Storage&& storage) noexcept
   {
-    if (this == &storage) return *this;
-    if (data_ != nullptr) {
-      alloc_.deallocate(data_, capacity_);
-    }
-    data_ = storage.data_;
-    size_ = storage.size_;
+    if(this == &storage) return *this;
+    if(data_ != nullptr) { alloc_.deallocate(data_, capacity_); }
+    data_     = storage.data_;
+    size_     = storage.size_;
     capacity_ = storage.capacity_;
 
-    storage.data_ = nullptr;
-    storage.size_ = 0;
+    storage.data_     = nullptr;
+    storage.size_     = 0;
     storage.capacity_ = 1;
     return *this;
   }
@@ -133,18 +126,16 @@ public:
   void resize_(size_t i, const T& val)
   {
     reserve_(i);
-    for (size_t z{size_}; z < i; z++) {
-      data_[i] = val;
-    }
+    for(size_t z{size_}; z < i; z++) { data_[i] = val; }
     size_ = i;
   }
 
   void reserve_(size_t i)
   {
-    if (i <= capacity_) return;
+    if(i <= capacity_) return;
     T* old_ = data_;
-    data_ = alloc_.allocate(i);
-    for (size_t z{0}; z < size_; z++) {
+    data_   = alloc_.allocate(i);
+    for(size_t z{0}; z < size_; z++) {
       alloc_.construct(data_ + z, old_[z]);
       alloc_.destroy(old_ + z);
     }
@@ -154,40 +145,24 @@ public:
 
   void init_(size_t start, size_t end)
   {
-    for (size_t i{0}; i < size_; i++) {
-      alloc_.construct(data_ + i, static_cast<T>(0));
-    }
+    for(size_t i{0}; i < size_; i++) { alloc_.construct(data_ + i, static_cast<T>(0)); }
   }
-  
-  void init_()
-  {
-    for (size_t i{0}; i < size_; i++) {
-      alloc_.construct(data_ + i, static_cast<T>(0));
-    }
-  }
+
+  void init_() { for(size_t i{0}; i < size_; i++) { alloc_.construct(data_ + i, static_cast<T>(0)); } }
 
   void init_checked_(size_t start, size_t end)
   {
-    if (start > end || start > size_) throw std::logic_error("start should be less than end and size");
-    if (end > size_) throw std::logic_error("end must be equal to or less than size");
-    for (size_t i{0}; i < size_; i++) {
-      alloc_.construct(data_ + i, static_cast<T>(0));
-    }
+    if(start > end || start > size_) throw std::logic_error("start should be less than end and size");
+    if(end > size_) throw std::logic_error("end must be equal to or less than size");
+    for(size_t i{0}; i < size_; i++) { alloc_.construct(data_ + i, static_cast<T>(0)); }
   }
 
   void copy_init_(T* arr, size_t start, size_t end)
   {
-    for (size_t i{0}; i < size_; i++) {
-      alloc_.construct(data_ + i, arr[i]);
-    }
+    for(size_t i{0}; i < size_; i++) { alloc_.construct(data_ + i, arr[i]); }
   }
-  
-  void copy_(T* arr, size_t start, size_t end)
-  {
-    for (size_t i{start}; i < end; i++) {
-      data_[i] = arr[i - start];
-    }
-  }
+
+  void copy_(T* arr, size_t start, size_t end) { for(size_t i{start}; i < end; i++) { data_[i] = arr[i - start]; } }
 
   size_t grow_cap_(size_t s) const
   {
@@ -212,14 +187,14 @@ public:
   // dont resize, checked
   [[nodiscard]] T& at_(size_t i)
   {
-    if (i >= get_size_()) throw std::out_of_range("index is out of bounds");
+    if(i >= get_size_()) throw std::out_of_range("index is out of bounds");
     return data_[i];
   }
 
   // dont resize, checked, view only
   [[nodiscard]] const T& at_(size_t i) const
   {
-    if (i >= get_size_()) throw std::out_of_range("index is out of bounds");
+    if(i >= get_size_()) throw std::out_of_range("index is out of bounds");
     return data_[i];
   }
 

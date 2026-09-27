@@ -7,18 +7,19 @@
 namespace schur {
 using index_t = std::ptrdiff_t;
 using msize_t = int32_t;
-using size_t = std::size_t;
+using size_t  = std::size_t;
 
 static constexpr msize_t Dynamic = -1;
 
 namespace internal {
 struct MatrixExprTag {};
+
 struct MainMatrixTag {};
+
 struct NonMainMatrixTag {};
 }
 
-enum class Layout
-{
+enum class Layout {
   ColMajor = 0,
   RowMajor = 1
 };

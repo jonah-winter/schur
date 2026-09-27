@@ -8,49 +8,49 @@
 
 namespace schur {
 namespace internal {
-template <typename T>
+template<typename T>
 struct Quaternion;
 
 // TODO: Eventually expand to complex numbers
-template <typename T>
+template<typename T>
 struct is_valid_storage_type : std::false_type {};
 
-template <typename T>
-requires(std::is_arithmetic_v<T>)
+template<typename T>
+  requires(std::is_arithmetic_v<T>)
 struct is_valid_storage_type<T> : std::true_type {};
 
-template <typename Q>
-requires(std::is_arithmetic_v<Q>)
-struct is_valid_storage_type<Quaternion<Q>> : std::true_type {};
+template<typename Q>
+  requires(std::is_arithmetic_v<Q>)
+struct is_valid_storage_type<Quaternion<Q> > : std::true_type {};
 
-template <typename T>
+template<typename T>
 inline constexpr bool is_valid_storage_type_v = is_valid_storage_type<T>::value;
 
-template <typename Q>
+template<typename Q>
 struct is_quaternion : std::false_type {};
 
-template <typename Q>
-struct is_quaternion<Quaternion<Q>> : std::true_type {};
+template<typename Q>
+struct is_quaternion<Quaternion<Q> > : std::true_type {};
 
-template <typename Q>
+template<typename Q>
 inline constexpr bool is_quaternion_v = is_quaternion<Q>::value;
 
 // forward declaration for is_matrix
-template <typename T, msize_t Rows, msize_t Cols, Layout L>
+template<typename T, msize_t Rows, msize_t Cols, Layout L>
 struct Matrix;
 
 // is_matrix_impl preserves const
-template <typename M>
+template<typename M>
 struct is_matrix_impl : std::false_type {};
 
-template <typename T, msize_t Rows, msize_t Cols, Layout L>
-struct is_matrix_impl<Matrix<T, Rows, Cols, L>> : std::true_type {};
+template<typename T, msize_t Rows, msize_t Cols, Layout L>
+struct is_matrix_impl<Matrix<T, Rows, Cols, L> > : std::true_type {};
 
 // just checks if its a matrix
-template <typename M>
-struct is_matrix : is_matrix_impl<std::remove_cvref_t<M>> {};
+template<typename M>
+struct is_matrix : is_matrix_impl<std::remove_cvref_t<M> > {};
 
-template <typename M>
+template<typename M>
 inline constexpr bool is_matrix_v = is_matrix<M>::value;
 }
 } // namespace schur

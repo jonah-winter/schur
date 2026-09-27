@@ -75,16 +75,11 @@ int main(int argc, char* argv[])
   using Matrix4i = Matrix<4, 4, int>;
 
   Matrix<4, 4> m = {
-    {1,  2,  3,  4},
-    {5,  6,  7,  8},
-    {9,  10, 11, 12},
+    {1, 2, 3, 4},
+    {5, 6, 7, 8},
+    {9, 10, 11, 12},
     {13, 14, 15, 16}
   };
-  
-  Matrix<4, 4> m2 = m;
-  Matrix<4, 4> m3 = m + m2;
-  std::cout << m2 << '\n';
-  std::cout << eval(m + m2) << '\n';
-  std::cout << m3 << '\n';
+  std::cout << m << '\n';;
   return 0;
 }

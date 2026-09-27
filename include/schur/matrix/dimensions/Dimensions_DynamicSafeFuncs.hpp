@@ -6,8 +6,9 @@
 
 namespace schur {
 namespace internal {
-inline bool Dimensions<Dynamic, Dynamic>::valid_dims_overflow() const {
-  if (rows_ == 0 || cols_ <= SIZE_MAX / rows_) return true;
+inline bool Dimensions<Dynamic, Dynamic>::valid_dims_overflow() const
+{
+  if(rows_ == 0 || cols_ <= SIZE_MAX / rows_) return true;
   return false;
 }
 } // namespace internal

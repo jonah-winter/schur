@@ -6,8 +6,7 @@
 
 namespace schur {
 namespace internal {
-
-template <storage_t T>
+template<storage_t T>
 struct Storage {
   // STRUCT VARIABLES //
 private:
@@ -22,11 +21,17 @@ public:
   Storage() : data_{nullptr}, size_{}, capacity_{1} {}
 
   explicit Storage(size_t s);
+
   Storage(size_t r, size_t c);
+
   Storage(const Storage& other);
+
   Storage(Storage&& other) noexcept;
+
   ~Storage();
+
   Storage& operator=(const Storage& other);
+
   Storage& operator=(Storage&& other) noexcept;
 
   // FUNCTIONS //
@@ -40,20 +45,33 @@ public:
    * really a point for an unsafe version */
 
   auto& at(this auto&& self, index_t i);
+
   auto& data(this auto&& self);
+
   void resize(size_t s);
+
   void reserve(size_t s);
+
 private:
   void reserve_copy(size_t s);
+
   void reserve_move(size_t s);
+
   size_t grow_cap(size_t s) const;
+
   void delete_data();
+
 public:
   void init();
+
   void init(index_t start, index_t end);
+
   void init(T val);
+
   void init(index_t start, index_t end, T val);
+
   size_t size() const;
+
   size_t capacity() const;
 };
 } // namespace internal
