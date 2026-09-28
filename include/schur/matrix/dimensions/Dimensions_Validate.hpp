@@ -26,29 +26,31 @@ constexpr internal::ValidDimStates_ valid_dims_specific(msize_t r, msize_t c)
   return V::INVALID_DIMS;
 }
 
+namespace internal {
 template<msize_t Rows, msize_t Cols>
-  requires(internal::valid_dims(Rows, Cols))
-bool internal::Dimensions<Rows, Cols>::valid_dims_overflow() const
+  requires(valid_dims(Rows, Cols))
+bool Dimensions<Rows, Cols>::valid_dims_overflow() const
 {
   if(Rows == 0 || Cols <= SIZE_MAX / Rows) return true;
   return false;
 }
 
 template<msize_t Rows>
-  requires(internal::valid_dim(Rows))
-bool internal::Dimensions<Rows, Dynamic>::valid_dims_overflow() const
+  requires(valid_dim(Rows))
+bool Dimensions<Rows, Dynamic>::valid_dims_overflow() const
 {
   if(Rows == 0 || cols_ <= SIZE_MAX / Rows) return true;
   return false;
 }
 
 template<msize_t Cols>
-  requires(internal::valid_dim(Cols))
-bool internal::Dimensions<Dynamic, Cols>::valid_dims_overflow() const
+  requires(valid_dim(Cols))
+bool Dimensions<Dynamic, Cols>::valid_dims_overflow() const
 {
   if(rows_ == 0 || Cols <= SIZE_MAX / rows_) return true;
   return false;
 }
+} // namespace internal
 
 inline size_t calculate_dims(msize_t r, msize_t c)
 {

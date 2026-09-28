@@ -1,8 +1,8 @@
 #ifndef SCHUR_MATRIX_OPERATIONS_HPP_
 #define SCHUR_MATRIX_OPERATIONS_HPP_
 
-#include <schur/core/Concepts.hpp>
-#include <schur/matrix/Matrix_MainClass.hpp>
+#include "schur/core/Concepts.hpp"
+#include "schur/matrix/Matrix_MainClass.hpp"
 
 namespace schur {
 // template <typename T, index_t Rows, index_t Cols, Layout L>
@@ -11,8 +11,8 @@ namespace schur {
 //   return BlockView<T, L>(this, start_rows, start_cols, rows, cols);
 // }
 template<internal::MatrixExpr D>
-[[nodiscard]] auto block(D&& d, size_t start_rows, size_t start_cols, size_t rows, size_t cols)
-  -> BlockView<typename std::remove_cvref_t<D>::val_t, d.layout()>
+auto block(D&& d, size_t start_rows, size_t start_cols, size_t rows, size_t cols)
+  -> BlockView<typename std::remove_cvref_t<D>::val_t, D::layout()>
 {
   return BlockView<typename std::remove_cvref_t<D>::val_t, d.layout()>(&d, start_rows, start_cols, rows, cols);
 }

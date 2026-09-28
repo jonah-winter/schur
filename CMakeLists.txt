@@ -4,6 +4,9 @@ project(schur_
         VERSION 0.2.0
         LANGUAGES CXX)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+option(SCHUR_TEST_EXE "Build Schur tests" ON)
+
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 
@@ -11,8 +14,9 @@ add_library(schur_ INTERFACE)
 add_library(Schur::Schur ALIAS schur_)
 
 target_compile_features(schur_ INTERFACE cxx_std_23)
+
 target_include_directories(schur_ INTERFACE
-  # build_interface is for developer use when changing from project dir
+  # build_interface is for developer use when editing from project dir
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
 
   # from GNU install dirs, makes sure that package is being 
@@ -51,3 +55,7 @@ install(
     ${CMAKE_CURRENT_BINARY_DIR}/SchurConfigVersion.cmake
   DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/Schur
 )
+
+if(${SCHUR_TEST_EXE})
+  add_subdirectory(tests)
+endif()
