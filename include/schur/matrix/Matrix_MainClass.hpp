@@ -1,7 +1,9 @@
 #ifndef SCHUR_MATRIX_MAIN_CLASS_HPP_
 #define SCHUR_MATRIX_MAIN_CLASS_HPP_
 
+#if SCHUR_FREESTANDING == 0
 #include <vector>
+#endif // SCHUR_FREESTANDING == 0
 
 #include "schur/matrix/lazy/Forward_Lazy.hpp"
 #include "schur/matrix/dimensions/Dimensions_Include.hpp"
@@ -12,12 +14,35 @@
 //#include "schur/matrix/misc.hpp"
 
 namespace schur {
+namespace internal {
+template<typename T, msize_t Rows, msize_t Cols>
+struct mat_storage_t {
+  using type = internal::FixedStorage<T, Rows * Cols>;
+};
+
+template<typename T, msize_t Rows>
+struct mat_storage_t<T, Rows, Dynamic> {
+  using type = internal::Storage<T>;
+};
+
+template<typename T, msize_t Cols>
+struct mat_storage_t<T, Dynamic, Cols> {
+  using type = internal::Storage<T>;
+};
+
+template<typename T>
+struct mat_storage_t<T, Dynamic, Dynamic> {
+  using type = internal::Storage<T>;
+};
+} // namespace internal
+
 template<msize_t Rows, msize_t Cols, typename Scalar = float,
          Layout L = Layout::ColMajor>
 struct Matrix : internal::MatrixBase<Matrix<Rows, Cols, Scalar, L>, Rows, Cols, Scalar, L> {
   using Base            = internal::MatrixBase<Matrix, Rows, Cols, Scalar, L>;
   using dims_t          = internal::Dimensions<Rows, Cols>;
   using val_t           = Scalar;
+  using mat_storage_t   = internal::mat_storage_t<Scalar, Rows, Cols>::type;
   using main_matrix_tag = internal::MainMatrixTag;
 
   friend Base;
@@ -26,7 +51,7 @@ struct Matrix : internal::MatrixBase<Matrix<Rows, Cols, Scalar, L>, Rows, Cols, 
 
 private:
   dims_t dims;
-  internal::Storage<Scalar> storage;
+  mat_storage_t storage;
   static constexpr bool has_fixed_rows = dims_t::has_fixed_rows;
   static constexpr bool has_fixed_cols = dims_t::has_fixed_cols;
 
@@ -40,15 +65,17 @@ public:
   explicit Matrix(size_t dim)
     : dims(dim), storage(internal::Dimensions<Rows, Cols>::size(dim)) {}
 
+#if SCHUR_FREESTANDING == 0
   Matrix(std::initializer_list<std::initializer_list<Scalar> > list);
 
   Matrix(std::vector<std::vector<Scalar> > list);
 
   template<size_t arrRows, size_t arrCols>
   Matrix(std::array<std::array<Scalar, arrCols>, arrRows> arr);
+#endif // SCHUR_FREESTANDING == 0
 
   Matrix(const Matrix& other)
-    : storage(other.storage), dims(construct_dims_rows(other), construct_dims_cols(other)) {}
+    : dims(construct_dims_rows(other), construct_dims_cols(other)), storage(other.storage)  {}
 
   Matrix(Matrix&&) noexcept = default;
 

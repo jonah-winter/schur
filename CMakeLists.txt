@@ -6,12 +6,16 @@ project(schur_
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 option(SCHUR_TEST_EXE "Build Schur tests" ON)
+option(SCHUR_FREESTANDING "Freestanding version for OS/no deps" OFF)
 
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 
 add_library(schur_ INTERFACE)
 add_library(Schur::Schur ALIAS schur_)
+
+target_compile_definitions(schur_ INTERFACE
+        SCHUR_FREESTANDING=$<BOOL:${SCHUR_FREESTANDING}>)
 
 target_compile_features(schur_ INTERFACE cxx_std_23)
 

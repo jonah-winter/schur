@@ -55,6 +55,30 @@ template <schur::msize_t Rows, schur::msize_t Cols, typename Scalar, schur::Layo
 schur::Matrix<Rows, Cols, Scalar, L>& eval(const schur::Matrix<Rows, Cols, Scalar, L>& m) { return &(m); }
 */
 
+void* operator new(std::size_t n) {
+  std::cout << "heap alloc\n";
+  void* ptr = std::malloc(n);
+  if(!ptr) { throw std::bad_alloc(); }
+  return ptr;
+}
+
+void operator delete(void* p) noexcept {
+  std::cout << "heap delete\n";
+  std::free(p);
+}
+
+void* operator new[](std::size_t n) {
+  std::cout << "arr heap alloc\n";
+  void* ptr = std::malloc(n);
+  if(!ptr) { throw std::bad_alloc(); }
+  return ptr;
+}
+
+void operator delete[](void* p) noexcept {
+  std::cout << "arr heap delete\n";
+  std::free(p);
+}
+
 int main(int argc, char* argv[])
 {
   using namespace schur;
@@ -74,12 +98,5 @@ int main(int argc, char* argv[])
   using Matrix4f = Matrix<4, 4, float>;
   using Matrix4i = Matrix<4, 4, int>;
 
-  Matrix<4, 4> m = {
-    {1, 2, 3, 4},
-    {5, 6, 7, 8},
-    {9, 10, 11, 12},
-    {13, 14, 15, 16}
-  };
-  std::cout << m << '\n';;
   return 0;
 }

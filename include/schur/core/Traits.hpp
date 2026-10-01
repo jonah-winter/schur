@@ -52,6 +52,6 @@ struct is_matrix : is_matrix_impl<std::remove_cvref_t<M> > {};
 
 template<typename M>
 inline constexpr bool is_matrix_v = is_matrix<M>::value;
-}
+} // namespace internal
 } // namespace schur
 #endif //SCHUR_TRAITS_HPP_

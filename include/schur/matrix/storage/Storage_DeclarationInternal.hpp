@@ -36,7 +36,6 @@ public:
 
   // FUNCTIONS //
 
-  // UNSAFE -- fast
   auto& operator[](this auto&& self, index_t i);
 
   // SAFE -- slow?
