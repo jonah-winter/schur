@@ -1,9 +1,7 @@
 #ifndef SCHUR_MATRIX_MAIN_CLASS_HPP_
 #define SCHUR_MATRIX_MAIN_CLASS_HPP_
 
-#if SCHUR_FREESTANDING == 0
 #include <vector>
-#endif // SCHUR_FREESTANDING == 0
 
 #include "schur/matrix/lazy/Forward_Lazy.hpp"
 #include "schur/matrix/dimensions/Dimensions_Include.hpp"
@@ -65,14 +63,12 @@ public:
   explicit Matrix(size_t dim)
     : dims(dim), storage(internal::Dimensions<Rows, Cols>::size(dim)) {}
 
-#if SCHUR_FREESTANDING == 0
   Matrix(std::initializer_list<std::initializer_list<Scalar> > list);
 
   Matrix(std::vector<std::vector<Scalar> > list);
 
   template<size_t arrRows, size_t arrCols>
   Matrix(std::array<std::array<Scalar, arrCols>, arrRows> arr);
-#endif // SCHUR_FREESTANDING == 0
 
   Matrix(const Matrix& other)
     : dims(construct_dims_rows(other), construct_dims_cols(other)), storage(other.storage)  {}
@@ -96,8 +92,10 @@ public:
   template<internal::MatrixExpr Derived>
   Matrix(const Derived& other);
 
+  auto* data(this auto&& self) noexcept { return self.storage.data(); }
   [[nodiscard]] Scalar* begin() { return storage.data(); }
   [[nodiscard]] Scalar* end() { return storage.data() + (*this).size(); }
+  //void internal_setdata_donotuse(Scalar* ptr) { storage.data_ = ptr; }
 
   [[nodiscard]] auto& at(this auto&& self, index_t r, index_t c);
 

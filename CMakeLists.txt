@@ -6,7 +6,6 @@ project(schur_
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 option(SCHUR_TEST_EXE "Build Schur tests" ON)
-option(SCHUR_FREESTANDING "Freestanding version for OS/no deps" OFF)
 
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
@@ -60,6 +59,6 @@ install(
   DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/Schur
 )
 
-if(${SCHUR_TEST_EXE})
+if(SCHUR_TEST_EXE)
   add_subdirectory(tests)
 endif()

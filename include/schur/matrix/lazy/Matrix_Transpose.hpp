@@ -32,7 +32,7 @@ struct Transposed : MatrixBase
 
   [[nodiscard]] size_t cols() const { return derived.rows(); }
 
-  size_t size() const { return derived.rows() * derived.cols(); }
+  size_t size() const { return derived.size(); }
 };
 } // namespace internal
 } // namespace schur

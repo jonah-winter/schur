@@ -3,33 +3,7 @@
 #include <schur/matrix/Matrix>
 #include <schur/quaternion/Quaternion.hpp>
 #include <schur/core/Numbers.hpp>
-
-// #define TYPEDEF(X, Y) typedef X Y
-//
-// #if defined(_WIN32)
-// #define BEGIN_NAMESPACE_SCHUR \
-//   namespace schur {
-// #define END_NAMESPACE_SCHUR \
-//   }
-// #endif
-//
-// #if defined(__APPLE__)
-// #define BEGIN_NAMESPACE_SCHUR \
-//   namespace schur {
-// #define END_NAMESPACE_SCHUR \
-//   }
-// #endif
-//
-// #if defined(__linux__)
-// #define BEGIN_NAMESPACE_SCHUR \
-//   namespace schur {
-// #define END_NAMESPACE_SCHUR \
-//   }
-// #endif
-//
-// BEGIN_NAMESPACE_SCHUR
-//
-// END_NAMESPACE_SCHUR
+#include <schur/matrix/mult/MatMulNxN.hpp>
 
 /*template <typename M>
 concept NonMatrixMatrixExpr = requires (M m)
@@ -53,7 +27,6 @@ auto eval(const M& m)
 
 template <schur::msize_t Rows, schur::msize_t Cols, typename Scalar, schur::Layout L>
 schur::Matrix<Rows, Cols, Scalar, L>& eval(const schur::Matrix<Rows, Cols, Scalar, L>& m) { return &(m); }
-*/
 
 void* operator new(std::size_t n) {
   std::cout << "heap alloc\n";
@@ -78,6 +51,7 @@ void operator delete[](void* p) noexcept {
   std::cout << "arr heap delete\n";
   std::free(p);
 }
+*/
 
 int main(int argc, char* argv[])
 {
@@ -98,5 +72,15 @@ int main(int argc, char* argv[])
   using Matrix4f = Matrix<4, 4, float>;
   using Matrix4i = Matrix<4, 4, int>;
 
+  using MatrixXd = Matrix<Dynamic, Dynamic, double>;
+  using Matrixf = Matrix<Dynamic, Dynamic, float>;
+  using Matrixi = Matrix<Dynamic, Dynamic, int>;
+
+  Matrix2d m1 = {{1,2},{3,4}};
+  Matrix2d m2 = m1;
+  Matrix2d m3 = m1 * m2;
+  Matrix2d m4 = m1 + m2 * m3;
+  Matrix4f m5 = {{1,2,3,4},{5,6,7,8},{9,10,11,12},{13,14,15,16}};
+  auto t1 = transpose(m5);
   return 0;
 }

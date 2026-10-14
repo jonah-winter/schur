@@ -12,6 +12,13 @@ template<typename Derived, msize_t Rows, msize_t Cols, typename Scalar, Layout L
 struct MatrixBase {
   using matrix_expr_tag = MatrixExprTag;
   using main_matrix_tag = NonMainMatrixTag;
+
+  Derived& derived() {
+    return *static_cast<Derived*>(this);
+  }
+  const Derived& derived() const {
+    return *static_cast<const Derived*>(this);
+  }
   //using this_t = std::remove_cvref_t<decltype(*this)>;
 
   // [[nodiscard]] Derived& derived();
@@ -36,7 +43,18 @@ struct MatrixBase {
 
   [[nodiscard]] auto transpose(this auto&& self)
     requires(MatrixExpr<operand_t<Derived> >);
+  
+  void eval_to(Scalar* out) const {
+    for(int i{0}; i < derived().rows(); i++) { 
+      for(int j{0}; j < derived().cols(); j++) {
+        out[j*derived().rows()+i] = derived()[i, j];
+      }
+    }
+  }
 
+  Transpose<Derived> transpose() const {
+    return 
+  }
 protected:
   MatrixBase() = default;
 }; // end of matrix struct

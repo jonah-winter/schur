@@ -8,9 +8,9 @@
 namespace schur {
 namespace internal {
 template<MatrixExpr L, MatrixExpr R>
-  requires((get_cols<L> == Dynamic || get_cols<L> == get_rows<R>)
-           && (get_rows<R> == Dynamic || get_cols<L> == get_rows<R>)
-           && std::same_as<typename std::remove_cvref_t<L>::val_t, typename std::remove_cvref_t<R>::val_t>)
+requires((get_cols<L> == Dynamic || get_cols<L> == get_rows<R>)
+         && (get_rows<R> == Dynamic || get_cols<L> == get_rows<R>)
+         && std::same_as<typename std::remove_cvref_t<L>::val_t, typename std::remove_cvref_t<R>::val_t>)
 //&& std::same_as<typename std::remove_cvref_t<L>::layout(), typename std::remove_cvref_t<R>::layout()>)
 struct Mult : MatrixBase
     <
@@ -37,11 +37,16 @@ struct Mult : MatrixBase
     return total;
   }
 
+// auto left() { return left; }
+// auto right() { return right; }
+
   size_t rows() const { return left.rows(); }
-
-  size_t cols() const { return left.cols(); }
-
+  size_t cols() const { return right.cols(); }
+  size_t shared() const { return left.cols(); }
   size_t size() const { return left.rows() * left.cols(); }
+
+  void left_data(this auto&& self, float* out) { self.left.eval_to(out); }
+  void right_data(this auto&& self, float* out) { self.right.eval_to(out); }
 };
 } // namespace internal
 } // namespace schur
