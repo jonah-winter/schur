@@ -63,6 +63,14 @@ transpose(this auto&& self)
     std::forward<Derived>(self)
    );
 }
+
+template<typename Derived, msize_t Rows, msize_t Cols, typename Scalar, Layout L>
+void MatrixBase<Derived, Rows, Cols, Scalar, L>::
+transposeSelf(this auto&& self)
+  requires(MatrixExpr<operand_t<Derived> >)
+{
+  self = eval(self.transpose());
+}
 } // namespace internal
 } // namespace schur
 #endif // MATRIX_BASE_FUNCS_HPP_

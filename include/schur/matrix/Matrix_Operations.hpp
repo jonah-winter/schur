@@ -55,5 +55,15 @@ template<internal::MatrixExpr L, internal::MatrixExpr R>
     std::forward<R>(rhs)
    );
 }
+
+template <internal::MatrixExpr D>
+[[nodiscard]] auto transpose(D&& d) -> internal::Transposed<internal::operand_t<D>>
+{
+  return internal::Transposed<
+    internal::operand_t<D>
+    >(
+      std::forward<D>(d)
+    );
+}
 } // namespace schur
 #endif //SCHUR_MATRIX_OPERATIONS_HPP_

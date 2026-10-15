@@ -3,7 +3,11 @@
 
 #include "schur/matrix/Matrix_MainClass.hpp"
 #include "schur/core/Concepts.hpp"
-#include "schur/matrix/mult/MatMulNxN.hpp"
+#if defined(__APPLE__)
+#  if defined(__ARM_NEON)
+#    include "schur/matrix/mult/apple/MM_NxN_NEON.hpp"
+#  endif // arm neon
+#endif // apple
 
 namespace schur {
 namespace internal {
@@ -26,46 +30,66 @@ struct contains_mult<Transposed<D>> {
 }
 
 template<typename L, typename R>
-void naive_mm(internal::Mult<L, R>& 
+void naive_mm(
+    const internal::Mult<L, R>& ml,
+    Matrix<
+        internal::get_rows<internal::Mult<L, R>>,
+        internal::get_cols<internal::Mult<L, R>>,
+        typename internal::Mult<L, R>::val_t,
+        internal::Mult<L, R>::layout()
+          >* out)
+{
+  using Scalar = std::remove_cvref_t<decltype(ml)>::val_t;
+  constexpr Layout layout = internal::Mult<L, R>::layout();
+  if constexpr(layout == Layout::ColMajor) {
+    for(int j{0}; j < ml.cols(); j++) {
+      for(int k{0}; k < ml.shared(); k++) {
+        Scalar temp = ml.left[k, j];
+        for(int i{0}; i < ml.rows(); i++) { (*out)[i, j] += temp*ml.right[i, k]; }
+      }
+    }
+  } else {
+    for(int i{0}; i < ml.rows(); i++) {
+      for(int k{0}; k < ml.shared(); k++) {
+        Scalar temp = ml.left[i, k];
+        for(int j{0}; j < ml.cols(); j++) {
+          (*out)[i, j] += temp*ml.right[k, j];
+        }
+      }
+    }
+  }
+}
 
 template<typename L, typename R>
 auto eval(const internal::Mult<L, R>& ml)
   -> Matrix<
-            internal::get_rows<internal::Mult<L, R>,
-            internal::get_cols<internal::Mult<L, R>,
+            internal::get_rows<internal::Mult<L, R>>,
+            internal::get_cols<internal::Mult<L, R>>,
             typename internal::Mult<L, R>::val_t,
             internal::Mult<L, R>::layout()
            >{
   using Scalar = typename internal::Mult<L, R>::val_t;
-  constexpr Layout  L = internal::Mult<L, R>::layout();
+  constexpr Layout layout = internal::Mult<L, R>::layout();
   constexpr msize_t M = internal::get_rows<internal::Mult<L, R>>;
   constexpr msize_t K = internal::get_cols<internal::Mult<L, R>>;
   constexpr msize_t N = internal::get_cols<L>;
 
-  Matrix<M, N, Scalar, L> out{ml.rows(), ml.cols()};
+  Matrix<M, N, Scalar, layout> temp{ml.rows(), ml.cols()};
+  Matrix<M, N, Scalar, layout>* out{&temp};
   if constexpr(std::is_same_v<Scalar, float>) {
     Scalar* left = (Scalar*)(malloc(ml.left.size() * sizeof(Scalar)));
     Scalar* right = (Scalar*)(malloc(ml.right.size() * sizeof(Scalar)));
     ml.left_data(left);
     ml.right_data(right);
-#if defined(__APPLE__) && defined(aarch64)
-    internal::mmNNxCM(left, right, out.data(), ml.rows(), ml.cols(), K);
+#if defined(__APPLE__) && defined(__ARM_NEON)
+    internal::mmNNxCM_neon(left, right, out->data(), ml.rows(), ml.cols(), K);
 #else
     naive_mm(ml, out);
 #endif // choose mult
   } else {
-    if constexpr(L == Layout::ColMajor) {
-      for(int j{0}; j < ml.cols(); j++) {
-        for(int k{0}; k < ml.shared(); k++) {
-          Scalar temp = ml.left[k, j];
-          for(int i{0}; i < ml.rows(); i++) { out[i, j] += temp*ml.right[i, k]; }
-        }
-      }
-    } else {
-      
-    }
+    naive_mm(ml, out);
   }
-  return out;
+  return *out;
 }
 
 template<internal::NonMatrixMatrixExpr M>

@@ -43,6 +43,8 @@ struct MatrixBase {
 
   [[nodiscard]] auto transpose(this auto&& self)
     requires(MatrixExpr<operand_t<Derived> >);
+  void transposeSelf(this auto&& self)
+    requires(MatrixExpr<operand_t<Derived> >);
   
   void eval_to(Scalar* out) const {
     for(int i{0}; i < derived().rows(); i++) { 
@@ -52,9 +54,9 @@ struct MatrixBase {
     }
   }
 
-  Transpose<Derived> transpose() const {
+  /*Transposed<Derived> transpose() const {
     return 
-  }
+  }*/
 protected:
   MatrixBase() = default;
 }; // end of matrix struct
